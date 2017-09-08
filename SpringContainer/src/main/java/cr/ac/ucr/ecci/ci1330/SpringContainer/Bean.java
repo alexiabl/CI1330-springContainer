@@ -1,13 +1,14 @@
 package main.java.cr.ac.ucr.ecci.ci1330.SpringContainer;
 
 
-public class Bean {
+public class Bean<T>{
     String id;
     String className;
     String scope;
     String autowiringMode;
     String initMethod;
     String destructMethod;
+    T beanInstance;
 
     public Bean(String id, String className, String scope, String autowiringMode, String initMethod, String destructMethod) {
         this.id = id;
@@ -64,5 +65,13 @@ public class Bean {
 
     public void setDestructMethod(String destructMethod) {
         this.destructMethod = destructMethod;
+    }
+
+    public T getBeanInstance() {
+        return beanInstance;
+    }
+
+    public void setBeanInstance(T beanInstance) {
+        this.beanInstance = beanInstance;
     }
 }

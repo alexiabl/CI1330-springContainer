@@ -2,21 +2,22 @@ package main.java.cr.ac.ucr.ecci.ci1330.SpringContainer;
 
 
 public class Bean<T>{
-    String id;
-    String className;
-    String scope;
-    String autowiringMode;
-    String initMethod;
-    String destructMethod;
-    T beanInstance;
+    private String id;
+    private String className;
+    private String initMethod;
+    private String destructMethod;
+    private T beanInstance;
+    private AutowiringMode autowiringMode;
+    private ScopeType scopeType;
 
-    public Bean(String id, String className, String scope, String autowiringMode, String initMethod, String destructMethod) {
+    public Bean(String id, String className, String initMethod, String destructMethod, T beanInstance, AutowiringMode autowiringMode, ScopeType scopeType) {
         this.id = id;
         this.className = className;
-        this.scope = scope;
-        this.autowiringMode = autowiringMode;
         this.initMethod = initMethod;
         this.destructMethod = destructMethod;
+        this.beanInstance = beanInstance;
+        this.autowiringMode = autowiringMode;
+        this.scopeType = scopeType;
     }
 
     public String getId() {
@@ -35,22 +36,6 @@ public class Bean<T>{
         this.className = className;
     }
 
-    public String getScope() {
-        return scope;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
-
-    public String getAutowiringMode() {
-        return autowiringMode;
-    }
-
-    public void setAutowiringMode(String autowiringMode) {
-        this.autowiringMode = autowiringMode;
-    }
-
     public String getInitMethod() {
         return initMethod;
     }
@@ -67,11 +52,17 @@ public class Bean<T>{
         this.destructMethod = destructMethod;
     }
 
-    public T getBeanInstance() {
-        return beanInstance;
-    }
+    public T getBeanInstance() { return beanInstance; }
 
     public void setBeanInstance(T beanInstance) {
         this.beanInstance = beanInstance;
     }
+
+    public AutowiringMode getAutowiringMode() { return autowiringMode; }
+
+    public void setAutowiringMode(AutowiringMode autowiringMode) { this.autowiringMode = autowiringMode; }
+
+    public ScopeType getScopeType() { return scopeType; }
+
+    public void setScopeType(ScopeType scopeType) { this.scopeType = scopeType; }
 }

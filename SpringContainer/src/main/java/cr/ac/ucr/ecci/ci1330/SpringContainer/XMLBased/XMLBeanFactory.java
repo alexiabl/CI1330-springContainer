@@ -3,12 +3,16 @@ package main.java.cr.ac.ucr.ecci.ci1330.SpringContainer.XMLBased;
 import main.java.cr.ac.ucr.ecci.ci1330.SpringContainer.AbstractBeanFactory;
 import main.java.cr.ac.ucr.ecci.ci1330.SpringContainer.Bean;
 
+import java.util.HashMap;
+
 /**
  * Created by alexiaborchgrevink on 9/8/17.
  */
 public class XMLBeanFactory extends AbstractBeanFactory {
 
+    HashMap<String, String> tagsBeanContent;
     private void readXML(String xmlPath) {
+
 
     }
 
@@ -22,7 +26,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
     }
 
     @Override
-    public Bean destroyBean(String id) {
-        return null;
+    public void destroyBean(String id) {
+
     }
 }

@@ -4,28 +4,31 @@ import java.util.HashMap;
 
 public abstract class AbstractBeanFactory implements BeanFactoryContainer {
 
-    HashMap<String, Bean> beanHashMap = new HashMap<>();
+    protected HashMap<String, Bean> beanHashMap;
 
     public AbstractBeanFactory() {
-        System.out.println("hola");
+        this.beanHashMap = new HashMap<>();
     }
 
     @Override
-    public Bean createBean() {
+    public Bean createBean(String id) {
         return null;
     }
 
     @Override
-    public Bean destroyBean(String id) {
-        return null;
+    public void destroyBean(String id) {
+        beanHashMap.remove(id);
     }
 
     @Override
-    public Bean getBean(String id) {
-        return null;
+    public Object getBean(String id) {
+        if(beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)){
+            return createBean(id);
+        }
+        return beanHashMap.get(id).getBeanInstance();
     }
 
-    private String detectAutowiringMode(String id) {
+    private String detectAutowiringMode(String beanTag) {
         return null;
     }
 

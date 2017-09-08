@@ -2,9 +2,9 @@ package main.java.cr.ac.ucr.ecci.ci1330.SpringContainer;
 
 public interface BeanFactoryContainer {
 
-    Bean createBean();
+    Bean createBean(String id);
 
-    Bean getBean(String id);
+    Object getBean(String id);
 
-    Bean destroyBean(String id);
+    void destroyBean(String id);
 }

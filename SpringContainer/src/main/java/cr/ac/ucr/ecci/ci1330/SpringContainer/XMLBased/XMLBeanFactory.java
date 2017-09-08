@@ -5,15 +5,11 @@ import main.java.cr.ac.ucr.ecci.ci1330.SpringContainer.Bean;
 
 import java.util.HashMap;
 
-/**
- * Created by alexiaborchgrevink on 9/8/17.
- */
 public class XMLBeanFactory extends AbstractBeanFactory {
 
     HashMap<String, String> tagsBeanContent;
+
     private void readXML(String xmlPath) {
-
-
     }
 
     private Bean readXMLBean(String id) {

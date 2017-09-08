@@ -18,6 +18,8 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     @Override
     public void destroyBean(String id) {
         beanHashMap.remove(id);
+        /*Aquí se ejecuta el método del bean, el destructMethod
+        * Se llama al método executeDestructMethod*/
     }
 
     @Override

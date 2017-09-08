@@ -65,4 +65,7 @@ public class Bean<T>{
     public ScopeType getScopeType() { return scopeType; }
 
     public void setScopeType(ScopeType scopeType) { this.scopeType = scopeType; }
+
+    public void executeDestructuMethod(){
+    }
 }

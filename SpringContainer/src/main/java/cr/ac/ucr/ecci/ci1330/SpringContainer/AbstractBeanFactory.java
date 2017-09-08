@@ -2,7 +2,7 @@ package main.java.cr.ac.ucr.ecci.ci1330.SpringContainer;
 
 import java.util.HashMap;
 
-public abstract class AbstractBeanFactory implements BeanFactoryContainer{
+public abstract class AbstractBeanFactory implements BeanFactoryContainer {
 
     HashMap<String, Bean> beanHashMap = new HashMap<String, Bean>();
 

@@ -15,7 +15,19 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer{
         return null;
     }
 
+    @Override
+    public Bean destroyBean(String id) {
+        return null;
+    }
+
+    @Override
+    public Bean getBean(String id) {
+        return null;
+    }
+
     private String detectAutowiringMode(String id) {
         return null;
     }
+
+    private Bean findBean(String id) { return null; }
 }

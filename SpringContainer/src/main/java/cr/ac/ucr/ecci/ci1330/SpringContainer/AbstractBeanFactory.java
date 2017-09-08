@@ -7,6 +7,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer{
     HashMap<String, Bean> beanHashMap = new HashMap<String, Bean>();
 
     public AbstractBeanFactory() {
+        System.out.println("hola");
     }
 
     @Override

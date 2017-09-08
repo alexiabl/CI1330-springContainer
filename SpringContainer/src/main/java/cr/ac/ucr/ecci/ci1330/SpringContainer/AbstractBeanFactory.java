@@ -1,10 +1,10 @@
-package com.container;
+package main.java.cr.ac.ucr.ecci.ci1330.SpringContainer;
 
 import java.util.HashMap;
 
 public abstract class AbstractBeanFactory implements BeanFactoryContainer{
 
-    HashMap<String, Bean>   = new HashMap<String, Bean>();
+    HashMap<String, Bean> beanHashMap = new HashMap<String, Bean>();
 
     public AbstractBeanFactory() {
     }
@@ -15,6 +15,6 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer{
     }
 
     private String detectAutowiringMode(String id) {
-
+        return null;
     }
 }

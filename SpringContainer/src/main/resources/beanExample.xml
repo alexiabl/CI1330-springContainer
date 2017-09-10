@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+    <bean id="Autores" class="cr.ac.ucr.ecci.ci1330.SpringContainer.Bean" scope="prototype">
+        <property name="integerProperty" value="1"/>
+        <property name="Nombre" value="Alexia"/>
+    </bean>
+    <bean id="anotherExampleBean" class="cr.ac.ucr.ecci.ci1330.SpringContainer.Bean" scope="singleton" />
+    <bean id="yetAnotherBean" />
+</beans>

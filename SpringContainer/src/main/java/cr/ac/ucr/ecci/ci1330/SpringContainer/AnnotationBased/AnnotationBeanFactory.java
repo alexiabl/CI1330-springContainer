@@ -1,7 +1,7 @@
-package main.java.cr.ac.ucr.ecci.ci1330.SpringContainer.AnnotationBased;
+package cr.ac.ucr.ecci.ci1330.SpringContainer.AnnotationBased;
 
-import main.java.cr.ac.ucr.ecci.ci1330.SpringContainer.AbstractBeanFactory;
-import main.java.cr.ac.ucr.ecci.ci1330.SpringContainer.Bean;
+import cr.ac.ucr.ecci.ci1330.SpringContainer.AbstractBeanFactory;
+import cr.ac.ucr.ecci.ci1330.SpringContainer.Bean;
 
 public class AnnotationBeanFactory extends AbstractBeanFactory {
 

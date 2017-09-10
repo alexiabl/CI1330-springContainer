@@ -11,7 +11,5 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
     }
 
     @Override
-    public Bean destroyBean(String id) {
-        return null;
-    }
+    public void destroyBean(String id) {  }
 }

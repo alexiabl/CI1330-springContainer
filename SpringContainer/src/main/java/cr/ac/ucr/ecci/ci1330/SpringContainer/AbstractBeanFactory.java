@@ -7,7 +7,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     protected HashMap<String, Bean> beanHashMap;
 
     public AbstractBeanFactory() {
-        this.beanHashMap = new HashMap<>();
+        this.beanHashMap = new HashMap<String, Bean>();
     }
 
     @Override

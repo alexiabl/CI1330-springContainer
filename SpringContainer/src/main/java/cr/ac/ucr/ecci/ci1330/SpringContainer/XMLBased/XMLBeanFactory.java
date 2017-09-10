@@ -18,8 +18,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         Builder builder = new Builder();
         Document xmlDoc = builder.build(xmlPath);
         Element root = xmlDoc.getRootElement();
-        Element bean = root.getFirstChildElement("bean");
-        Elements beans = bean.getChildElements();
+        Elements beans = root.getChildElements();
         for (int i=0; i<beans.size(); i++){
             System.out.println("El bean "+beans.get(i).getLocalName()+"tiene "+beans.get(i).getAttributeCount()+" atributos");
         }

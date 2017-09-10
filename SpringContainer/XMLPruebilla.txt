@@ -1,0 +1,12 @@
+<bean id="libro" class="com.blogspot.programandoointentandolo.Libro">
+  <property name="titulo" value="Aprendiendo Spring"/>
+  <property name="autor" ref="autor"/>
+  <property name="genero" value="Aventuras"/>
+  <property name="edicion" value="2"/>
+  <property name="paginas" value="257"/>
+ </bean>
+ 
+ <bean id="autor" class="com.blogspot.programandoointentandolo.Autor">
+  <property name="nombre" value="Luis" />
+  <property name="apellido" value="Perez" />
+ </bean>

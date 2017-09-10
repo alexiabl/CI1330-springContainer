@@ -11,9 +11,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     }
 
     @Override
-    public Bean createBean(String id) {
-        return null;
-    }
+    public Bean createBean(String id) { return null; }
 
     @Override
     public void destroyBean(String id) {

@@ -25,7 +25,17 @@ public class XMLBeanFactory extends AbstractBeanFactory {
             System.out.println("El bean "+currentBean.getAttributeValue("id")+" tiene "+attributeCount+" atributos");
             if (attributeCount>0){
                 for (int j=0;j<attributeCount;j++){
-                    System.out.println(currentBean.getAttribute(j).getLocalName()+" - "+currentBean.getAttribute(j).getValue());
+                    String attributeName = currentBean.getAttribute(j).getLocalName();
+                    String attributeValue = currentBean.getAttribute(j).getValue();
+                    System.out.println(attributeName+" - "+attributeValue);
+                    if(attributeName.equals("singleton")){
+                        //hay que definir si el bean se crea enviandose una lista de los atributos o donde guardar
+                        // los atributos relacionados a un bean id para poder llamar a createBean(id) solo con el id
+                    }
+                    else{
+
+                    }
+
                 }
             }
         }

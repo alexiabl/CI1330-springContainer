@@ -20,7 +20,14 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         Element root = xmlDoc.getRootElement();
         Elements beans = root.getChildElements();
         for (int i=0; i<beans.size(); i++){
-            System.out.println("El bean "+beans.get(i).getLocalName()+"tiene "+beans.get(i).getAttributeCount()+" atributos");
+            Element currentBean = beans.get(i);
+            int attributeCount = currentBean.getAttributeCount();
+            System.out.println("El bean "+currentBean.getAttributeValue("id")+" tiene "+attributeCount+" atributos");
+            if (attributeCount>0){
+                for (int j=0;j<attributeCount;j++){
+                    System.out.println(currentBean.getAttribute(j).getLocalName()+" - "+currentBean.getAttribute(j).getValue());
+                }
+            }
         }
 
 

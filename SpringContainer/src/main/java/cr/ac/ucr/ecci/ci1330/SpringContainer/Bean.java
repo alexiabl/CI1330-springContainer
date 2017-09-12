@@ -21,7 +21,10 @@ public class Bean<T>{
     }
 
     public Bean(){
-
+        this.initMethod = "initMethod";
+        this.destructMethod = "destructMethod";
+        this.autowiringMode = AutowiringMode.BYTYPE;
+        this.scopeType = ScopeType.SINGLETON;
     }
 
     public String getId() {

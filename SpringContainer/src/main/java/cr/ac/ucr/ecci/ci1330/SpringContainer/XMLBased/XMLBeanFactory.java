@@ -40,33 +40,14 @@ public class XMLBeanFactory extends AbstractBeanFactory {
                 tagsBeanContent.put(currentBean.getAttributeValue("id"), currentBean);
                 createBean(currentBean.getAttributeValue("id"));
             }
-            /*int attributeCount = currentBean.getAttributeCount();
-            System.out.println("El bean " + currentBean.getAttributeValue("id") + " tiene " + attributeCount + " atributos");
-            if (attributeCount > 0) {
-                if (hasScopeAttribute(currentBean, attributeCount, "scopeType")) {
-                    String scope = currentBean.getAttribute("scopeType").getValue();
-                    if (scope.equals("singleton")) {
-                        System.out.println("El bean es singleton");
-                    } else {
-                        System.out.println("El bean es prototype");
-                    }
-                }
-                else{
-                    System.out.println("El bean es singleton");
-                }
-                for (int j = 0; j < attributeCount; j++) {
-                    String attributeName = currentBean.getAttribute(j).getLocalName();
-                    String attributeValue = currentBean.getAttribute(j).getValue();
-                    System.out.println(attributeName + " - " + attributeValue);
-                    //hay que definir si el bean se crea enviandose una lista de los atributos o donde guardar
-                    // los atributos relacionados a un bean id para poder llamar a createBean(id) solo con el id
-                }
-            }*/
         }
     }
 
     @Override
     public Bean createBean(String id) {
+        //ver el modo de autowiring
+        //java reflection(ver si la clase existe )
+        // si la clase no existe hay que borrarlo del mapa de tags donde ya se agregó
         Bean bean = new Bean();
         Element element = tagsBeanContent.get(id);
         bean.setId(element.getAttributeValue("id"));
@@ -87,33 +68,39 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         }
         //faltan setters y constructores y crear la instancia
         //falta lo de reference
+        if (! beanHashMap.containsKey(id)){
+            beanHashMap.put(id, bean);
+        }
         return bean;
     }
 
-    private Bean readXMLBean(String id, String xmlPath) throws ParsingException, IOException {
+    @Override
+    public Bean findBean(String id) {
         Bean foundBean = new Bean();
         Builder builder = new Builder();
-        Document xmlDoc = builder.build(xmlPath);
+        Document xmlDoc = null;
+        try {
+            xmlDoc = builder.build(xmlPath);
+        } catch (ParsingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Element root = xmlDoc.getRootElement();
         Elements beans = root.getChildElements();
-        for (int i = 0; i < beans.size(); i++) {
+        int i = 0;
+        boolean found = false;
+        while (!found && i < beans.size()) {
             Element currentBean = beans.get(i);
-            String idValue = currentBean.getAttribute("id").getValue();
-            //buscar en un hashmap de beans el bean con el id
-
+            String idValue = currentBean.getAttributeValue("id");
+            if (idValue.equals(id)) {
+                found = true;
+                tagsBeanContent.put(idValue, currentBean);
+                foundBean = createBean(idValue);
+            }
+            i++;
         }
         return foundBean;
-
     }
 
-
-    @Override
-    public Bean getBean(String id) {
-        return null;
-    }
-
-    @Override
-    public void destroyBean(String id) {
-
-    }
 }

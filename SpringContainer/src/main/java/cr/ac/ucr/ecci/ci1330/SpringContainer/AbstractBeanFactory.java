@@ -13,7 +13,9 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
         this.beanHashMap = new HashMap<String, Bean>();
     }
 
-    public Bean createBean(Element object) { return null; }
+    public Bean createBean(String id) {
+        return null;
+    }
 
     public void destroyBean(String id) {
         beanHashMap.remove(id);
@@ -22,15 +24,15 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     }
 
     public Object getBean(String id) {
-        if(beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)){
-            return createBean(id);
+        if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
+            Bean bean = createBean(id);
+            //aquí va el init method
+            return bean.getBeanInstance();
         }
         return beanHashMap.get(id).getBeanInstance();
     }
 
-    protected String detectAutowiringMode(String beanTag) {
+    public Bean findBean(String id) {
         return null;
     }
-
-    protected Bean findBean(String id, String path) { return null; }
 }

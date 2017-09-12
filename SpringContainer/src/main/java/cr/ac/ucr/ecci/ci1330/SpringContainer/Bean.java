@@ -20,6 +20,10 @@ public class Bean<T>{
         this.scopeType = scopeType;
     }
 
+    public Bean(){
+
+    }
+
     public String getId() {
         return id;
     }

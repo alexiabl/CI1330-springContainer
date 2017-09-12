@@ -9,8 +9,7 @@ import java.util.HashMap;
 public class Main {
 
     public static void main(String[] args) throws ParsingException, IOException {
-        String path="./SpringContainer/src/main/resources/beanExample.xml";
+        String path = "./SpringContainer/src/main/resources/beanExample.xml";
         XMLBeanFactory beanFactory = new XMLBeanFactory(path);
-
-}
+    }
 }

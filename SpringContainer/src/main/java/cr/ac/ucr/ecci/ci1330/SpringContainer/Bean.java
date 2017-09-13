@@ -1,9 +1,5 @@
 package cr.ac.ucr.ecci.ci1330.SpringContainer;
 
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 public class Bean<T> {
     private String id;
     private String className;

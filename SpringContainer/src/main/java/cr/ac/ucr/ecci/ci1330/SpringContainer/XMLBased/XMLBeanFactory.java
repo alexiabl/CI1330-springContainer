@@ -7,10 +7,7 @@ import cr.ac.ucr.ecci.ci1330.SpringContainer.ScopeType;
 import nu.xom.*;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Iterator;
-
 
 public class XMLBeanFactory extends AbstractBeanFactory {
 
@@ -71,7 +68,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         if (!beanHashMap.containsKey(id)) {
             beanHashMap.put(id, bean);
         }
-        this.executeBeanInitMethod(bean);
+        this.executeBeanInitMethod(bean); // Se ejecuta el metodo initMethod, para que el singleton solo lo haga 1 vez
         return bean;
     }
 

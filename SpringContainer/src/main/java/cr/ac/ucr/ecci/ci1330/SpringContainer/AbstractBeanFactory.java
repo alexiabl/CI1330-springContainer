@@ -1,9 +1,5 @@
 package cr.ac.ucr.ecci.ci1330.SpringContainer;
 
-
-import nu.xom.Element;
-
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -13,7 +9,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     protected HashMap<String, Bean> beanHashMap;
 
     public AbstractBeanFactory() {
-        this.beanHashMap = new HashMap<String, Bean>();
+        this.beanHashMap = new HashMap<>();
     }
 
     public Bean createBean(String id) {
@@ -26,16 +22,16 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
 
         Class instance = null;
         try {
-            instance = Bean.class.getDeclaredField("beanInstance").getDeclaringClass();
+            instance = Bean.class.getDeclaredField("beanInstance").getDeclaringClass(); //creo que asi agarra la clase
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
         Method methods[] = instance.getDeclaredMethods();
         Method method;
         boolean execute = false;
-        for (int i = 0; i < methods.length && !execute; i++) {
+        for (int i = 0; i < methods.length && !execute; i++) { // Busca el metodo que corresponda al destructMethod
             method = methods[i];
-            if (method.toString() == bean.getDestructMethod()) {
+            if (method.toString() == bean.getDestructMethod()) { // Cuando lo encuentra, lo ejecuta y se sale del ciclo
                 try {
                     method.invoke(bean.getBeanInstance());
                 } catch (IllegalAccessException e) {
@@ -47,8 +43,6 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
             }
         }
         bean = null; //??
-        /*AquÃ­ se ejecuta el mÃ©todo del bean, el destructMethod
-        * Se llama al mÃ©todo executeDestructMethod*/
     }
 
     public Object getBean(String id) {
@@ -66,7 +60,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     public void executeBeanInitMethod(Bean bean) {
         Class instance = null;
         try {
-            instance = Bean.class.getDeclaredField("beanInstance").getDeclaringClass();
+            instance = Bean.class.getDeclaredField("beanInstance").getDeclaringClass(); //creo que asi agarra la clase
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
@@ -74,9 +68,9 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
         Method methods[] = instance.getDeclaredMethods();
         Method method;
         boolean execute = false;
-        for (int i = 0; i < methods.length && !execute; i++) {
+        for (int i = 0; i < methods.length && !execute; i++) {  // Busca el metodo que corresponda al initMethod
             method = methods[i];
-            if (method.toString() == bean.getInitMethod()) {
+            if (method.toString() == bean.getInitMethod()) { // Cuando lo encuentra, lo ejecuta y se sale del ciclo
                 try {
                     method.invoke(bean.getBeanInstance());
                 } catch (IllegalAccessException e) {

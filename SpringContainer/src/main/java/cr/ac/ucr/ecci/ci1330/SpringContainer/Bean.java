@@ -6,7 +6,7 @@ public class Bean<T> {
     private String initMethod;
     private String destructMethod;
     private T beanInstance;
-    private AutowiringMode autowiringMode;
+    private AutowiringMode autowiringMode; 
     private ScopeType scopeType;
 
     public Bean(String id, String className, String initMethod, String destructMethod, T beanInstance, AutowiringMode autowiringMode, ScopeType scopeType) {

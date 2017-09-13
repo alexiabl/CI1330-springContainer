@@ -31,7 +31,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
         boolean execute = false;
         for (int i = 0; i < methods.length && !execute; i++) { // Busca el metodo que corresponda al destructMethod
             method = methods[i];
-            if (method.toString() == bean.getDestructMethod()) { // Cuando lo encuentra, lo ejecuta y se sale del ciclo
+            if (method.toString() == bean.getDestructMethod()) { // Cuando lo encuentra, lo ejecuta y se sale del ciclo.
                 try {
                     method.invoke(bean.getBeanInstance());
                 } catch (IllegalAccessException e) {

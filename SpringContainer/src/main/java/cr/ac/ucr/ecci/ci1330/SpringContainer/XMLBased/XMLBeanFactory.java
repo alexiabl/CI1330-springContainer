@@ -68,7 +68,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         if (!beanHashMap.containsKey(id)) {
             beanHashMap.put(id, bean);
         }
-        this.executeBeanInitMethod(bean); // Se ejecuta el metodo initMethod, para que el singleton solo lo haga 1 vez
+        this.executeBeanInitMethod(bean); // Se ejecuta el metodo initMethod, para que el singleton solo lo haga una vez
         return bean;
     }
 

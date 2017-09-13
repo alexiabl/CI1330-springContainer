@@ -1,7 +1,10 @@
 package cr.ac.ucr.ecci.ci1330.SpringContainer;
 
 
-public class Bean<T>{
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class Bean<T> {
     private String id;
     private String className;
     private String initMethod;
@@ -20,7 +23,7 @@ public class Bean<T>{
         this.scopeType = scopeType;
     }
 
-    public Bean(){
+    public Bean() {
         this.initMethod = "initMethod";
         this.destructMethod = "destructMethod";
         this.autowiringMode = AutowiringMode.BYTYPE;
@@ -59,20 +62,27 @@ public class Bean<T>{
         this.destructMethod = destructMethod;
     }
 
-    public T getBeanInstance() { return beanInstance; }
+    public T getBeanInstance() {
+        return beanInstance;
+    }
 
     public void setBeanInstance(T beanInstance) {
         this.beanInstance = beanInstance;
     }
 
-    public AutowiringMode getAutowiringMode() { return autowiringMode; }
+    public AutowiringMode getAutowiringMode() {
+        return autowiringMode;
+    }
 
-    public void setAutowiringMode(AutowiringMode autowiringMode) { this.autowiringMode = autowiringMode; }
+    public void setAutowiringMode(AutowiringMode autowiringMode) {
+        this.autowiringMode = autowiringMode;
+    }
 
-    public ScopeType getScopeType() { return scopeType; }
+    public ScopeType getScopeType() {
+        return scopeType;
+    }
 
-    public void setScopeType(ScopeType scopeType) { this.scopeType = scopeType; }
-
-    public void executeDestructuMethod(){
+    public void setScopeType(ScopeType scopeType) {
+        this.scopeType = scopeType;
     }
 }

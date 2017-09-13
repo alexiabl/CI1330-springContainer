@@ -47,7 +47,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
     public Bean createBean(String id) {
         //ver el modo de autowiring
         //java reflection(ver si la clase existe )
-        // si la clase no existe hay que borrarlo del mapa de tags donde ya se agregó
+        // si la clase no existe hay que borrarlo del mapa de tags donde ya se agregÃ³
         Bean bean = new Bean();
         Element element = tagsBeanContent.get(id);
         bean.setId(element.getAttributeValue("id"));
@@ -68,9 +68,10 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         }
         //faltan setters y constructores y crear la instancia
         //falta lo de reference
-        if (! beanHashMap.containsKey(id)){
+        if (!beanHashMap.containsKey(id)) {
             beanHashMap.put(id, bean);
         }
+        this.executeBeanInitMethod(bean);
         return bean;
     }
 
@@ -102,5 +103,4 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         }
         return foundBean;
     }
-
 }

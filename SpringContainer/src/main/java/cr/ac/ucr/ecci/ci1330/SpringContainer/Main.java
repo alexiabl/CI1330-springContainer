@@ -11,5 +11,6 @@ public class Main {
     public static void main(String[] args) throws ParsingException, IOException {
         String path = "./SpringContainer/src/main/resources/beanExample.xml";
         XMLBeanFactory beanFactory = new XMLBeanFactory(path) ;
+        // Main del branch Renato
     }
 }

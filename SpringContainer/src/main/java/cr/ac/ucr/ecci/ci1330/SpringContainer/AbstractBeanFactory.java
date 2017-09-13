@@ -22,7 +22,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
 
         Class instance = null;
         try {
-            instance = Bean.class.getDeclaredField("beanInstance").getDeclaringClass(); //creo que asi agarra la clase
+            instance = Bean.class.getDeclaredField("beanInstance").getType(); //creo que asi agarra la clase
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     public void executeBeanInitMethod(Bean bean) {
         Class instance = null;
         try {
-            instance = Bean.class.getDeclaredField("beanInstance").getDeclaringClass(); //creo que asi agarra la clase
+            instance = Bean.class.getDeclaredField("beanInstance").getType(); //creo que asi agarra la clase
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }

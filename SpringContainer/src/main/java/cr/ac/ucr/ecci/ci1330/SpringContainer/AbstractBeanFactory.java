@@ -46,9 +46,10 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
         try {
             method = instance.getDeclaredMethod(methodName); // Recupera el metodo recibido por parametro
         } catch (NoSuchMethodException e) {
+            // Si la instancia no tiene el metodo respectivo entonces no hace nada
         }
 
-        if (method != null) {
+        if (method != null) { // Si existe el metodo respectivo
             try {
                 method.invoke(bean.getBeanInstance());
             } catch (IllegalAccessException e) {

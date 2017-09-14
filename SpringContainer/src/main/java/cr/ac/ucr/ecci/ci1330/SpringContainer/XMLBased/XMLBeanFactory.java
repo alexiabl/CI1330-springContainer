@@ -71,6 +71,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         if (! beanHashMap.containsKey(id)){
             beanHashMap.put(id, bean);
         }
+        executeBeanInstanceMethod(bean, bean.getInitMethod());
         return bean;
     }
 

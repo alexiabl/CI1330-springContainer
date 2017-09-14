@@ -1,8 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.SpringContainer;
 
-
-import nu.xom.Element;
-
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 public abstract class AbstractBeanFactory implements BeanFactoryContainer {
@@ -10,7 +9,7 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     protected HashMap<String, Bean> beanHashMap;
 
     public AbstractBeanFactory() {
-        this.beanHashMap = new HashMap<String, Bean>();
+        this.beanHashMap = new HashMap<>();
     }
 
     public Bean createBean(String id) {
@@ -18,15 +17,15 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
     }
 
     public void destroyBean(String id) {
+        Bean bean = beanHashMap.get(id);
         beanHashMap.remove(id);
-        /*Aquí se ejecuta el método del bean, el destructMethod
-        * Se llama al método executeDestructMethod*/
+
+        this.executeBeanInstanceMethod(bean, bean.getDestructMethod());
     }
 
     public Object getBean(String id) {
         if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
             Bean bean = createBean(id);
-            //aquí va el init method
             return bean.getBeanInstance();
         }
         return beanHashMap.get(id).getBeanInstance();
@@ -34,5 +33,29 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
 
     public Bean findBean(String id) {
         return null;
+    }
+
+    public void executeBeanInstanceMethod(Bean bean, String methodName) {
+        Class instance = null;
+        try {
+            instance = Bean.class.getDeclaredField("beanInstance").getType(); // Recupera el tipo de la instancia del Bean
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        Method method = null;
+        try {
+            method = instance.getDeclaredMethod(methodName); // Recupera el metodo recibido por parametro
+        } catch (NoSuchMethodException e) {
+        }
+
+        if (method != null) {
+            try {
+                method.invoke(bean.getBeanInstance());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -95,7 +96,14 @@ public class XMLBeanFactory <T> extends AbstractBeanFactory {
         Class newClass = Class.forName(className);
         //verificar que esté llamando al constructor
         if(element.getAttribute("injectConstructor")!= null){
-            Object[] parameters= obtainConstructorDependencies(element);
+            Object[] parameters= new Object[0];
+            try {
+                parameters = obtainConstructorDependencies(element);
+            } catch (ParsingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             Constructor[] constructors= newClass.getDeclaredConstructors();
             Constructor constructor= constructors[lookForConstructor(constructors, parameters)];
@@ -108,7 +116,23 @@ public class XMLBeanFactory <T> extends AbstractBeanFactory {
         }
         //verificar que está llamando a un setter
         else{
-
+            Element setterParameter= element.getChildElements().get(0);
+            String fieldName= setterParameter.getAttributeValue("name");
+            fieldName= fieldName.replace(fieldName.substring(0,1), fieldName.substring(0,1).toUpperCase());
+            String setterName= "set"+ fieldName;
+            String classReference= setterParameter.getAttributeValue("reference");
+            Object parameter;
+            if (beanHashMap.containsKey(classReference)){
+                parameter= beanHashMap.get(classReference).getBeanInstance();
+            }else{ //si el bean al que se hace referencia aún no está creado
+                parameter= findBean(classReference).getBeanInstance();
+            }
+            Method method= newClass.getDeclaredMethod(setterName);
+            try {
+                method.invoke(objectInstance, parameter);
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
         return objectInstance;
     }
@@ -126,8 +150,10 @@ public class XMLBeanFactory <T> extends AbstractBeanFactory {
                 equal= true;
                 while (equal && j< parameters.length){
                     String parameter= parameters[j].getClass().toString();
-                    if(parameter.equals(parameterTypes[j].toString()) && (j== parameters.length-1)){
-                        found= true;
+                    if(parameter.equals(parameterTypes[j].toString())){
+                        if(j== parameters.length-1){
+                            found= true;
+                        }
                     }
                     else{
                         equal= false;
@@ -140,7 +166,7 @@ public class XMLBeanFactory <T> extends AbstractBeanFactory {
         return i-1;
     }
 
-    private Object[] obtainConstructorDependencies(Element element) throws ClassNotFoundException {
+    private Object[] obtainConstructorDependencies(Element element) throws ClassNotFoundException, ParsingException, IOException {
         Elements constructorArgs= element.getChildElements();
         Object[] parameters = new Object[0];
         for (int i= 0; i < constructorArgs.size(); i++){
@@ -149,7 +175,7 @@ public class XMLBeanFactory <T> extends AbstractBeanFactory {
             if (beanHashMap.containsKey(classReference)){
                 parameters[i]= beanHashMap.get(classReference).getBeanInstance();
             }else{ //si el bean al que se hace referencia aún no está creado
-                parameters[i]= createBean(classReference).getBeanInstance();
+                parameters[i]= findBean(classReference).getBeanInstance();
             }
         }
         return parameters;

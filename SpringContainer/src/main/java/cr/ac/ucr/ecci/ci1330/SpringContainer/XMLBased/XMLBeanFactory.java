@@ -64,11 +64,11 @@ public class XMLBeanFactory<T> extends AbstractBeanFactory {
 
         if (definedClass != null) {
 
-            if (element.getAttributeValue("autowiringMode").equals(AutowiringMode.valueOf("TYPE")) || element.getAttribute("autowiringMode").equals(null)) {
+            /*if (element.getAttributeValue("autowiringMode").equals(AutowiringMode.valueOf("TYPE")) || element.getAttribute("autowiringMode").equals(null)) {
 
             } else { //byname
 
-            }
+            }*/
             bean = new Bean();
             bean.setId(element.getAttributeValue("id"));
             bean.setClassName(element.getAttributeValue("className"));

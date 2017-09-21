@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 
-public class XMLBeanFactory<T> extends AbstractBeanFactory {
+public class XMLBeanFactory extends AbstractBeanFactory {
 
     HashMap<String, Element> tagsBeanContent;
     private String xmlPath;
@@ -60,6 +60,7 @@ public class XMLBeanFactory<T> extends AbstractBeanFactory {
             definedClass = Class.forName(element.getAttributeValue("className"));
         } catch (ClassNotFoundException e) {
             tagsBeanContent.remove(id);
+            System.out.println("La clase no existe");
         }
 
         if (definedClass != null) {
@@ -87,77 +88,131 @@ public class XMLBeanFactory<T> extends AbstractBeanFactory {
                 bean.setScopeType(ScopeType.valueOf(scopeType));
             }
 
-            try {
-                bean.setBeanInstance(createBeanInstance(element));
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-
-            if (!beanHashMap.containsKey(id)) {
+            bean.setBeanInstance(createBeanInstance(element));
+            if (!beanHashMap.containsKey(id)&& bean.getBeanInstance()!= null) {
+                System.out.println("agrego "+bean.getClassName());
                 beanHashMap.put(id, bean);
             }
             executeBeanInstanceMethod(bean, bean.getInitMethod());
         }
+        System.out.println("Se creó bean "+ bean.getId());
         return bean;
     }
 
-    private T createBeanInstance(Element element) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException {
-        T objectInstance = null;
+    private Object createBeanInstance(Element element) {
+        Object objectInstance = null;
         String className = element.getAttributeValue("className");
-        Class newClass = Class.forName(className);
+        Class newClass = null;
+        try {
+            newClass = Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            System.out.println("no se encontró la clase en el forName. M: createBeanInstance");
+        }
+        //verificar que se está llamando a un constructor
         if (element.getAttribute("injectConstructor") != null) {
-            Object[] parameters = new Object[0];
-            try {
-                parameters = obtainConstructorDependencies(element);
-            } catch (ParsingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Constructor[] constructors = newClass.getDeclaredConstructors();
-            Constructor constructor = constructors[lookForConstructor(constructors, parameters)];
-            try {
-                constructor.newInstance(objectInstance, parameters);
-            } catch (InvocationTargetException e) {
-                System.out.println("no ingresó bien los parametros. Metodo: createBeanInstance");
-                e.printStackTrace();
-            }
+            objectInstance= injectConstructorDependencies(element, newClass);
         }
         //verificar que está llamando a un setter
         else if (element.getAttribute("injectSetter") != null) {
-            Element setterParameter = element.getChildElements().get(0);
-            String fieldName = setterParameter.getAttributeValue("name");
-            fieldName = fieldName.replace(fieldName.substring(0, 1), fieldName.substring(0, 1).toUpperCase());
-            String setterName = "set" + fieldName;
-            String classReference = setterParameter.getAttributeValue("reference");
-            Object parameter;
-            if (beanHashMap.containsKey(classReference)) {
-                parameter = beanHashMap.get(classReference).getBeanInstance();
-            } else { //si el bean al que se hace referencia aún no está creado
-                parameter = findBean(classReference).getBeanInstance();
-            }
-            Method method = newClass.getDeclaredMethod(setterName);
-            try {
-                method.invoke(objectInstance, parameter);
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+            objectInstance= injectSetterDependencies(element, newClass);
+            if(objectInstance== null){
+                return null;
             }
         }
         // Crea una instancia con un constructor sin parámetros
         else {
-            Constructor constructor = newClass.getDeclaredConstructor();
             try {
-                constructor.newInstance(objectInstance);
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                objectInstance= newClass.newInstance();
+            } catch (Exception e) {
+                System.out.println("no se creó bien la instancia de la clase");
             }
+        }
+        return objectInstance;
+    }
+
+    private Object injectConstructorDependencies(Element element, Class newClass) {
+        Object objectInstance = null;
+        try {
+            objectInstance = newClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Object[] parameters = {new Object()};
+        try {
+            try {
+                parameters = obtainConstructorDependencies(element);
+                System.out.println("size params: "+ parameters.length);
+            } catch (ClassNotFoundException e) {
+                System.out.println("no se devuelve bien el objeto. método: obtainConstructorDependencies");
+            }
+        } catch (ParsingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Constructor[] constructors = newClass.getDeclaredConstructors();
+        Constructor constructor = constructors[lookForConstructor(constructors, parameters)];
+        Class[]pa= constructor.getParameterTypes();
+        for (int i = 0; i < pa.length; i++) {
+            System.out.println(pa[i].getName());
+        }
+        try {
+            constructor.newInstance(objectInstance, parameters);
+        } catch (Exception e) {
+            System.out.println("no se creó bien la instancia con el constructor. M: createBeanInstance");
+            e.printStackTrace();
+        }
+        return  objectInstance;
+    }
+
+    private Object injectSetterDependencies(Element element, Class newClass) {
+        Object objectInstance = null;
+        try {
+            objectInstance = newClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        Element setterParameter = element.getChildElements().get(0);
+        String fieldName = setterParameter.getAttributeValue("name");
+        fieldName = fieldName.replace(fieldName.substring(0, 1), fieldName.substring(0, 1).toUpperCase());
+        String setterName = "set" + fieldName;
+        String classReference = setterParameter.getAttributeValue("reference");
+        String id= setterParameter.getAttributeValue("id");
+        Object parameter = null;
+        if (beanHashMap.containsKey(id)) {
+            parameter = beanHashMap.get(id).getBeanInstance();
+        } else { //si el bean al que se hace referencia aún no está creado
+            try{
+                parameter = findBean(classReference).getBeanInstance();
+            }catch (NullPointerException e){
+                System.out.println("El bean de la clase "+classReference+" no fue declarado");
+                return null;
+            }
+        }
+
+        Method[] methods = null;
+        try {
+            methods = newClass.getMethods();
+        } catch (Exception e) {
+            System.out.println("No se pudo recuperar el método: " + setterName);
+            e.printStackTrace();
+        }
+        boolean found= false;
+        int i=0;
+        while(!found&& i<methods.length){
+            if(methods[i].getName().equals(setterName)){
+                found= true;
+            }else{
+                i++;
+            }
+        }
+        try {
+            methods[i].invoke(objectInstance, parameter);
+
+        } catch (Exception e) {
+            System.out.println("falla el invoke y no mete bien el parámetro del setter. M: createBeanInstance");
         }
         return objectInstance;
     }
@@ -167,7 +222,6 @@ public class XMLBeanFactory<T> extends AbstractBeanFactory {
         boolean equal = true;
         int i = 0;
         int j;
-
         while (!found && i < constructors.length) {
             Class[] parameterTypes = constructors[i].getParameterTypes();
             if (constructors[i].getParameterCount() == parameters.length) {
@@ -195,11 +249,11 @@ public class XMLBeanFactory<T> extends AbstractBeanFactory {
         Object[] parameters = new Object[0];
         for (int i = 0; i < constructorArgs.size(); i++) {
             Element parameter = constructorArgs.get(i);
-            String classReference = parameter.getAttributeValue("reference");
-            if (beanHashMap.containsKey(classReference)) {
-                parameters[i] = beanHashMap.get(classReference).getBeanInstance();
+            String id = parameter.getAttributeValue("id");
+            if (beanHashMap.containsKey(id)) {
+                parameters[i] = beanHashMap.get(id).getBeanInstance();
             } else { //si el bean al que se hace referencia aún no está creado
-                parameters[i] = findBean(classReference).getBeanInstance();
+                parameters[i] = findBean(parameter.getAttributeValue("reference")).getBeanInstance();
             }
         }
         return parameters;
@@ -224,13 +278,17 @@ public class XMLBeanFactory<T> extends AbstractBeanFactory {
         while (!found && i < beans.size()) {
             Element currentBean = beans.get(i);
             String idValue = currentBean.getAttributeValue("id");
-            if (idValue.equals(id)) {
+            if (idValue.equals(id)) { //realiza la comparación de clases
                 found = true;
-                tagsBeanContent.put(idValue, currentBean);
+                tagsBeanContent.put(currentBean.getAttributeValue("id"), currentBean);
                 foundBean = createBean(idValue);
             }
             i++;
         }
+        if(!found){
+          foundBean= null;
+        }
+        //ver que pasa si no encontró en bean
         return foundBean;
     }
 

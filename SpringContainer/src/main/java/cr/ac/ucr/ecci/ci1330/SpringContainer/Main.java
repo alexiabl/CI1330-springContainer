@@ -15,5 +15,8 @@ public class Main {
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
         System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());
 
+      // testeReflection testeReflection= (cr.ac.ucr.ecci.ci1330.SpringContainer.testeReflection) abstractBeanFactory.beanHashMap.get("testeReflection").getBeanInstance();
+       //String id= testeReflection.getBean().getScopeType().toString();
+       // System.out.println(id);
     }
 }

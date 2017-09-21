@@ -10,10 +10,7 @@ import nu.xom.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -95,7 +92,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
             }
             executeBeanInstanceMethod(bean, bean.getInitMethod());
         }
-        System.out.println("Se creó bean "+ bean.getId());
+      //  System.out.println("Se creó bean "+ bean.getId());
         return bean;
     }
 
@@ -110,7 +107,20 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         }
         //verificar que se está llamando a un constructor
         if (element.getAttribute("injectConstructor") != null) {
-            objectInstance= injectConstructorDependencies(element, newClass);
+            //hay que hacer excepcion para cuando no trae parametros pero trae el senalador
+            Elements parameters=  element.getChildElements();
+            if(parameters.size()==0){
+                try {
+                    objectInstance= newClass.newInstance();
+                } catch (Exception e) {
+                    System.out.println("no se creó bien la instancia de la clase");
+                }
+            }else{
+                objectInstance= injectConstructorDependencies(element, newClass);
+            }
+            if(objectInstance== null){
+                return null;
+            }
         }
         //verificar que está llamando a un setter
         else if (element.getAttribute("injectSetter") != null) {
@@ -141,21 +151,20 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         try {
             try {
                 parameters = obtainConstructorDependencies(element);
-                System.out.println("size params: "+ parameters.length);
             } catch (ClassNotFoundException e) {
-                System.out.println("no se devuelve bien el objeto. método: obtainConstructorDependencies");
+                e.printStackTrace();
+            }
+            if(parameters==null){
+                return null;
             }
         } catch (ParsingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Constructor[] constructors = newClass.getDeclaredConstructors();
+        Constructor[] constructors = newClass.getConstructors();
         Constructor constructor = constructors[lookForConstructor(constructors, parameters)];
-        Class[]pa= constructor.getParameterTypes();
-        for (int i = 0; i < pa.length; i++) {
-            System.out.println(pa[i].getName());
-        }
+        System.out.println("parametro rar: "+constructor.getParameterCount());
         try {
             constructor.newInstance(objectInstance, parameters);
         } catch (Exception e) {
@@ -191,7 +200,6 @@ public class XMLBeanFactory extends AbstractBeanFactory {
                 return null;
             }
         }
-
         Method[] methods = null;
         try {
             methods = newClass.getMethods();
@@ -250,10 +258,16 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         for (int i = 0; i < constructorArgs.size(); i++) {
             Element parameter = constructorArgs.get(i);
             String id = parameter.getAttributeValue("id");
+            String classReference= parameter.getAttributeValue("reference");
             if (beanHashMap.containsKey(id)) {
                 parameters[i] = beanHashMap.get(id).getBeanInstance();
             } else { //si el bean al que se hace referencia aún no está creado
-                parameters[i] = findBean(parameter.getAttributeValue("reference")).getBeanInstance();
+                try{
+                    parameters[i] = findBean(classReference).getBeanInstance();
+                }catch (NullPointerException e){
+                    System.out.println("El bean de la clase "+classReference+" no fue declarado");
+                    return null;
+                }
             }
         }
         return parameters;

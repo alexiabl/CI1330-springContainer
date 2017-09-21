@@ -7,11 +7,10 @@ public class testeReflection {
     private int num;
     private Bean bean;
 
-    public testeReflection(){
+    public testeReflection(Bean bean){
+        this.bean= bean;
         this.num= 5;
     }
-
-    public testeReflection(String j){}
 
     public int getNum() {
         return num;

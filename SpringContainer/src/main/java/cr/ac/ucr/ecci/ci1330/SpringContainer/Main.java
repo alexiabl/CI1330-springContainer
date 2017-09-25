@@ -10,7 +10,7 @@ public class Main {
         System.out.println("Tamaño del beanHashMap: "+abstractBeanFactory.beanHashMap.size());
 
 
-        /*
+
        System.out.println("\n1) Dependency Injection");
         System.out.println("*Se crea una instancia llamada \"testeReflection\", sin uso de bean y se pregunta el valor del atributo Persona:");
         testeReflection testeReflection = new testeReflection();
@@ -27,9 +27,9 @@ public class Main {
         System.out.println("*Se crea una instancia del bean \"TR2\", llamada \"testeReflection2\"");
         System.out.println("En la definición del bean se usa un constructor con referencia a un bean de tipo Persona, por lo tanto su valor ya no es null:");
         System.out.println("Edad: " + testeReflection2.getPersona().getEdad() + " y nombre: " + testeReflection2.getPersona().getNombre());
-        */
 
 
+        /*
         System.out.println("\n3) Lyfe Cycle");
         System.out.println("-COMPROBACION DEL INITIALIZATION:");
         System.out.println("La clase Persona tiene un metodo llamado \"initMethod\", que se llama por defecto cuando se destruye el respectivo bean, que publica un mensaje. Por ejemplo:");
@@ -43,8 +43,8 @@ public class Main {
         System.out.println("*Se destruye el bean de la instancia \"persona1\"");
         abstractBeanFactory.destroyBean("Persona");
         System.out.println("Cuando se destruye el bean de la instancia \"persona2\" se publica se publica el mensaje del \"initMethod\" (ya que se intercambio con \"destructMethod\"):");
-
-         abstractBeanFactory.destroyBean("PersonaMethods");
+        abstractBeanFactory.destroyBean("PersonaMethods");
+        */
 
         /*
         System.out.println("\n2)Scope");
@@ -56,7 +56,7 @@ public class Main {
         System.out.println("testeReflection3.getNum() luego de setear un valor de 6: " + testeReflection3.getNum());
         testeReflection testeReflection4 =  (testeReflection) abstractBeanFactory.getBean("TR3");
         System.out.println("\n*Se crea una instancia del bean \"TR3\", llamada \"testeReflection4\"");
-        System.out.println("testeReflection4.getNum() es de tipo \"singleton\", por lo que por defecto tiene el ultimo valor de \"testeReflection\": " + testeReflection4.getNum());
+        System.out.println("testeReflection4.getNum() es de tipo \"singleton\", por lo que por defecto tiene el ultimo valor de \"testeReflection3\": " + testeReflection4.getNum());
         testeReflection4.setNum(7);
         System.out.println("testeReflection4.getNum() luego de setear un valor de 7: " + testeReflection4.getNum());
         System.out.println("testeReflection3.getNum() cambia de valor, pues se cambio en el testeReflection4 y este es de tipo \"singleton\": " + testeReflection3.getNum());

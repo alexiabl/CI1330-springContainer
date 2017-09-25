@@ -5,11 +5,14 @@ package cr.ac.ucr.ecci.ci1330.SpringContainer;
  */
 public class testeReflection {
     private int num;
-    private Bean bean;
+    private Persona persona;
 
-    public testeReflection(Bean bean){
-        this.bean= bean;
+    public testeReflection(){
         this.num= 5;
+    }
+
+    public testeReflection(Persona persona){
+        this.persona = persona;
     }
 
     public int getNum() {
@@ -20,11 +23,12 @@ public class testeReflection {
         this.num = num;
     }
 
-    public Bean getBean() {
-        return bean;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setBean(Bean bean) {
-        this.bean = bean;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
+
 }

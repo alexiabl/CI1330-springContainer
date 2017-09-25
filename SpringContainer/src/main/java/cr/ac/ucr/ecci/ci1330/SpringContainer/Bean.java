@@ -1,16 +1,23 @@
 package cr.ac.ucr.ecci.ci1330.SpringContainer;
 
+import java.util.List;
 
-public class Bean<T>{
+/**
+ * Created by majo_ on 22/9/2017.
+ */
+public class Bean {
     private String id;
     private String className;
     private String initMethod;
     private String destructMethod;
-    private T beanInstance;
+    private Object beanInstance;
     private AutowiringMode autowiringMode;
     private ScopeType scopeType;
 
-    public Bean(String id, String className, String initMethod, String destructMethod, T beanInstance, AutowiringMode autowiringMode, ScopeType scopeType) {
+
+
+
+    public Bean(String id, String className, String initMethod, String destructMethod, Object beanInstance, AutowiringMode autowiringMode, ScopeType scopeType) {
         this.id = id;
         this.className = className;
         this.initMethod = initMethod;
@@ -59,9 +66,9 @@ public class Bean<T>{
         this.destructMethod = destructMethod;
     }
 
-    public T getBeanInstance() { return beanInstance; }
+    public Object getBeanInstance() { return beanInstance; }
 
-    public void setBeanInstance(T beanInstance) {
+    public void setBeanInstance(Object beanInstance) {
         this.beanInstance = beanInstance;
     }
 
@@ -72,4 +79,7 @@ public class Bean<T>{
     public ScopeType getScopeType() { return scopeType; }
 
     public void setScopeType(ScopeType scopeType) { this.scopeType = scopeType; }
+
+
+
 }

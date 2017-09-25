@@ -149,11 +149,16 @@ public class XMLBeanFactory extends AbstractBeanFactory {
 
     @Override
     public Object getBean(String id) {
-        if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)){
-            Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
-            return bean.getBeanInstance();
+        try {
+            if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)){
+                Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
+                return bean.getBeanInstance();
+            }
+            return beanHashMap.get(id).getBeanInstance();
+        } catch (Exception e) {
+            System.out.println("El bean con id: " + id + " no existe.");
+            return null;
         }
-        return beanHashMap.get(id).getBeanInstance();
     }
 
     public XMLParser getXmlParser() {

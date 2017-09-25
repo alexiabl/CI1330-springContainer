@@ -29,7 +29,7 @@ public class Main {
         System.out.println("Edad: " + testeReflection2.getPersona().getEdad() + " y nombre: " + testeReflection2.getPersona().getNombre());
 
 
-        System.out.println("\n3) Lyfe Cycle");
+        System.out.println("\n2) Lyfe Cycle");
         System.out.println("-COMPROBACION DEL INITIALIZATION:");
         System.out.println("La clase Persona tiene un metodo llamado \"initMethod\", que se llama por defecto cuando se destruye el respectivo bean, que publica un mensaje. Por ejemplo:");
         System.out.println("*Se crea una instancia del bean \"Persona\", llamada \"persona1\"");
@@ -45,7 +45,7 @@ public class Main {
         abstractBeanFactory.destroyBean("PersonaMethods");
 
 
-        System.out.println("\n2)Scope");
+        System.out.println("\n3)Scope");
         System.out.println("-COMPROBACION DEL SINGLETON:");
         testeReflection testeReflection3 = (testeReflection) abstractBeanFactory.getBean("TR3");
         System.out.println("\n*Se crea una instancia del bean \"TR3\", llamada \"testeReflection3\"");

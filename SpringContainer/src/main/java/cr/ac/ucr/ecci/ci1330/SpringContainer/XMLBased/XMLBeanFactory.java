@@ -86,7 +86,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
                         parameters[i] = beanHashMap.get(beanID).getBeanInstance();
                     } else { //si el bean al que se hace referencia aún no está creado
                         try {
-                            parameters[i] = retrieveNotCreatedBean(beanID, AutowiringMode.BYNAME);
+                            parameters[i] = retrieveNotCreatedBean(beanID, AutowiringMode.BYNAME).getBeanInstance();
                         } catch (NullPointerException e) {
                             return null;
                         }
@@ -117,7 +117,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         }
         if(!found) { //si el bean al que se hace referencia aún no está creado
             try {
-                parameter = retrieveNotCreatedBean(classReference, AutowiringMode.BYTYPE);
+                parameter = retrieveNotCreatedBean(classReference, AutowiringMode.BYTYPE).getBeanInstance();
             } catch (NullPointerException e) {
                 return null;
             }

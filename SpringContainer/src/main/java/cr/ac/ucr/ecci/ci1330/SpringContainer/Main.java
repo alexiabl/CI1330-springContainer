@@ -29,7 +29,6 @@ public class Main {
         System.out.println("Edad: " + testeReflection2.getPersona().getEdad() + " y nombre: " + testeReflection2.getPersona().getNombre());
 
 
-        /*
         System.out.println("\n3) Lyfe Cycle");
         System.out.println("-COMPROBACION DEL INITIALIZATION:");
         System.out.println("La clase Persona tiene un metodo llamado \"initMethod\", que se llama por defecto cuando se destruye el respectivo bean, que publica un mensaje. Por ejemplo:");
@@ -44,9 +43,8 @@ public class Main {
         abstractBeanFactory.destroyBean("Persona");
         System.out.println("Cuando se destruye el bean de la instancia \"persona2\" se publica se publica el mensaje del \"initMethod\" (ya que se intercambio con \"destructMethod\"):");
         abstractBeanFactory.destroyBean("PersonaMethods");
-        */
 
-        /*
+
         System.out.println("\n2)Scope");
         System.out.println("-COMPROBACION DEL SINGLETON:");
         testeReflection testeReflection3 = (testeReflection) abstractBeanFactory.getBean("TR3");
@@ -73,10 +71,9 @@ public class Main {
         testeReflection6.setNum(7);
         System.out.println("testeReflection6.getNum() luego de setear un valor de 7: " + testeReflection6.getNum());
         System.out.println("testeReflection5.getNum() no cambia de valor, pues este es de tipo \"prototype\": " + testeReflection5.getNum());
-        */
 
-        /*
-        System.out.println("\n4) Autowiring");
+
+        /*System.out.println("\n4) Autowiring");
         System.out.println("-COMPROBACION DEL By Name:");
         System.out.println("-COMPROBACION DEL By Type:");
         */

@@ -6,7 +6,7 @@
     </bean>
 
     <bean id="TR2" className="cr.ac.ucr.ecci.ci1330.SpringContainer.testeReflection" injectConstructor="">
-        <constructuor-arg name = "Persona" reference = "cr.ac.ucr.ecci.ci1330.SpringContainer.Persona" autowiringMode="byType"/>
+        <constructuor-arg reference = "cr.ac.ucr.ecci.ci1330.SpringContainer.Persona" autowiringMode="byType"/>
     </bean>
 
     <bean id="TR3" className="cr.ac.ucr.ecci.ci1330.SpringContainer.testeReflection" scopeType="singleton">

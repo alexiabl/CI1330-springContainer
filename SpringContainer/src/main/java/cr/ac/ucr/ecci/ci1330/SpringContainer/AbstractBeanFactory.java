@@ -35,7 +35,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             bean.setId((String) beanInformation.get("id"));
             bean.setClassName((String) beanInformation.get("className"));
             if (beanInformation.containsKey("initMethod")) {
-                bean.setDestructMethod((String) beanInformation.get("initMethod"));
+                bean.setInitMethod((String) beanInformation.get("initMethod"));
             }
             if (beanInformation.containsKey("destructMethod")) {
                 bean.setDestructMethod((String) beanInformation.get("destructMethod"));
@@ -159,7 +159,9 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
 
     public void destroyBean(String id) {
-
+        Bean bean = beanHashMap.get(id);
+        this.executeBeanInstanceMethod(bean, bean.getDestructMethod());
+        beanHashMap.remove(id);
     }
 
     public Bean findBean(String id) {
@@ -168,11 +170,13 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     public void executeBeanInstanceMethod(Bean bean, String methodName) {
         Class instance = null;
+
         try {
-            instance = Bean.class.getDeclaredField("beanInstance").getType(); // Recupera el tipo de la instancia del Bean
-        } catch (NoSuchFieldException e) {
+            instance = Class.forName(bean.getClassName()); // Recupera el tipo de la instancia del Bean
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         Method method = null;
         try {
             method = instance.getDeclaredMethod(methodName); // Recupera el metodo recibido por parametro

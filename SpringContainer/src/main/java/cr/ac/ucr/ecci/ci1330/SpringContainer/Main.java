@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         String path = "beans.xml";
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
-        System.out.println("Tamaño del beanHashMap: "+abstractBeanFactory.beanHashMap.size());
+        System.out.println("Tamaño del beanHashMap: " + abstractBeanFactory.getContainerSize());
 
 
 

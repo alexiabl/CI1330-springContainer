@@ -195,4 +195,8 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         }
     }
 
+    public int getContainerSize(){
+        return beanHashMap.size();
+    }
+
 }

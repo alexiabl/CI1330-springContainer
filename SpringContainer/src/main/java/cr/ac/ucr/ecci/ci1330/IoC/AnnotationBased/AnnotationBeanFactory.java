@@ -10,8 +10,6 @@ public class AnnotationBeanFactory extends AbstractBeanFactory{
 
     public AnnotationBeanFactory(Class className) {
         annotationParser = new AnnotationParser(className, this);
-        annotationParser.parseClassForAnnotations();
-
     }
 
     public Object getBean(){

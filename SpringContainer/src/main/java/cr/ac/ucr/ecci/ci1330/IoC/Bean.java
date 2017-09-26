@@ -1,5 +1,8 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by majo_ on 22/9/2017.
  */
@@ -11,8 +14,8 @@ public class Bean {
     private Object beanInstance;
     private AutowiringMode autowiringMode;
     private ScopeType scopeType;
-
-
+    private List<Dependency> constructorDependencies;
+    private List<Dependency> setterDependencies;
 
 
     public Bean(String id, String className, String initMethod, String destructMethod, Object beanInstance, AutowiringMode autowiringMode, ScopeType scopeType) {
@@ -23,6 +26,8 @@ public class Bean {
         this.beanInstance = beanInstance;
         this.autowiringMode = autowiringMode;
         this.scopeType = scopeType;
+        this.constructorDependencies= new ArrayList<>();
+        this.setterDependencies= new ArrayList<>();
     }
 
     public Bean(){
@@ -30,6 +35,8 @@ public class Bean {
         this.destructMethod = "destructMethod";
         this.autowiringMode = AutowiringMode.BYTYPE;
         this.scopeType = ScopeType.SINGLETON;
+        this.constructorDependencies= new ArrayList<>();
+        this.setterDependencies= new ArrayList<>();
     }
 
     public String getId() {
@@ -78,6 +85,26 @@ public class Bean {
 
     public void setScopeType(ScopeType scopeType) { this.scopeType = scopeType; }
 
+    public List<Dependency> getConstructorDependencies() {
+        return constructorDependencies;
+    }
 
+    public void setConstructorDependencies(List<Dependency> constructorDependencies) {
+        this.constructorDependencies = constructorDependencies;
+    }
 
+    public List<Dependency> getSetterDependencies() {
+        return setterDependencies;
+    }
+
+    public void setSetterDependencies(List<Dependency> setterDependencies) {
+        this.setterDependencies = setterDependencies;
+    }
+
+    public boolean hasDependencies(){
+        if(constructorDependencies.size()> 0 || setterDependencies.size() >0){
+            return true;
+        }
+        return false;
+    }
 }

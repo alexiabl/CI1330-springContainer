@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by majo_ on 22/9/2017.
@@ -33,26 +35,105 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             bean.setId((String) beanInformation.get("id"));
             bean.setClassName((String) beanInformation.get("className"));
             if (beanInformation.containsKey("initMethod")) {
-                bean.setInitMethod((String) beanInformation.get("initMethod"));
+                bean.setDestructMethod((String) beanInformation.get("initMethod"));
             }
             if (beanInformation.containsKey("destructMethod")) {
                 bean.setDestructMethod((String) beanInformation.get("destructMethod"));
             }
             if (beanInformation.containsKey("autowiringMode")) {
-                bean.setAutowiringMode(AutowiringMode.valueOf((String) beanInformation.get("autowiringMode")));
+                String autowiringName = (String) beanInformation.get("autowiringMode");
+                if (autowiringName.equals("byName") || autowiringName.equals("byType")) {
+                    bean.setAutowiringMode(AutowiringMode.valueOf((String) beanInformation.get("autowiringMode")));
+                }
             }
             if (beanInformation.containsKey("scopeType")) {
                 bean.setScopeType(ScopeType.valueOf((String) beanInformation.get("scopeType")));
             }
-            bean.setBeanInstance(beanInformation.get("beanInstance"));
-            if (!beanHashMap.containsKey(beanInformation.get("id")) && bean.getBeanInstance() != null) {
-                System.out.println("agrego " + bean.getClassName());
-                beanHashMap.put((String) beanInformation.get("id"), bean);
+            if (beanInformation.containsKey("dependencies")) {
+                bean.setConstructorDependencies((List<Dependency>) beanInformation.get("dependencies"));//por constructor
             }
-            executeBeanInstanceMethod(bean, bean.getInitMethod());
+            if (beanInformation.containsKey("dependency")) {
+                bean.setSetterDependencies((List<Dependency>) beanInformation.get("dependency")); //por setter
+            }
+            beanHashMap.put((String) beanInformation.get("id"), bean);
+            //executeBeanInstanceMethod(bean, bean.getInitMethod());
         }
         return bean;
     }
+
+    protected void createBeanInstances() {
+        for (Map.Entry<String, Bean> entry : beanHashMap.entrySet()) {
+            Bean bean = entry.getValue();
+            injectBeanInstance(bean);
+        }
+    }
+
+    protected Object injectBeanInstance(Bean bean) {
+        Class newClass = null;
+        try {
+            newClass= Class.forName(bean.getClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Object instance = null;
+        if (!bean.hasDependencies()) {
+            try {
+                instance = newClass.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            bean.setBeanInstance(instance);
+        } else {
+            Object[] parameters = obtainBeanParameters(bean);
+            if (bean.getConstructorDependencies().size() > 0) {
+                bean.setBeanInstance(injectConstructorDependencies(newClass, parameters));
+            } else { //es con setter
+                String setterName = obtainSetterName(bean.getSetterDependencies().get(0).getName());
+                bean.setBeanInstance(injectSetterDependencies(newClass, setterName, parameters[0]));
+            }
+        }
+        return instance;
+    }
+
+    protected boolean hasDependencies(Bean bean) {
+        if (bean.getConstructorDependencies().size() > 0 || bean.getSetterDependencies().size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    protected Object[] obtainBeanParameters(Bean bean) {
+        Object[] parameters;
+        if (bean.getConstructorDependencies().size() > 0) {
+            parameters = new Object[bean.getConstructorDependencies().size()];
+            List<Dependency> constructorDependencies = bean.getConstructorDependencies();
+            for (int i = 0; i < constructorDependencies.size(); i++) {
+                Dependency currentDependency = constructorDependencies.get(i);
+                if (currentDependency.getAutowiringMode().equals(AutowiringMode.BYNAME)) {
+                    Bean dependencyBean = beanHashMap.get(currentDependency.getReference());
+                    Object instance = injectBeanInstance(dependencyBean);
+                    parameters[i] = instance;
+                } else {
+
+                }
+            }
+        } else {
+            parameters = new Object[]{new Object()};;
+
+            Dependency dependency = bean.getSetterDependencies().get(0);
+            if (dependency.getAutowiringMode().equals(AutowiringMode.BYNAME)) {
+                Bean dependencyBean = beanHashMap.get(dependency.getReference());
+                Object instance = injectBeanInstance(dependencyBean);
+                parameters[0] = instance;
+            } else {
+
+            }
+        }
+        return parameters;
+    }
+
 
     protected Object injectSetterDependencies(Class newClass, String setterName, Object parameter) {
         Object objectInstance = null;
@@ -60,7 +141,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             //ver que pasa si el constructor tiene parametros
             objectInstance = newClass.newInstance();
         } catch (InstantiationException e) {
-            System.out.println("ERROR: El constructor de "+newClass.getName()+ " tiene parámetros cuando inyecta en un setter.");
+            System.out.println("ERROR: El constructor de " + newClass.getName() + " tiene parámetros cuando inyecta en un setter.");
             return null;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -73,11 +154,20 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             e.printStackTrace();
         }
 
+
+            System.out.println(setterName);
+            System.out.println(obtainMethodtoInvoke(methods, setterName).getName());
+            System.out.println(objectInstance.toString());
+            System.out.println("param "+parameter.toString());
         try {
             obtainMethodtoInvoke(methods, setterName).invoke(objectInstance, parameter);
-        } catch (Exception e) {
-            System.out.println("falla el invoke method, puede que es no haya un constructor sin parámetros");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
+
+        System.out.println(newClass.getName());
         return objectInstance;
     }
 
@@ -87,8 +177,8 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         Constructor[] constructors = newClass.getConstructors();
         Constructor constructor = null;
         int constructorPosition = lookForConstructor(constructors, parameters);
-        if(constructorPosition== -1){
-            System.out.println("El constructor de la clase: "+newClass.getName()+" no hace match con los parámetros brindados.");
+        if (constructorPosition == -1) {
+            System.out.println("El constructor de la clase: " + newClass.getName() + " no hace match con los parámetros brindados.");
             return null;
         }
         constructor = constructors[constructorPosition];
@@ -151,30 +241,33 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return methods[i];
     }
 
+    protected String obtainSetterName(String fieldName) {
+        fieldName = fieldName.replace(fieldName.substring(0, 1), fieldName.substring(0, 1).toUpperCase());
+        String setterName = "set" + fieldName;
+        return setterName;
+    }
+
     public Object getBean(String id) {
         return null;
     }
 
 
     public void destroyBean(String id) {
-        Bean bean = beanHashMap.get(id);
-        this.executeBeanInstanceMethod(bean, bean.getDestructMethod());
-        beanHashMap.remove(id);
+
     }
 
     public Bean findBean(String id) {
         return null;
     }
 
+
     public void executeBeanInstanceMethod(Bean bean, String methodName) {
         Class instance = null;
-
         try {
-            instance = Class.forName(bean.getClassName()); // Recupera el tipo de la instancia del Bean
-        } catch (ClassNotFoundException e) {
+            instance = Bean.class.getDeclaredField("beanInstance").getType(); // Recupera el tipo de la instancia del Bean
+        } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
-
         Method method = null;
         try {
             method = instance.getDeclaredMethod(methodName); // Recupera el metodo recibido por parametro
@@ -191,10 +284,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
                 e.printStackTrace();
             }
         }
-    }
-
-    public int getContainerSize(){
-        return beanHashMap.size();
     }
 
 }

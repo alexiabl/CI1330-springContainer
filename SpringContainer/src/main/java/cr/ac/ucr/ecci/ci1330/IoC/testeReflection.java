@@ -1,18 +1,25 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
 /**
- * Created by majo_ on 17/9/2017.
+ * Created by majo_ on 22/9/2017.
  */
 public class testeReflection {
     private int num;
-    private Persona persona;
+    private Bean bean;
+    Bean n;
+    Persona p;
+    Persona a;
 
     public testeReflection(){
         this.num= 5;
     }
 
-    public testeReflection(Persona persona){
-        this.persona = persona;
+    public Persona getP() {
+        return p;
+    }
+
+    public void setP(Persona p) {
+        this.p = p;
     }
 
     public int getNum() {
@@ -23,12 +30,11 @@ public class testeReflection {
         this.num = num;
     }
 
-    public Persona getPersona() {
-        return persona;
+    public Bean getBean() {
+        return bean;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setBean(Bean bean) {
+        this.bean = bean;
     }
-
 }

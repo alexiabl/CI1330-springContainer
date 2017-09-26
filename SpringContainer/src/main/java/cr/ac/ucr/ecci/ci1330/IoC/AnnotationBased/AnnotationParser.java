@@ -6,35 +6,28 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by majo_ on 22/9/2017.
  */
 public class AnnotationParser {
 
-    private Class aClass;
+    private List<Class> annotadedClasses;
     private AnnotationBeanFactory annotationBeanFactory;
-    private HashMap<Class, Element> beanContent;
+    private HashMap<String, Object> annotationBeanContent;
 
 
-    public AnnotationParser(Class annotadedClass, AnnotationBeanFactory annotationBeanFactory){
-        try {
-            this.aClass = Class.forName(annotadedClass.getName());
-            if (this.aClass.isAnnotationPresent(Component.class)){
-                this.annotationBeanFactory=annotationBeanFactory;
-                this.beanContent=new HashMap<>();
-            }
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No se encontró la clase");
-            e.printStackTrace();
-        }
+    public AnnotationParser(AnnotationBeanFactory annotationBeanFactory) {
+                this.annotationBeanFactory = annotationBeanFactory;
+                this.annotationBeanContent = new HashMap<>();
+                this.parseClassForAnnotations();
     }
 
 
-    public void parseClassForAnnotations(){
-        Annotation classAnnotations[] = aClass.getAnnotations();
-        if (classAnnotations.length>0) {
+    public void parseClassForAnnotations() {
+        for (Class aClass: this.annotadedClasses) {
+            Annotation classAnnotations[] = aClass.getAnnotations();
             System.out.println("Class annotations: " + aClass.getSimpleName());
             for (Annotation annotation : classAnnotations) {
                 System.out.println(annotation.annotationType().getSimpleName());
@@ -43,6 +36,11 @@ public class AnnotationParser {
             System.out.println("Class attributes " + aClass.getSimpleName());
             for (Field field : fields) {
                 Annotation fieldAnnotations[] = field.getAnnotations();
+                if (field.isAnnotationPresent(Component.class)) {
+                    String className = field.getAnnotation(Component.class).value();
+                    System.out.println(className);
+
+                }
                 System.out.println("Field annotations of " + field.getName() + " are: ");
                 if (fieldAnnotations.length > 0) {
                     for (Annotation annotation : fieldAnnotations) {
@@ -54,7 +52,6 @@ public class AnnotationParser {
             for (Method method : methods) {
                 Annotation methodAnnotations[] = method.getDeclaredAnnotations();
                 System.out.println("Method annotations of " + method.getName() + " are: ");
-
                 if (methodAnnotations.length > 0) {
                     for (Annotation annotation : methodAnnotations) {
                         System.out.println(annotation.annotationType().getSimpleName());
@@ -62,12 +59,11 @@ public class AnnotationParser {
                 }
             }
         }
-        else{
-            System.out.println("Class "+this.aClass.getName()+" missing Component annotation needed to scan class");
-        }
+
     }
 
-    public Object createBean(){
+
+    public Object createBean() {
         return null;
     }
 }

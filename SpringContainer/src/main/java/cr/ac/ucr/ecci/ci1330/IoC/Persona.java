@@ -12,6 +12,9 @@ public class Persona {
     private int edad;
     private String nombre;
 
+    @Component(value="Mascota")
+    private Mascota mascota;
+
     @Scope(scopeType = ScopeType.PROTOTYPE)
     public Persona() {
         this.edad = 18;

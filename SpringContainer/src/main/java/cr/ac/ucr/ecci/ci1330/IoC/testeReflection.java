@@ -10,16 +10,16 @@ public class testeReflection {
     Persona p;
     Persona a;
 
-    public testeReflection(Persona p){
-        this.p=p;
-        this.num= 5;
+    public testeReflection(Persona p) {
+        this.p = p;
+        this.num = 5;
     }
 
     public Persona getP() {
         return p;
     }
 
-    public testeReflection(){
+    public testeReflection() {
         this.p = new Persona();
         this.a = new Persona();
     }

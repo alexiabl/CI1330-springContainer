@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-    <bean id="TR1" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton" injectSetter = "">
+    <bean id="TR1" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton" injectSetter = "...">
         <setter-arg name = "p" reference = "Persona" autowiringMode="byName"/>
     </bean>
 
-    <bean id="TR2" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" injectConstructor="">
+    <bean id="TR2" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" injectConstructor="...">
         <constructuor-arg reference = "Persona" autowiringMode="byName"/>
     </bean>
 

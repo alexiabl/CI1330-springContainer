@@ -10,7 +10,8 @@ public class testeReflection {
     Persona p;
     Persona a;
 
-    public testeReflection(){
+    public testeReflection(Persona p){
+        this.p=p;
         this.num= 5;
     }
 

@@ -70,7 +70,7 @@ public class XMLParser {
                 Element dependencyTag = dependenciesTags.get(i);
                 Dependency dependency = new Dependency(beanTag.getAttributeValue("id"), dependencyTag.getAttributeValue("reference"));
                 if (dependencyTag.getAttribute("autowiringMode") != null) {
-                    dependency.setAutowiringMode(AutowiringMode.valueOf(dependencyTag.getAttributeValue("autowiringMode")));
+                    dependency.setAutowiringMode(AutowiringMode.valueOf(dependencyTag.getAttributeValue("autowiringMode").toUpperCase()));
                 }
                 dependencies.add(dependency);
             }

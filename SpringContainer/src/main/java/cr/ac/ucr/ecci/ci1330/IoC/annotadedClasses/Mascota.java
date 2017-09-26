@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1330.IoC;
+package cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses;
 
 /**
  * Created by alexiaborchgrevink on 9/26/17.

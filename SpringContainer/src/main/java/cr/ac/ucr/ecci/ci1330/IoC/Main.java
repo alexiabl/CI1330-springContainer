@@ -3,21 +3,30 @@ package cr.ac.ucr.ecci.ci1330.IoC;
 
 import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory;
 import cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota;
+import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
+import sun.reflect.Reflection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        AnnotationBeanFactory annotationBeanFactory = new AnnotationBeanFactory(Persona.class);
+     List<Class> annotadedClasses = new ArrayList<>();
+     annotadedClasses.add(Persona.class);
+     annotadedClasses.add(Mascota.class);
+        AnnotationBeanFactory annotationBeanFactory = new AnnotationBeanFactory(annotadedClasses);
 
 
         String path = "beans.xml";
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
-        System.out.println("Tamaño del beanHashMap: " + abstractBeanFactory.getContainerSize());
+        //System.out.println("Tamaño del beanHashMap: " + abstractBeanFactory.getContainerSize());
 
 
 
 
-
+/*
        System.out.println("\n1) Dependency Injection");
         System.out.println("*Se crea una instancia llamada \"testeReflection\", sin uso de bean y se pregunta el valor del atributo Persona:");
         testeReflection testeReflection = new testeReflection();

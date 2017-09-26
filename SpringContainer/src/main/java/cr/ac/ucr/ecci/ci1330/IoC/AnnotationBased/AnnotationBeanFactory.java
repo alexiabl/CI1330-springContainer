@@ -10,7 +10,7 @@ public class AnnotationBeanFactory extends AbstractBeanFactory{
     private AnnotationParser annotationParser;
 
 
-    public AnnotationBeanFactory(List<Class> annotadedClasses, Class className) {
+    public AnnotationBeanFactory(List<Class> annotadedClasses) {
         annotationParser = new AnnotationParser(annotadedClasses,this);
     }
 

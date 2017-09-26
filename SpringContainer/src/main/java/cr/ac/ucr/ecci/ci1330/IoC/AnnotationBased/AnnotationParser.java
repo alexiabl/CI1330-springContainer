@@ -1,5 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
 
+import cr.ac.ucr.ecci.ci1330.IoC.Dependency;
 import nu.xom.Element;
 
 import java.lang.annotation.Annotation;
@@ -21,42 +22,51 @@ public class AnnotationParser {
     public AnnotationParser(List<Class> annotadedClasses, AnnotationBeanFactory annotationBeanFactory) {
                 this.annotationBeanFactory = annotationBeanFactory;
                 this.annotationBeanContent = new HashMap<>();
+                this.annotadedClasses=annotadedClasses;
                 this.parseClassForAnnotations();
     }
 
 
     public void parseClassForAnnotations() {
         for (Class aClass: this.annotadedClasses) {
-            Annotation classAnnotations[] = aClass.getAnnotations();
-            System.out.println("Class annotations: " + aClass.getSimpleName());
-            for (Annotation annotation : classAnnotations) {
-                System.out.println(annotation.annotationType().getSimpleName());
-            }
-            Field fields[] = aClass.getDeclaredFields();
-            System.out.println("Class attributes " + aClass.getSimpleName());
-            for (Field field : fields) {
-                Annotation fieldAnnotations[] = field.getAnnotations();
-                if (field.isAnnotationPresent(Component.class)) {
-                    String className = field.getAnnotation(Component.class).value();
-                    System.out.println(className);
+            if (aClass.isAnnotationPresent(Component.class)) {
+                Annotation classAnnotations[] = aClass.getAnnotations(); //annotations de la clase
+                System.out.println("Class annotations: " + aClass.getSimpleName());
+                for (Annotation annotation : classAnnotations) {
+                    System.out.println(annotation.annotationType().getSimpleName());
+                }
+                Field fields[] = aClass.getDeclaredFields(); //atributos de la clase
+                System.out.println("Class attributes " + aClass.getSimpleName());
+                for (Field field : fields) {
+                    Annotation fieldAnnotations[] = field.getAnnotations(); //annotations de los atributos
+                    if (field.isAnnotationPresent(Component.class)) { //agregar a lista de dependencias
+                        String className = field.getAnnotation(Component.class).value();
+                        System.out.println(className);
 
+                    }
+                    System.out.println("Field annotations of " + field.getName() + " are: ");
+                    if (fieldAnnotations.length > 0) {
+                        for (Annotation annotation : fieldAnnotations) {
+                            System.out.println(annotation.annotationType().getSimpleName());
+                        }
+                    }
                 }
-                System.out.println("Field annotations of " + field.getName() + " are: ");
-                if (fieldAnnotations.length > 0) {
-                    for (Annotation annotation : fieldAnnotations) {
-                        System.out.println(annotation.annotationType().getSimpleName());
+                Method methods[] = aClass.getDeclaredMethods(); //metodos de la clase
+                for (Method method : methods) {
+                    if (method.getName().contains("set")){
+                        System.out.println(method.getName());
+                    }
+                    Annotation methodAnnotations[] = method.getDeclaredAnnotations(); //annotations de los metodos
+                    System.out.println("Method annotations of " + method.getName() + " are: ");
+                    if (methodAnnotations.length > 0) {
+                        for (Annotation annotation : methodAnnotations) {
+                            System.out.println(annotation.annotationType().getSimpleName());
+                        }
                     }
                 }
             }
-            Method methods[] = aClass.getDeclaredMethods();
-            for (Method method : methods) {
-                Annotation methodAnnotations[] = method.getDeclaredAnnotations();
-                System.out.println("Method annotations of " + method.getName() + " are: ");
-                if (methodAnnotations.length > 0) {
-                    for (Annotation annotation : methodAnnotations) {
-                        System.out.println(annotation.annotationType().getSimpleName());
-                    }
-                }
+            else{
+                System.out.println("Class "+aClass.getSimpleName()+" does not have Component annotation needed to scan class annotations");
             }
         }
 

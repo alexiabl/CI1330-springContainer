@@ -7,11 +7,11 @@ public class testXml {
     public testXml() {
     }
 
-    public void executeTest(){
+    public void executeTest() {
         String path = "beanExample.xml";
-        AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
+        AbstractBeanFactory abstractBeanFactory = new XMLBeanFactory(path);
 
-        System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());
+        System.out.println("beanHashMap.size() = " + abstractBeanFactory.beanHashMap.size());
 
         System.out.println("\n1) Dependency Injection");
         System.out.println("*Se crea una instancia llamada \"testeReflection\", sin uso de bean y se pregunta el valor del atributo Persona:");
@@ -54,7 +54,7 @@ public class testXml {
         System.out.println("testeReflection3.getNum() por defecto tiene: " + testeReflection3.getNum());
         testeReflection3.setNum(6);
         System.out.println("testeReflection3.getNum() luego de setear un valor de 6: " + testeReflection3.getNum());
-        testeReflection testeReflection4 =  (testeReflection) abstractBeanFactory.getBean("TR3");
+        testeReflection testeReflection4 = (testeReflection) abstractBeanFactory.getBean("TR3");
         System.out.println("\n*Se crea una instancia del bean \"TR3\", llamada \"testeReflection4\"");
         System.out.println("testeReflection4.getNum() es de tipo \"singleton\", por lo que por defecto tiene el ultimo valor de \"testeReflection3\": " + testeReflection4.getNum());
         testeReflection4.setNum(7);
@@ -67,7 +67,7 @@ public class testXml {
         System.out.println("testeReflection5.getNum() es de tipo \"prototype\" y los cambios en los \"singleton\" no le afectan, asi que por defecto tiene: " + testeReflection5.getNum());
         testeReflection5.setNum(6);
         System.out.println("testeReflection5.getNum() luego de setear un valor de 6: " + testeReflection5.getNum());
-        testeReflection testeReflection6 =  (testeReflection) abstractBeanFactory.getBean("TR4");
+        testeReflection testeReflection6 = (testeReflection) abstractBeanFactory.getBean("TR4");
         System.out.println("\n*Se crea una instancia del bean \"TR4\", llamada \"testeReflection6\"");
         System.out.println("testeReflection6.getNum() es de tipo \"prototype\", por lo que por defecto tiene: " + testeReflection6.getNum());
         testeReflection6.setNum(7);

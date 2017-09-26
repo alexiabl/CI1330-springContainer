@@ -9,9 +9,10 @@ import java.lang.annotation.Target;
  * Created by alexiaborchgrevink on 9/24/17.
  */
 
-@Target(ElementType.CONSTRUCTOR)
+
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Component {
 
+   String value();
 
 }

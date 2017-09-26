@@ -1,13 +1,20 @@
 package cr.ac.ucr.ecci.ci1330.SpringContainer;
 
 
+import cr.ac.ucr.ecci.ci1330.SpringContainer.AnnotationBased.AnnotationBeanFactory;
 import cr.ac.ucr.ecci.ci1330.SpringContainer.XMLBased.XMLBeanFactory;
 
 public class Main {
     public static void main(String[] args) {
+
+        AnnotationBeanFactory annotationBeanFactory = new AnnotationBeanFactory(Persona.class);
+
+
         String path = "beans.xml";
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
         System.out.println("Tamaño del beanHashMap: "+abstractBeanFactory.beanHashMap.size());
+
+
 
 
 

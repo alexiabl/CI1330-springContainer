@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-
+    <configuration xmlBeans="false" annotationBased="true"></configuration>
     <bean id="TR1" className="cr.ac.ucr.ecci.ci1330.SpringContainer.testeReflection" scopeType="singleton" injectSetter = "">
         <setter-arg name = "Persona" reference = "Persona" autowiringMode="byName"/>
     </bean>

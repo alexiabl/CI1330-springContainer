@@ -10,11 +10,12 @@ import java.lang.annotation.Target;
 /**
  * Created by alexiaborchgrevink on 9/24/17.
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Autowired {
 
-    public AutowiringMode autowiringMode =AutowiringMode.BYTYPE; //default
+    AutowiringMode autowiringMode() default AutowiringMode.BYTYPE;
+
 
 
 

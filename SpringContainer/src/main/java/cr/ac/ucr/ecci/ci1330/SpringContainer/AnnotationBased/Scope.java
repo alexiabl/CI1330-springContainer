@@ -11,11 +11,10 @@ import java.lang.annotation.Target;
  * Created by alexiaborchgrevink on 9/24/17.
  */
 
-@Target(ElementType.CONSTRUCTOR)
-@Retention(RetentionPolicy.RUNTIME)//no estoy segura de esto
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Scope {
 
-    public ScopeType scopeType = ScopeType.SINGLETON; //default
+    ScopeType scopeType() default ScopeType.SINGLETON; //default
 
 
 

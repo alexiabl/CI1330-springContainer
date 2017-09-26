@@ -18,7 +18,7 @@ public class AnnotationParser {
     private HashMap<String, Object> annotationBeanContent;
 
 
-    public AnnotationParser(AnnotationBeanFactory annotationBeanFactory) {
+    public AnnotationParser(List<Class> annotadedClasses, AnnotationBeanFactory annotationBeanFactory) {
                 this.annotationBeanFactory = annotationBeanFactory;
                 this.annotationBeanContent = new HashMap<>();
                 this.parseClassForAnnotations();

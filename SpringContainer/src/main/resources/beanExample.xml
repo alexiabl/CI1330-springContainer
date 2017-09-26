@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-
-    <bean id="testeReflection" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton" injectConstructor = "...">
-        <setter-arg name = "bean" reference = "Bean"/>
+    <bean id="TR1" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton" injectSetter = "">
+        <setter-arg name = "p" reference = "Persona" autowiringMode="byName"/>
     </bean>
 
+    <bean id="TR2" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" injectConstructor="">
+        <constructuor-arg reference = "Persona" autowiringMode="byName"/>
+    </bean>
 
-    <bean id="Bean" className="cr.ac.ucr.ecci.ci1330.IoC.Bean" scopeType="singleton" />
+    <bean id="TR3" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton">
+    </bean>
+
+    <bean id="TR4" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="prototype">
+
+    </bean>
+
+    <bean id="Persona" className="cr.ac.ucr.ecci.ci1330.IoC.Persona" scopeType="prototype" />
+
+    <bean id="PersonaMethods" className="cr.ac.ucr.ecci.ci1330.IoC.Persona" scopeType="prototype" initMethod= "destructMethod" destructMethod = "initMethod"/>
 
 </beans>

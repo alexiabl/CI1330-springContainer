@@ -19,6 +19,11 @@ public class testeReflection {
         return p;
     }
 
+    public testeReflection(){
+        this.p = new Persona();
+        this.a = new Persona();
+    }
+
     public void setP(Persona p) {
         this.p = p;
     }

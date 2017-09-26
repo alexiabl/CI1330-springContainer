@@ -25,7 +25,9 @@ public class XMLBeanFactory extends AbstractBeanFactory {
     public Object getBean(String id) {
         try{
             if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)){
+                System.out.println("Entro aqui, con el bean de id :"+id);
                 Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
+                bean.setBeanInstance(injectBeanInstance(bean));
                 return bean.getBeanInstance();
             }
             return beanHashMap.get(id).getBeanInstance();

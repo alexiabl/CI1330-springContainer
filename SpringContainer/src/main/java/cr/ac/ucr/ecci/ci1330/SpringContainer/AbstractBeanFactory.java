@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * Created by majo_ on 22/9/2017.
  */
-public abstract class AbstractBeanFactory implements BeanFactoryContainer {
+public class AbstractBeanFactory implements BeanFactoryContainer {
 
     protected HashMap<String, Bean> beanHashMap;
 
@@ -195,8 +195,8 @@ public abstract class AbstractBeanFactory implements BeanFactoryContainer {
         }
     }
 
-    public void checkConfigurationType(){
-
+    public int getContainerSize(){
+        return beanHashMap.size();
     }
 
 }

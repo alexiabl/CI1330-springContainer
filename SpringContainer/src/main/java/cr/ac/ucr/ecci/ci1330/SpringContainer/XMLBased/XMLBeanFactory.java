@@ -86,7 +86,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
                         parameters[i] = beanHashMap.get(beanID).getBeanInstance();
                     } else { //si el bean al que se hace referencia aún no está creado
                         try {
-                            parameters[i] = retrieveNotCreatedBean(beanID, AutowiringMode.BYNAME);
+                            parameters[i] = retrieveNotCreatedBean(beanID, AutowiringMode.BYNAME).getBeanInstance();
                         } catch (NullPointerException e) {
                             return null;
                         }
@@ -117,7 +117,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         }
         if(!found) { //si el bean al que se hace referencia aún no está creado
             try {
-                parameter = retrieveNotCreatedBean(classReference, AutowiringMode.BYTYPE);
+                parameter = retrieveNotCreatedBean(classReference, AutowiringMode.BYTYPE).getBeanInstance();
             } catch (NullPointerException e) {
                 return null;
             }
@@ -149,11 +149,16 @@ public class XMLBeanFactory extends AbstractBeanFactory {
 
     @Override
     public Object getBean(String id) {
-        if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)){
-            Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
-            return bean.getBeanInstance();
+        try {
+            if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)){
+                Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
+                return bean.getBeanInstance();
+            }
+            return beanHashMap.get(id).getBeanInstance();
+        } catch (Exception e) {
+            System.out.println("El bean con id: " + id + " no existe.");
+            return null;
         }
-        return beanHashMap.get(id).getBeanInstance();
     }
 
     public XMLParser getXmlParser() {

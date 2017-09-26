@@ -1,8 +1,8 @@
-package cr.ac.ucr.ecci.ci1330.SpringContainer;
+package cr.ac.ucr.ecci.ci1330.IoC;
 
 
-import cr.ac.ucr.ecci.ci1330.SpringContainer.AnnotationBased.AnnotationBeanFactory;
-import cr.ac.ucr.ecci.ci1330.SpringContainer.XMLBased.XMLBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1330.SpringContainer;
+package cr.ac.ucr.ecci.ci1330.IoC;
 
 /**
  * Created by majo_ on 17/9/2017.

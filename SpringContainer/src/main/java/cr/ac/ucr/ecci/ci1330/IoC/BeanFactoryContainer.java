@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1330.SpringContainer;
+package cr.ac.ucr.ecci.ci1330.IoC;
 
 import java.util.HashMap;
 

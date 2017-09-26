@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1330.SpringContainer.AnnotationBased;
+package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,5 +11,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PostConstruct {
+public @interface PreDestruct {
+
+
 }

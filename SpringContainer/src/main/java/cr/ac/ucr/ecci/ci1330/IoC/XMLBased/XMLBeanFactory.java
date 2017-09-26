@@ -1,9 +1,9 @@
-package cr.ac.ucr.ecci.ci1330.SpringContainer.XMLBased;
+package cr.ac.ucr.ecci.ci1330.IoC.XMLBased;
 
-import cr.ac.ucr.ecci.ci1330.SpringContainer.AbstractBeanFactory;
-import cr.ac.ucr.ecci.ci1330.SpringContainer.AutowiringMode;
-import cr.ac.ucr.ecci.ci1330.SpringContainer.Bean;
-import cr.ac.ucr.ecci.ci1330.SpringContainer.ScopeType;
+import cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
+import cr.ac.ucr.ecci.ci1330.IoC.Bean;
+import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
 import nu.xom.Element;
 
 import java.util.*;
@@ -14,7 +14,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
     protected String path;
 
     public XMLBeanFactory(String fileName) {
-        this.path = "./SpringContainer/src/main/resources/"+fileName;
+        this.path = "./IoC/src/main/resources/"+fileName;
         this.xmlParser = new XMLParser(path, this);
         xmlParser.readXML();
     }

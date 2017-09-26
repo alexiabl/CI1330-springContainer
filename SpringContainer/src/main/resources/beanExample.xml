@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-    <bean id="testeReflection" className="cr.ac.ucr.ecci.ci1330.SpringContainer.testeReflection" scopeType="singleton" injectConstructor = "...">
+    <bean id="testeReflection" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton" injectConstructor = "...">
         <setter-arg name = "bean" reference = "Bean"/>
     </bean>
 
 
-    <bean id="Bean" className="cr.ac.ucr.ecci.ci1330.SpringContainer.Bean" scopeType="singleton" />
+    <bean id="Bean" className="cr.ac.ucr.ecci.ci1330.IoC.Bean" scopeType="singleton" />
 
 </beans>

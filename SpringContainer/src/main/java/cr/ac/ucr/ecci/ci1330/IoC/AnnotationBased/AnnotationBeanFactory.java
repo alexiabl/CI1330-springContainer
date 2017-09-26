@@ -1,7 +1,7 @@
-package cr.ac.ucr.ecci.ci1330.SpringContainer.AnnotationBased;
+package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
 
 
-import cr.ac.ucr.ecci.ci1330.SpringContainer.AbstractBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory;
 
 public class AnnotationBeanFactory extends AbstractBeanFactory{
 

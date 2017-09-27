@@ -14,7 +14,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
     protected String path;
 
     public XMLBeanFactory(String fileName) {
-        this.path = "SpringContainer/src/main/resources/"+fileName;
+        this.path = "SpringContainer/src/main/resources/" + fileName;
         this.xmlParser = new XMLParser(path, this);
         xmlParser.readXML();
         createBeanInstances();
@@ -23,14 +23,15 @@ public class XMLBeanFactory extends AbstractBeanFactory {
 
     @Override
     public Object getBean(String id) {
-        try{
-            if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)){
+        try {
+            if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
                 Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
+                bean.setBeanInstance(injectBeanInstance(bean));
                 return bean.getBeanInstance();
             }
             return beanHashMap.get(id).getBeanInstance();
-        }catch (NullPointerException e){
-            System.out.println("El id '"+id+"' no identifica nigún bean.");
+        } catch (NullPointerException e) {
+            System.out.println("El id '" + id + "' no identifica nigún bean.");
             return null;
         }
     }

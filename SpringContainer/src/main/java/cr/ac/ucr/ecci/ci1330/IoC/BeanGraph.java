@@ -7,11 +7,11 @@ import java.util.HashMap;
 /**
  * Created by Renato on 27/09/2017.
  */
-public class DependenciesGraph {
+public class BeanGraph {
     private ArrayList<Node> nodes;
     private HashMap<String, Node> visited;
 
-    public DependenciesGraph() {
+    public BeanGraph() {
         this.nodes = new ArrayList<>();
         this.visited = new HashMap<>();
     }
@@ -22,8 +22,8 @@ public class DependenciesGraph {
     }
 
     public void addEdge(String start, String end) {
-        Edge edge = new Edge(getNodePerName(start), getNodePerName(end));
-        getNodePerName(start).addEdge(edge);
+        Edge edge = new Edge(getNodeForName(start), getNodeForName(end));
+        getNodeForName(start).addEdge(edge);
     }
 
     public boolean reviewCyclesBean() {
@@ -34,16 +34,16 @@ public class DependenciesGraph {
         return cycle;
     }
 
-    public boolean reviewCyclesBeanRec(DependenciesGraph graph, Node node) {
+    public boolean reviewCyclesBeanRec(BeanGraph graph, Node node) {
         boolean cycle = false;
-        if (node.getEdgesSize()>0) {
+        if (node.getNumberOfEdges() > 0) {
             visited.put(node.getName(), node);
         }
         Node nodeAdj = node.getNeighbour(0);
         int position = 1;
         if (nodeAdj != null && visited.containsKey(nodeAdj.getName())) {
             cycle = true;
-            System.out.println("El ciclo es porque " + node.getName() +" vuelve a: " + nodeAdj.getName());
+            System.out.println("Hay un ciclo ocurre porque \"" + node.getName() + "\" tiene una referencia de \"" + nodeAdj.getName() + "\".");
         }
         while (!cycle && nodeAdj != null) {
             cycle = reviewCyclesBeanRec(graph, nodeAdj);
@@ -58,7 +58,7 @@ public class DependenciesGraph {
         return cycle;
     }
 
-    public Node getNodePerName(String name) {
+    public Node getNodeForName(String name) {
         Node node = null;
         for (int i = 0; i < nodes.size(); i++) {
             if (nodes.get(i).getName() == name) {
@@ -69,7 +69,7 @@ public class DependenciesGraph {
     }
 
     public int getEdgeNodeSize(String name) {
-        return getNodePerName(name).getEdgesSize();
+        return getNodeForName(name).getNumberOfEdges();
     }
 }
 

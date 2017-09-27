@@ -23,7 +23,7 @@ public class Node {
         }
     }
 
-    public int getEdgesSize() {
+    public int getNumberOfEdges() {
         return edges.size();
     }
 

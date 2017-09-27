@@ -2,12 +2,21 @@
 <beans>
 
 
-    <bean id="teste" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton" injectConstructor = "...">
-        <constructor-args name= "p" reference = "Persona" autowiringMode="byName"/>
-
+    <bean id="teste" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton">
+        <constructor-args reference = "Persona" autowiringMode="byName"/>
+        <constructor-args reference = "Mascota" autowiringMode="byName"/>
+        <setter-arg name="a" reference = "Persona" autowiringMode="byName"/>
+        <setter-arg name="estudiante" reference = "Estudiante" autowiringMode="byName"/>
+        <setter-arg name="est" reference = "cr.ac.ucr.ecci.ci1330.IoC.Estudiante" autowiringMode="byType"/>
     </bean>
 
     <bean id="Persona" className="cr.ac.ucr.ecci.ci1330.IoC.Persona" scopeType="singleton" >
+    </bean>
+
+    <bean id="Mascota" className="cr.ac.ucr.ecci.ci1330.IoC.Mascota" scopeType="singleton" >
+    </bean>
+
+    <bean id="Estudiante" className="cr.ac.ucr.ecci.ci1330.IoC.Estudiante" scopeType="singleton" >
     </bean>
 
 </beans>

@@ -63,28 +63,31 @@ public class XMLParser {
         }
         //meter a la lista de dependencias del Bean
 
-        if (beanTag.getAttribute("injectConstructor") != null) {
-            Elements dependenciesTags = beanTag.getChildElements();
-            List<Dependency> dependencies = new ArrayList<>();
+        Elements dependenciesTags = beanTag.getChildElements();
+        if (dependenciesTags.size() > 0) {
+            List<Dependency> constructorDependencies = new ArrayList<>();
+            List<Dependency> setterDependencies = new ArrayList<>();
             for (int i = 0; i < dependenciesTags.size(); i++) {
                 Element dependencyTag = dependenciesTags.get(i);
-                Dependency dependency = new Dependency(beanTag.getAttributeValue("id"), dependencyTag.getAttributeValue("reference"));
-                if (dependencyTag.getAttribute("autowiringMode") != null) {
-                    dependency.setAutowiringMode(AutowiringMode.valueOf(dependencyTag.getAttributeValue("autowiringMode").toUpperCase()));
+               if (dependencyTag.getLocalName().equals("constructor-args")) {
+                    Dependency dependency = new Dependency(beanTag.getAttributeValue("id"), dependencyTag.getAttributeValue("reference"));
+                    if (dependencyTag.getAttribute("autowiringMode") != null) {
+                        dependency.setAutowiringMode(AutowiringMode.valueOf(dependencyTag.getAttributeValue("autowiringMode").toUpperCase()));
+                    }
+                    constructorDependencies.add(dependency);
                 }
-                dependencies.add(dependency);
+                 if (dependencyTag.getLocalName().equals("setter-arg")) {
+                    dependencyTag = beanTag.getChildElements().get(i);
+                    Dependency dependency = new Dependency(beanTag.getAttributeValue("id"), dependencyTag.getAttributeValue("reference"), dependencyTag.getAttributeValue("name"));
+                    if (dependencyTag.getAttribute("autowiringMode") != null) {
+                        String autowiringMode = dependencyTag.getAttributeValue("autowiringMode").toUpperCase();
+                        dependency.setAutowiringMode(AutowiringMode.valueOf(autowiringMode));
+                    }
+                    setterDependencies.add(dependency);
+                }
             }
-            beanAttributes.put("dependencies", dependencies);
-        } else if (beanTag.getAttribute("injectSetter") != null) {
-            Element dependencyTag = beanTag.getChildElements().get(0);
-            List<Dependency> dependencies = new ArrayList<>();
-            Dependency dependency = new Dependency(beanTag.getAttributeValue("id"), dependencyTag.getAttributeValue("reference"), dependencyTag.getAttributeValue("name"));
-            if (dependencyTag.getAttribute("autowiringMode") != null) {
-                String autowiringMode= dependencyTag.getAttributeValue("autowiringMode").toUpperCase();
-                dependency.setAutowiringMode(AutowiringMode.valueOf(autowiringMode));
-            }
-            dependencies.add(dependency);
-            beanAttributes.put("dependency", dependencies);
+            beanAttributes.put("dependencies", constructorDependencies);
+            beanAttributes.put("dependency", setterDependencies);
         }
         return beanAttributes;
     }

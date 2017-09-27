@@ -10,13 +10,9 @@ public class Mascota {
 
     private int edad;
 
-    public Mascota(String name, int edad){
-        this.name=name;
-        this.edad=edad;
-    }
 
     public Mascota(){
-
+        this.name= "pinocho";
     }
 
     public String getName() {

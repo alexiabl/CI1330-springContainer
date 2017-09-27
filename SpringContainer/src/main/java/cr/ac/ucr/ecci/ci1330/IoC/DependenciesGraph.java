@@ -52,20 +52,10 @@ public class DependenciesGraph {
                 position++;
             }
         }
-        return cycle;
-    }
-
-    public boolean edgeExist(String start, String end) {
-        boolean found = false;
-        Node node = getNodePerName(start);
-        int i = 0;
-        while (i < node.getEdgesSize() && !found) {
-            if (node.getNeighbour(i).getName() == end) {
-                found = true;
-            }
-            i++;
+        if (!cycle) {
+            visited.remove(node.getName());
         }
-        return found;
+        return cycle;
     }
 
     public Node getNodePerName(String name) {
@@ -78,78 +68,8 @@ public class DependenciesGraph {
         return node;
     }
 
-    public int getNodesSize() {
-        return nodes.size();
-    }
-
     public int getEdgeNodeSize(String name) {
         return getNodePerName(name).getEdgesSize();
     }
 }
 
-class Node {
-    public String name;
-    public ArrayList<Edge> edges;
-
-    public Node() {
-    }
-
-    public Node(String name) {
-        this.name = name;
-        this.edges = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Node getNeighbour(int i) {
-        if (i < edges.size()) {
-            return edges.get(i).getEnd();
-        } else {
-            return null;
-        }
-    }
-
-    public int getEdgesSize() {
-        return edges.size();
-    }
-
-    public ArrayList<Edge> getEdges() {
-        return edges;
-    }
-
-    public void addEdge(Edge edge) {
-        edges.add(edge);
-    }
-}
-
-class Edge {
-    public Node start;
-    public Node end;
-
-    public Edge(Node start, Node end) {
-        this.start = start;
-        this.end = end;
-    }
-
-    public Node getStart() {
-        return start;
-    }
-
-    public void setStart(Node start) {
-        this.start = start;
-    }
-
-    public Node getEnd() {
-        return end;
-    }
-
-    public void setEnd(Node end) {
-        this.end = end;
-    }
-}

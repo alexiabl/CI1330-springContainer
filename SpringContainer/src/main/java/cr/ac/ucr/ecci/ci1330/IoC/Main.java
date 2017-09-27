@@ -10,11 +10,14 @@ public class Main {
 
         System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());
 
-        //      Persona persona= (Persona) abstractBeanFactory.getBean("Persona");
-//        System.out.println(persona.getName());
+        Persona persona= (Persona) abstractBeanFactory.getBean("Persona");
+        System.out.println(persona.getNombre());
 
-        /*testeReflection testeReflection= (cr.ac.ucr.ecci.ci1330.IoC.testeReflection) abstractBeanFactory.getBean("teste");
-
+        testeReflection testeReflection= (cr.ac.ucr.ecci.ci1330.IoC.testeReflection) abstractBeanFactory.getBean("teste");
+        System.out.println(testeReflection.getA().getNombre());
+        System.out.println(testeReflection.getEst().getName());
+      //  System.out.println(testeReflection.);
+/*
         testeReflection.setNum(9);
         System.out.println(testeReflection.getP().getName());
         testeReflection testeReflection2= (cr.ac.ucr.ecci.ci1330.IoC.testeReflection) abstractBeanFactory.getBean("teste");

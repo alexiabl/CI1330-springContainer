@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 public @interface Autowired {
 
     AutowiringMode autowiringMode() default AutowiringMode.BYTYPE;
-    String value();
+
 
 
 

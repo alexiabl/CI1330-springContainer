@@ -1,7 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.IoC.XMLBased;
 
 import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
-import cr.ac.ucr.ecci.ci1330.IoC.Dependency;
+import cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency;
 import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
 import nu.xom.Builder;
 import nu.xom.Document;

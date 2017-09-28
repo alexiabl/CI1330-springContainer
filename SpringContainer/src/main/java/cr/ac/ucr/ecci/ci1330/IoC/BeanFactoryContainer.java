@@ -1,5 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
+import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
+
 import java.util.HashMap;
 
 /**

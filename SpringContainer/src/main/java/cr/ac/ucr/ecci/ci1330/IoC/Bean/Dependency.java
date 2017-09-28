@@ -1,4 +1,6 @@
-package cr.ac.ucr.ecci.ci1330.IoC;
+package cr.ac.ucr.ecci.ci1330.IoC.Bean;
+
+import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
 
 /**
  * Created by majo_ on 25/9/2017.

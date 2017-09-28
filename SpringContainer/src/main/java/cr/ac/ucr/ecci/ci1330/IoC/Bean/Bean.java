@@ -1,4 +1,7 @@
-package cr.ac.ucr.ecci.ci1330.IoC;
+package cr.ac.ucr.ecci.ci1330.IoC.Bean;
+
+import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
+import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
 
 import java.util.ArrayList;
 import java.util.List;

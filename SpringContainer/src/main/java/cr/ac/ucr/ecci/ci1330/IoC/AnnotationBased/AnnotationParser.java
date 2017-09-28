@@ -2,16 +2,13 @@ package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
 
 import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.*;
 import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
-import cr.ac.ucr.ecci.ci1330.IoC.Bean;
-import cr.ac.ucr.ecci.ci1330.IoC.Dependency;
+import cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by majo_ on 22/9/2017.
@@ -39,13 +36,16 @@ public class AnnotationParser {
             if (this.theClass.isAnnotationPresent(Component.class)) {
                 String autowiringMode ="";
                 String scopeType="";
-                if (this.theClass.isAnnotationPresent(Autowired.class)){
-                    Autowired wiringAnnotation=(Autowired)this.theClass.getAnnotation(Autowired.class);
-                    autowiringMode = wiringAnnotation.autowiringMode().name();
-                }
                 if (this.theClass.isAnnotationPresent(Scope.class)){
-                    Scope scopeAnnotation = (Scope)this.theClass.getAnnotation(Scope.class);
+                    Scope scopeAnnotation=(Scope) this.theClass.getAnnotation(Scope.class);
                     scopeType = scopeAnnotation.scopeType().name();
+                }
+                Constructor constructors[] = this.theClass.getConstructors();
+                for (Constructor constructor: constructors) {
+                    if (constructor.isAnnotationPresent(Autowired.class)){
+                        Autowired wiringAnnotation=(Autowired)constructor.getAnnotation(Autowired.class);
+                        autowiringMode = wiringAnnotation.autowiringMode().name();
+                    }
                 }
                 Component component = (Component) this.theClass.getAnnotation(Component.class);
                 String key = component.id(); //bean id
@@ -85,10 +85,10 @@ public class AnnotationParser {
                 Dependency dependency = new Dependency();
                 Autowired autowired = field.getAnnotation(Autowired.class);
                 if (autowired.autowiringMode().equals(AutowiringMode.BYNAME)) {
-                    dependency.setReference(autowired.value());
+                    dependency.setReference(field.getName());
                     dependency.setAutowiringMode(AutowiringMode.BYNAME);
                     dependency.setBeanID(beanId);
-                    dependency.setName(autowired.value());
+                    dependency.setName(field.getName());
                 }
                 else if (field.getAnnotation(Autowired.class).autowiringMode().equals(AutowiringMode.BYTYPE)){
                     dependency.setReference(field.getType().getTypeName());
@@ -109,10 +109,10 @@ public class AnnotationParser {
                 Autowired autowiredConstructor = (Autowired)constructor.getAnnotation(Autowired.class);
                 Dependency dependency = new Dependency();
                 if (autowiredConstructor.autowiringMode().equals(AutowiringMode.BYNAME)) {
-                    dependency.setReference(autowiredConstructor.value());
+                    dependency.setReference(constructor.getName());
                     dependency.setAutowiringMode(AutowiringMode.BYNAME);
                     dependency.setBeanID(beanId);
-                    dependency.setName(autowiredConstructor.value());
+                    dependency.setName(constructor.getName());
                 }
                 else if (autowiredConstructor.autowiringMode().equals(AutowiringMode.BYTYPE)){
                     dependency.setReference(constructor.getDeclaringClass().getSimpleName());

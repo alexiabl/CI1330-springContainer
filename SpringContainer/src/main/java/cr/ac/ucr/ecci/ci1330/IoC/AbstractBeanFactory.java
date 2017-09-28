@@ -1,6 +1,8 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
 import cr.ac.ucr.ecci.ci1330.IoC.beanGraph.BeanGraph;
+import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
+import cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

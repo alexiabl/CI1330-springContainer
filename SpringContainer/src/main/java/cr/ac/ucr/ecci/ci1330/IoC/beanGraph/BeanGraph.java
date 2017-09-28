@@ -1,12 +1,9 @@
-package cr.ac.ucr.ecci.ci1330.IoC;
+package cr.ac.ucr.ecci.ci1330.IoC.beanGraph;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Renato on 27/09/2017.
- */
 public class BeanGraph {
     private ArrayList<Node> nodes;
     private HashMap<String, Node> visited;
@@ -24,6 +21,9 @@ public class BeanGraph {
     public void addEdge(String start, String end) {
         Edge edge = new Edge(getNodeForName(start), getNodeForName(end));
         getNodeForName(start).addEdge(edge);
+        if (getNodeForName(end) == null) {
+            System.out.println(start+".PERROOO."+end+".");
+        }
     }
 
     public boolean reviewCyclesBean() {
@@ -43,7 +43,7 @@ public class BeanGraph {
         int position = 1;
         if (nodeAdj != null && visited.containsKey(nodeAdj.getName())) {
             cycle = true;
-            System.out.println("Hay un ciclo ocurre porque \"" + node.getName() + "\" tiene una referencia de \"" + nodeAdj.getName() + "\".");
+            System.out.println("ERROR! Hay un ciclo, ocurre porque \"" + node.getName() + "\" tiene una referencia de \"" + nodeAdj.getName() + "\".");
         }
         while (!cycle && nodeAdj != null) {
             cycle = reviewCyclesBeanRec(graph, nodeAdj);
@@ -60,16 +60,17 @@ public class BeanGraph {
 
     public Node getNodeForName(String name) {
         Node node = null;
-        for (int i = 0; i < nodes.size(); i++) {
-            if (nodes.get(i).getName() == name) {
+        int i = 0;
+        boolean found = false;
+        while (i<nodes.size() && !found) {
+            if (nodes.get(i).getName().equals(name)) {
                 node = nodes.get(i);
+                found = true;
             }
+            i++;
         }
         return node;
     }
 
-    public int getEdgeNodeSize(String name) {
-        return getNodeForName(name).getNumberOfEdges();
-    }
 }
 

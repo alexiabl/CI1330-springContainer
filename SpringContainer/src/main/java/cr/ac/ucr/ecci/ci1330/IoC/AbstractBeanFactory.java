@@ -1,5 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
+import cr.ac.ucr.ecci.ci1330.IoC.beanGraph.BeanGraph;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,9 +15,11 @@ import java.util.Map;
 public class AbstractBeanFactory implements BeanFactoryContainer {
 
     protected HashMap<String, Bean> beanHashMap;
+    private BeanGraph beanGraph;
 
     public AbstractBeanFactory() {
         this.beanHashMap = new HashMap<>();
+        this.beanGraph = new BeanGraph();
     }
 
     public HashMap<String, Bean> getBeanHashMap() {
@@ -35,7 +39,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             bean.setId((String) beanInformation.get("id"));
             bean.setClassName((String) beanInformation.get("className"));
             if (beanInformation.containsKey("initMethod")) {
-                bean.setDestructMethod((String) beanInformation.get("initMethod"));
+                bean.setInitMethod((String) beanInformation.get("initMethod"));
             }
             if (beanInformation.containsKey("destructMethod")) {
                 bean.setDestructMethod((String) beanInformation.get("destructMethod"));
@@ -56,15 +60,28 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
                 bean.setSetterDependencies((List<Dependency>) beanInformation.get("setterDependencies")); //por setter
             }
             beanHashMap.put((String) beanInformation.get("id"), bean);
-            //executeBeanInstanceMethod(bean, bean.getInitMethod());
+            beanGraph.addNode(bean.getId());
         }
         return bean;
     }
 
     protected void createBeanInstances() {
         for (Map.Entry<String, Bean> entry : beanHashMap.entrySet()) {
-            Bean bean = entry.getValue();
-            injectBeanInstance(bean);
+            for (Dependency dependency : entry.getValue().getConstructorDependencies()) {
+                beanGraph.addEdge(entry.getValue().getId(),dependency.getReference());
+            }
+            for (Dependency dependency : entry.getValue().getSetterDependencies()) {
+                beanGraph.addEdge(entry.getValue().getId(),dependency.getReference());
+            }
+        }
+        if (!beanGraph.reviewCyclesBean()) {
+            for (Map.Entry<String, Bean> entry : beanHashMap.entrySet()) {
+                Bean bean = entry.getValue();
+                injectBeanInstance(bean);
+            }
+        }
+        else {
+            System.exit(0);
         }
     }
 
@@ -94,6 +111,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
                 bean.setBeanInstance(injectSetterDependencies(newClass, setterName, parameters[0]));
             }
         }
+        executeBeanInstanceMethod(bean, bean.getInitMethod());
         return instance;
     }
 
@@ -250,7 +268,8 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
 
     public void destroyBean(String id) {
-
+        Bean bean = beanHashMap.remove(id);
+        executeBeanInstanceMethod(bean, bean.getDestructMethod());
     }
 
     public Bean findBean(String id) {

@@ -69,14 +69,14 @@ public class XMLParser {
             List<Dependency> setterDependencies = new ArrayList<>();
             for (int i = 0; i < dependenciesTags.size(); i++) {
                 Element dependencyTag = dependenciesTags.get(i);
-               if (dependencyTag.getLocalName().equals("constructor-args")) {
+                if (dependencyTag.getLocalName().equals("constructor-args")) {
                     Dependency dependency = new Dependency(beanTag.getAttributeValue("id"), dependencyTag.getAttributeValue("reference"));
                     if (dependencyTag.getAttribute("autowiringMode") != null) {
                         dependency.setAutowiringMode(AutowiringMode.valueOf(dependencyTag.getAttributeValue("autowiringMode").toUpperCase()));
                     }
                     constructorDependencies.add(dependency);
                 }
-                 if (dependencyTag.getLocalName().equals("setter-arg")) {
+                if (dependencyTag.getLocalName().equals("setter-arg")) {
                     dependencyTag = beanTag.getChildElements().get(i);
                     Dependency dependency = new Dependency(beanTag.getAttributeValue("id"), dependencyTag.getAttributeValue("reference"), dependencyTag.getAttributeValue("name"));
                     if (dependencyTag.getAttribute("autowiringMode") != null) {

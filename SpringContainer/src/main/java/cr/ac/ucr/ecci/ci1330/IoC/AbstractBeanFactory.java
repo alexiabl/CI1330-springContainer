@@ -264,8 +264,8 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
     public void executeBeanInstanceMethod(Bean bean, String methodName) {
         Class instance = null;
         try {
-            instance = Bean.class.getDeclaredField("beanInstance").getType(); // Recupera el tipo de la instancia del Bean
-        } catch (NoSuchFieldException e) {
+            instance = Class.forName(bean.getClassName()); // Recupera el tipo de la instancia del Bean
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         Method method = null;

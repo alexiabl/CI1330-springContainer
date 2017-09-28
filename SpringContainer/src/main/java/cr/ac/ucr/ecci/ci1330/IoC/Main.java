@@ -1,48 +1,31 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
-
-import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory;
 import cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory;
-import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota;
-import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
-import sun.reflect.Reflection;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-
-     List<Class> annotadedClasses = new ArrayList<>();
-     annotadedClasses.add(Persona.class);
-     annotadedClasses.add(Mascota.class);
-        AnnotationBeanFactory annotationBeanFactory = new AnnotationBeanFactory(annotadedClasses);
-
-
-        String path = "beans.xml";
+        String path = "beanExample.xml";
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
-        //System.out.println("Tamaño del beanHashMap: " + abstractBeanFactory.getContainerSize());
 
+        System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());
 
-
-
-/*
        System.out.println("\n1) Dependency Injection");
         System.out.println("*Se crea una instancia llamada \"testeReflection\", sin uso de bean y se pregunta el valor del atributo Persona:");
         testeReflection testeReflection = new testeReflection();
-        if (testeReflection.getPersona() == null) {
+        if (testeReflection.getP() == null) {
             System.out.println("El valor de Persona en testeReflection es null");
         }
         System.out.println("\n-COMPROBACION DEL SETTER:");
         testeReflection testeReflection1 = (testeReflection) abstractBeanFactory.getBean("TR1");
         System.out.println("*Se crea una instancia del bean \"TR1\", llamada \"testeReflection1\"");
         System.out.println("En la definición del bean se hace usa un set con referencia a un bean de tipo Persona, por lo tanto su valor ya no es null:");
-        System.out.println("Edad: " + testeReflection1.getPersona().getEdad() + " y nombre: " + testeReflection1.getPersona().getNombre());
+        System.out.println("Edad: " + testeReflection1.getP().getEdad() + " y nombre: " + testeReflection1.getP().getNombre());
         System.out.println("\n-COMPROBACION DEL CONSTRUCTOR:");
         testeReflection testeReflection2 = (testeReflection) abstractBeanFactory.getBean("TR2");
         System.out.println("*Se crea una instancia del bean \"TR2\", llamada \"testeReflection2\"");
         System.out.println("En la definición del bean se usa un constructor con referencia a un bean de tipo Persona, por lo tanto su valor ya no es null:");
-        System.out.println("Edad: " + testeReflection2.getPersona().getEdad() + " y nombre: " + testeReflection2.getPersona().getNombre());
+        System.out.println("Edad: " + testeReflection2.getP().getEdad() + " y nombre: " + testeReflection2.getP().getNombre());
 
 
         System.out.println("\n2) Lyfe Cycle");
@@ -91,7 +74,6 @@ public class Main {
 
         /*System.out.println("\n4) Autowiring");
         System.out.println("-COMPROBACION DEL By Name:");
-        System.out.println("-COMPROBACION DEL By Type:");
-        */
+        System.out.println("-COMPROBACION DEL By Type:");*/
     }
 }

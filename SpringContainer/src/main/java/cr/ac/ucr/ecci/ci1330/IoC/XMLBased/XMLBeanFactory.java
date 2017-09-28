@@ -14,7 +14,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
     protected String path;
 
     public XMLBeanFactory(String fileName) {
-        this.path = "./src/main/resources/"+fileName;
+        this.path = "SpringContainer/src/main/resources/"+fileName;
         this.xmlParser = new XMLParser(path, this);
         xmlParser.readXML();
         createBeanInstances();

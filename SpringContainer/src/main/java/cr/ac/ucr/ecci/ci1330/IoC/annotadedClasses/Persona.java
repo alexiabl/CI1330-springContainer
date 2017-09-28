@@ -1,19 +1,20 @@
 package cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses;
 
 import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.*;
+import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
 import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
 
 /**
  * Created by Renato on 23/09/2017.
  */
 
-@Component(value = "Persona")
+@Component(id = "Persona")
 public class Persona {
 
     private int edad;
     private String nombre;
 
-    @Component(value="Mascota")
+    @Component(id="Mascota")
     private Mascota mascota;
 
     @Scope(scopeType = ScopeType.PROTOTYPE)
@@ -27,7 +28,7 @@ public class Persona {
         return edad;
     }
 
-    @Autowired
+    @Autowired(autowiringMode = AutowiringMode.BYNAME)
     public void setEdad(int edad) {
         this.edad = edad;
     }
@@ -37,7 +38,7 @@ public class Persona {
         return nombre;
     }
 
-    @Autowired
+    @Autowired(autowiringMode = AutowiringMode.BYTYPE)
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

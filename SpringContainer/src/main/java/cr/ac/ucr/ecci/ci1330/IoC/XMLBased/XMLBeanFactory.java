@@ -1,7 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.IoC.XMLBased;
 
 import cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory;
-import cr.ac.ucr.ecci.ci1330.IoC.Bean;
+import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
 import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
 import nu.xom.Element;
 

@@ -1,5 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
+import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
 import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota;
 import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
 
@@ -17,12 +18,16 @@ public class testeReflection {
     Estudiante est;
 
     public testeReflection(){
-        this.p=p;
+        this.p= new Persona();
         //this.a= a;
         this.num= 5;
        this.mascota= new Mascota();
         estudiante= new Estudiante();
 
+    }
+
+    public testeReflection(Persona p){
+        this.p = p;
     }
 
     public Estudiante getEst() {

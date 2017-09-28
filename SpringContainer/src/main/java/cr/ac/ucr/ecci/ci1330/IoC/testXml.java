@@ -1,12 +1,13 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
 import cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
 
 public class testXml {
 
     public testXml() {
     }
-/*
+
     public void executeTest() {
         String path = "beanExample.xml";
         AbstractBeanFactory abstractBeanFactory = new XMLBeanFactory(path);
@@ -77,9 +78,9 @@ public class testXml {
 
         /*System.out.println("\n4) Autowiring");
         System.out.println("-COMPROBACION DEL By Name:");
-        System.out.println("-COMPROBACION DEL By Type:");
+        System.out.println("-COMPROBACION DEL By Type:");*/
 
-        }*/
+        }
 
 
 }

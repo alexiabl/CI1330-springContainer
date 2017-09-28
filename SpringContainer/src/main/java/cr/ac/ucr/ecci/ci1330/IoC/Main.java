@@ -1,6 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
 import cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
 
 
 public class Main {
@@ -10,12 +11,14 @@ public class Main {
 
         System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());
 
-        Persona persona= (Persona) abstractBeanFactory.getBean("Persona");
-        System.out.println(persona.getNombre());
+      //  Persona persona= (Persona) abstractBeanFactory.getBean("Persona");
+        //System.out.println(persona.getNombre());
 
         testeReflection testeReflection= (cr.ac.ucr.ecci.ci1330.IoC.testeReflection) abstractBeanFactory.getBean("teste");
-        System.out.println(testeReflection.getA().getNombre());
-        System.out.println(testeReflection.getEst().getName());
+        System.out.println(testeReflection.getMascota().getName());
+     /*   System.out.println(testeReflection.getEst().getName());
+        System.out.println(testeReflection.getEstudiante().getName());
+        System.out.println(testeReflection.getMascota().getName());
       //  System.out.println(testeReflection.);
 /*
         testeReflection.setNum(9);

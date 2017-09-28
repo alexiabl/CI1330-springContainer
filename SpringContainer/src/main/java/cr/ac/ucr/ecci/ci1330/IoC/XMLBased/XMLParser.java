@@ -86,8 +86,8 @@ public class XMLParser {
                     setterDependencies.add(dependency);
                 }
             }
-            beanAttributes.put("dependencies", constructorDependencies);
-            beanAttributes.put("dependency", setterDependencies);
+            beanAttributes.put("constructorDependencies", constructorDependencies);
+            beanAttributes.put("setterDependencies", setterDependencies);
         }
         return beanAttributes;
     }

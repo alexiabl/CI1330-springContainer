@@ -6,7 +6,7 @@ package cr.ac.ucr.ecci.ci1330.IoC;
 public class Dependency {
     private String beanID;
     private String reference;
-    private String name;
+    private String name; //
     private AutowiringMode autowiringMode;
 
     public Dependency(String beanID, String reference) {

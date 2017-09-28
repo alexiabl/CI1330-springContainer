@@ -1,6 +1,7 @@
-package cr.ac.ucr.ecci.ci1330.IoC;
+package cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses;
 
-import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.*;
+import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.*;
+import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
 
 /**
  * Created by Renato on 23/09/2017.

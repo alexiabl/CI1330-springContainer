@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1330.IoC;
+package cr.ac.ucr.ecci.ci1330.IoC.beanGraph;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class Node {
         }
     }
 
-    public int getEdgesSize() {
+    public int getNumberOfEdges() {
         return edges.size();
     }
 

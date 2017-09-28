@@ -1,5 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
+import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
+
 /**
  * Created by majo_ on 22/9/2017.
  */

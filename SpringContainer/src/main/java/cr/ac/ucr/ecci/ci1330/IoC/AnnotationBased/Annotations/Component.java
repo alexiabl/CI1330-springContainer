@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
+package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,6 +11,6 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Component {
 
-   String value();
+    String id();
 
 }

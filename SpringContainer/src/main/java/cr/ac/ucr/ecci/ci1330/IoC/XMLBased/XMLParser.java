@@ -42,7 +42,6 @@ public class XMLParser {
             Element currentBeanTag = beanTags.get(i);
             xmlBeanFactory.createBean(obtainBeanAttributes(currentBeanTag));
             tagsBeanContent.put(currentBeanTag.getAttributeValue("id"), currentBeanTag);
-
         }
     }
 
@@ -74,7 +73,7 @@ public class XMLParser {
                 }
                 dependencies.add(dependency);
             }
-            beanAttributes.put("dependencies", dependencies);
+            beanAttributes.put("constructorDependencies", dependencies);
         } else if (beanTag.getAttribute("injectSetter") != null) {
             Element dependencyTag = beanTag.getChildElements().get(0);
             List<Dependency> dependencies = new ArrayList<>();
@@ -84,7 +83,7 @@ public class XMLParser {
                 dependency.setAutowiringMode(AutowiringMode.valueOf(autowiringMode));
             }
             dependencies.add(dependency);
-            beanAttributes.put("dependency", dependencies);
+            beanAttributes.put("setterDependencies", dependencies);
         }
         return beanAttributes;
     }

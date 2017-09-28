@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
+package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

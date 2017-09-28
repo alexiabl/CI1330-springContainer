@@ -49,11 +49,11 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             if (beanInformation.containsKey("scopeType")) {
                 bean.setScopeType(ScopeType.valueOf((String) beanInformation.get("scopeType")));
             }
-            if (beanInformation.containsKey("dependencies")) {
-                bean.setConstructorDependencies((List<Dependency>) beanInformation.get("dependencies"));//por constructor
+            if (beanInformation.containsKey("constructorDependencies")) {
+                bean.setConstructorDependencies((List<Dependency>) beanInformation.get("constructorDependencies"));//por constructor
             }
-            if (beanInformation.containsKey("dependency")) {
-                bean.setSetterDependencies((List<Dependency>) beanInformation.get("dependency")); //por setter
+            if (beanInformation.containsKey("setterDependencies")) {
+                bean.setSetterDependencies((List<Dependency>) beanInformation.get("setterDependencies")); //por setter
             }
             beanHashMap.put((String) beanInformation.get("id"), bean);
             //executeBeanInstanceMethod(bean, bean.getInitMethod());
@@ -153,8 +153,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             System.out.println("No se pudo recuperar el método: " + setterName);
             e.printStackTrace();
         }
-
-
             System.out.println(setterName);
             System.out.println(obtainMethodtoInvoke(methods, setterName).getName());
             System.out.println(objectInstance.toString());
@@ -166,7 +164,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-
         System.out.println(newClass.getName());
         return objectInstance;
     }

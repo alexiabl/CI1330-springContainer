@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 /**
- * Created by majo_ on 22/9/2017.
+ * @author
  */
+
 public class XMLParser {
 
     private String path;
@@ -67,9 +69,9 @@ public class XMLParser {
     }
 
     /**
-     *@author María José Cubero
-     *@param //(HashMap<String, Object> beanAttributes, Element beanTag)
-     *@return (methods only)
+     *
+     * @param beanAttributes
+     * @param beanTag
      */
     public void setBeanDependencies(HashMap<String, Object> beanAttributes, Element beanTag) {
         Elements dependenciesTags = beanTag.getChildElements();

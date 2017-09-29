@@ -15,6 +15,4 @@ public interface BeanFactoryContainer {
 
         void destroyBean(String id);
 
-        public Bean findBean (String id);
-
 }

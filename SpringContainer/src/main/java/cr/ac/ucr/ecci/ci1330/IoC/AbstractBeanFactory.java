@@ -362,10 +362,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         executeBeanInstanceMethod(bean, bean.getDestructMethod());
     }
 
-    public Bean findBean(String id) {
-        return null;
-    }
-
 
     public void executeBeanInstanceMethod(Bean bean, String methodName) {
         Class instance = null;

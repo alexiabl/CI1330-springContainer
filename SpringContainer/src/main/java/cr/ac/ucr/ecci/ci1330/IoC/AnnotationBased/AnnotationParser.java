@@ -32,6 +32,8 @@ public class AnnotationParser {
     }
 
 
+
+
     public void parseClassForAnnotations() {
             if (this.theClass.isAnnotationPresent(Component.class)) {
                 String autowiringMode ="";
@@ -39,6 +41,9 @@ public class AnnotationParser {
                 if (this.theClass.isAnnotationPresent(Scope.class)){
                     Scope scopeAnnotation=(Scope) this.theClass.getAnnotation(Scope.class);
                     scopeType = scopeAnnotation.scopeType().name();
+                }
+                else if (this.theClass.isAnnotationPresent(Lazy.class)){
+                    annotationBeanContent.put("lazy",true);
                 }
                 Constructor constructors[] = this.theClass.getConstructors();
                 for (Constructor constructor: constructors) {
@@ -75,6 +80,8 @@ public class AnnotationParser {
                 this.annotationBeanContent.put("constructorDependencies",constructorDependencies);
                 this.annotationBeanContent.put("setterDependencies", setterDependencies);
                 this.annotationBeanFactory.createBean(annotationBeanContent);
+                System.out.println(annotationBeanContent.get("id"));
+                this.annotationBeanFactory.getAnnotationsContent().put(this.theClass.getSimpleName(), this.annotationBeanContent);
             }
             else {
                 System.out.println("La clase " + this.theClass.getSimpleName() + " no tiene el Component annotation necesitado para poder escanearla");

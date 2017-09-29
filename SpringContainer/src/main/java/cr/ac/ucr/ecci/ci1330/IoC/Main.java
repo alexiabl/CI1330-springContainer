@@ -1,11 +1,19 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
+import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory;
 import cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota;
 import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
+import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.testAnnotations;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) {
+        AbstractBeanFactory annotationTest = new AnnotationBeanFactory("CI1330-springContainer/SpringContainer/src/main/resources/xmlAnnotations.xml");
+
         String path = "SpringContainer/src/main/resources/beans.xml";
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
 
@@ -16,8 +24,8 @@ public class Main {
 
         testeReflection testeReflection= (cr.ac.ucr.ecci.ci1330.IoC.testeReflection) abstractBeanFactory.getBean("teste");
 
-        System.out.println(testeReflection.getMascota().getName());
-        System.out.println(testeReflection.getEstudiante().getName());
+       // System.out.println(testeReflection.getMascota().getName());
+        //System.out.println(testeReflection.getEstudiante().getName());
 
        // System.out.println();
      /*   System.out.println(testeReflection.getEst().getName());
@@ -33,5 +41,7 @@ public class Main {
         System.out.println(testeReflection.getNum());
 */
         //errores: al constructor no se le puede poner mas de un parametro
+
+
     }
 }

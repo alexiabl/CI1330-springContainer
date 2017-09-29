@@ -1,7 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
-import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota;
 import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
 
 /**
@@ -13,33 +12,19 @@ public class testeReflection {
     Bean n;
     Persona p;
     Persona a;
-    Mascota mascota;
-    Estudiante estudiante;
-    Estudiante est;
 
-    public testeReflection(){
-        this.p= new Persona();
-        //this.a= a;
-        this.num= 5;
-       this.mascota= new Mascota();
-        estudiante= new Estudiante();
-
-    }
-
-    public testeReflection(Persona p){
+    public testeReflection(Persona p) {
         this.p = p;
-    }
-
-    public Estudiante getEst() {
-        return est;
-    }
-
-    public void setEst(Estudiante est) {
-        this.est = est;
+        this.num = 5;
     }
 
     public Persona getP() {
         return p;
+    }
+
+    public testeReflection() {
+        this.p = new Persona();
+        this.a = new Persona();
     }
 
     public void setP(Persona p) {
@@ -60,37 +45,5 @@ public class testeReflection {
 
     public void setBean(Bean bean) {
         this.bean = bean;
-    }
-
-    public Bean getN() {
-        return n;
-    }
-
-    public void setN(Bean n) {
-        this.n = n;
-    }
-
-    public Persona getA() {
-        return a;
-    }
-
-    public void setA(Persona a) {
-        this.a = a;
-    }
-
-    public Mascota getMascota() {
-        return mascota;
-    }
-
-    public void setMascota(Mascota mascota) {
-        this.mascota = mascota;
-    }
-
-    public Estudiante getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
     }
 }

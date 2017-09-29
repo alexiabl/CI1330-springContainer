@@ -46,6 +46,10 @@ public class AnnotationParser {
                         Autowired wiringAnnotation=(Autowired)constructor.getAnnotation(Autowired.class);
                         autowiringMode = wiringAnnotation.autowiringMode().name();
                     }
+                    else if (!this.theClass.isAnnotationPresent(Scope.class) && constructor.isAnnotationPresent(Scope.class)){
+                        Scope scopeAnnotation = (Scope) constructor.getAnnotation(Scope.class);
+                        scopeType = scopeAnnotation.scopeType().name();
+                    }
                 }
                 Component component = (Component) this.theClass.getAnnotation(Component.class);
                 String key = component.id(); //bean id
@@ -73,12 +77,13 @@ public class AnnotationParser {
                 this.annotationBeanFactory.createBean(annotationBeanContent);
             }
             else {
-                System.out.println("Class " + this.theClass.getSimpleName() + " does not have Component annotation needed to scan class annotations");
+                System.out.println("La clase " + this.theClass.getSimpleName() + " no tiene el Component annotation necesitado para poder escanearla");
             }
     }
 
     public ArrayList<Dependency> scanClassSetterDependencies(String beanId){
         Field fields[] = this.theClass.getDeclaredFields(); //atributos de la clase
+        Method methods[] = this.theClass.getDeclaredMethods();
         ArrayList<Dependency> setterDependencies = new ArrayList<>();
         for (Field field : fields) { //revisar los atributos de la clase
             if (field.isAnnotationPresent(Autowired.class)) { //setter dependencies
@@ -92,6 +97,24 @@ public class AnnotationParser {
                 }
                 else if (field.getAnnotation(Autowired.class).autowiringMode().equals(AutowiringMode.BYTYPE)){
                     dependency.setReference(field.getType().getTypeName());
+                    dependency.setAutowiringMode(AutowiringMode.BYTYPE);
+                    dependency.setBeanID(beanId);
+                }
+                setterDependencies.add(dependency);
+            }
+        }
+        for (Method method : methods){
+            if (method.isAnnotationPresent(Autowired.class)) { //setter dependencies
+                Dependency dependency = new Dependency();
+                Autowired autowired = method.getAnnotation(Autowired.class);
+                if (autowired.autowiringMode().equals(AutowiringMode.BYNAME)) {
+                    dependency.setReference(method.getName());
+                    dependency.setAutowiringMode(AutowiringMode.BYNAME);
+                    dependency.setBeanID(beanId);
+                    dependency.setName(method.getName());
+                }
+                else if (method.getAnnotation(Autowired.class).autowiringMode().equals(AutowiringMode.BYTYPE)){
+                    dependency.setReference(method.getGenericReturnType().getTypeName());
                     dependency.setAutowiringMode(AutowiringMode.BYTYPE);
                     dependency.setBeanID(beanId);
                 }

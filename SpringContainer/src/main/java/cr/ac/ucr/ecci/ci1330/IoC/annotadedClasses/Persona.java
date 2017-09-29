@@ -14,7 +14,7 @@ public class Persona {
     private int edad;
     private String nombre;
 
-    @Component(id="Mascota")
+    @Autowired(autowiringMode = AutowiringMode.BYNAME)
     private Mascota mascota;
 
     @Scope(scopeType = ScopeType.PROTOTYPE)
@@ -38,7 +38,7 @@ public class Persona {
         return nombre;
     }
 
-    @Autowired(autowiringMode = AutowiringMode.BYTYPE)
+    @Autowired
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

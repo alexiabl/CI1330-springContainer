@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
 /**
  * Created by alexiaborchgrevink on 9/24/17.
  */
-@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Autowired {
 

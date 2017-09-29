@@ -15,9 +15,10 @@ public class testAnnotations {
     }
 
     public void executeTest(){
+        AbstractBeanFactory beanFactory =null;
         for (Class aClass: annotatedClasses) {
-            AbstractBeanFactory beanFactory = new AnnotationBeanFactory(aClass);
-
+            beanFactory = new AnnotationBeanFactory(aClass);
         }
+        beanFactory.getBean(annotatedClasses.get(0).getSimpleName());
     }
 }

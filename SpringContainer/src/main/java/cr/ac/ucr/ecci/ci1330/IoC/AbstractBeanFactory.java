@@ -326,8 +326,34 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return setterName;
     }
 
-    public Object getBean(String id) {
+    protected HashMap<String, Object> obtainBeanAttributes(String id){
         return null;
+    }
+
+    public Object getBean(String id) {
+        try {
+            if(beanHashMap.get("id").isLazy() && beanHashMap.get("id").getBeanInstance().equals(null)){
+                Bean bean = createBean(obtainBeanAttributes(id));
+                beanHashMap.put("id", bean);
+                addEdges(bean);
+                if(!beanGraph.reviewCyclesBean()){
+                    bean.setBeanInstance(injectBeanInstance(bean));
+                    return  bean.getBeanInstance();
+                }
+                else{
+                    System.exit(0);
+                }
+            }
+            if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
+                Bean bean = createBean(obtainBeanAttributes(id));
+                bean.setBeanInstance(injectBeanInstance(bean));
+                return bean.getBeanInstance();
+            }
+            return beanHashMap.get(id).getBeanInstance();
+        } catch (NullPointerException e) {
+            System.out.println("El id '" + id + "' no identifica nigún bean.");
+            return null;
+        }
     }
 
 

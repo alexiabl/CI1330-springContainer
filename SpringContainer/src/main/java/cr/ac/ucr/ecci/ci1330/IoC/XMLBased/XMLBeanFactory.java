@@ -1,9 +1,12 @@
 package cr.ac.ucr.ecci.ci1330.IoC.XMLBased;
 
 import cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory;
+import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory;
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
 import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
 import nu.xom.Element;
+
+import java.util.HashMap;
 
 /**
  * Created by majo_ on 22/9/2017.
@@ -11,41 +14,27 @@ import nu.xom.Element;
 public class XMLBeanFactory extends AbstractBeanFactory {
 
     private XMLParser xmlParser;
-    protected String path;
+    private String path;
+    private AnnotationBeanFactory annotationBeanFactory;
 
     public XMLBeanFactory(String fileName) {
         this.path = "SpringContainer/src/main/resources/" + fileName;
         this.xmlParser = new XMLParser(path, this);
         xmlParser.readXML();
+        // annotationBeanFactory= new AnnotationBeanFactory();
         createBeanInstances();
     }
 
-
     @Override
-    public Object getBean(String id) {
-        try {
-            if(beanHashMap.get("id").isLazy() && beanHashMap.get("id").getBeanInstance().equals(null)){
-                Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
-                beanHashMap.put("id", bean);
-                addEdges(bean);
-                if(!beanGraph.reviewCyclesBean()){
-                    bean.setBeanInstance(injectBeanInstance(bean));
-                    return  bean.getBeanInstance();
-                }
-                else{
-                    System.exit(0);
-                }
-            }
-            if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
-                Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
-                bean.setBeanInstance(injectBeanInstance(bean));
-                return bean.getBeanInstance();
-            }
-            return beanHashMap.get(id).getBeanInstance();
-        } catch (NullPointerException e) {
-            System.out.println("El id '" + id + "' no identifica nigún bean.");
-            return null;
-        }
+    protected HashMap<String, Object> obtainBeanAttributes(String id){
+        return xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id));
     }
 
+    public AnnotationBeanFactory getAnnotationBeanFactory() {
+        return annotationBeanFactory;
+    }
+
+    public void setAnnotationBeanFactory(AnnotationBeanFactory annotationBeanFactory) {
+        this.annotationBeanFactory = annotationBeanFactory;
+    }
 }

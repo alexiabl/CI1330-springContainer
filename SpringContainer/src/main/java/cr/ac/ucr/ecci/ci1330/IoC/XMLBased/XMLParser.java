@@ -62,7 +62,11 @@ public class XMLParser {
         if (beanTag.getAttribute("lazy") != null) {
             beanAttributes.put("lazy", true);
         }
-        //meter a la lista de dependencias del Bean
+        setBeanDependencies(beanAttributes, beanTag);
+        return beanAttributes;
+    }
+
+    public void setBeanDependencies(HashMap<String, Object> beanAttributes, Element beanTag){
         Elements dependenciesTags = beanTag.getChildElements();
         if (dependenciesTags.size() > 0) {
             List<Dependency> constructorDependencies = new ArrayList<>();
@@ -89,7 +93,6 @@ public class XMLParser {
             beanAttributes.put("constructorDependencies", constructorDependencies);
             beanAttributes.put("setterDependencies", setterDependencies);
         }
-        return beanAttributes;
     }
 
 

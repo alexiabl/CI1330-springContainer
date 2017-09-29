@@ -42,7 +42,6 @@ public class XMLParser {
             Element currentBeanTag = beanTags.get(i);
             xmlBeanFactory.createBean(obtainBeanAttributes(currentBeanTag));
             tagsBeanContent.put(currentBeanTag.getAttributeValue("id"), currentBeanTag);
-
         }
     }
 
@@ -58,11 +57,12 @@ public class XMLParser {
         }
         if (beanTag.getAttribute("scopeType") != null) {
             String scopeType = beanTag.getAttributeValue("scopeType").toUpperCase();
-
             beanAttributes.put("scopeType", ScopeType.valueOf(scopeType).toString());
         }
+        if (beanTag.getAttribute("lazy") != null) {
+            beanAttributes.put("lazy", true);
+        }
         //meter a la lista de dependencias del Bean
-
         Elements dependenciesTags = beanTag.getChildElements();
         if (dependenciesTags.size() > 0) {
             List<Dependency> constructorDependencies = new ArrayList<>();

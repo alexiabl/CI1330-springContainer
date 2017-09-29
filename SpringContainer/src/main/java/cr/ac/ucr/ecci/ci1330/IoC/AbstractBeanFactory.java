@@ -19,7 +19,7 @@ import java.util.Map;
 public class AbstractBeanFactory implements BeanFactoryContainer {
 
     protected HashMap<String, Bean> beanHashMap;
-    private BeanGraph beanGraph;
+    protected BeanGraph beanGraph;
 
     public AbstractBeanFactory() {
         this.beanHashMap = new HashMap<>();
@@ -63,29 +63,37 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             if (beanInformation.containsKey("setterDependencies")) {
                 bean.setSetterDependencies((List<Dependency>) beanInformation.get("setterDependencies")); //por setter
             }
+            if(beanInformation.containsKey("lazy")){
+                bean.setLazy((Boolean) beanInformation.get("lazy"));
+            }
             beanHashMap.put((String) beanInformation.get("id"), bean);
             beanGraph.addNode(bean.getId());
         }
         return bean;
     }
 
+    protected void addEdges(Bean bean){
+        for (Dependency dependency : bean.getConstructorDependencies()) {
+            beanGraph.addEdge(bean.getId(),dependency.getReference());
+        }
+        for (Dependency dependency : bean.getSetterDependencies()) {
+            beanGraph.addEdge(bean.getId(),dependency.getReference());
+        }
+    }
+
     protected void createBeanInstances() {
         for (Map.Entry<String, Bean> entry : beanHashMap.entrySet()) {
-            for (Dependency dependency : entry.getValue().getConstructorDependencies()) {
-                beanGraph.addEdge(entry.getValue().getId(),dependency.getReference());
-            }
-            for (Dependency dependency : entry.getValue().getSetterDependencies()) {
-                beanGraph.addEdge(entry.getValue().getId(),dependency.getReference());
-            }
+            addEdges(entry.getValue());
         }
         if (!beanGraph.reviewCyclesBean()) {
             for (Map.Entry<String, Bean> entry : beanHashMap.entrySet()) {
                 Bean bean = entry.getValue();
-                injectBeanInstance(bean);
+                if(!bean.isLazy()){
+                    injectBeanInstance(bean);
+                }
             }
         }
         else {
-            System.out.println("Las dependencias presentan ciclos");
             System.exit(0);
         }
     }
@@ -133,6 +141,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
                     beanHashMap.remove(bean.getId());
                 }
             }
+            instance= bean.getBeanInstance();
         }
         executeBeanInstanceMethod(bean, bean.getInitMethod());
         return instance;
@@ -237,7 +246,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     //devuelve la instancia con las dependencias agregadas
     protected Object injectConstructorDependencies(Class newClass, Object[] parameters) {
-        System.out.println(parameters[0]);
         Object objectInstance = new Object[]{new Object()};
         Constructor[] constructors = newClass.getConstructors();
         Constructor constructor = null;

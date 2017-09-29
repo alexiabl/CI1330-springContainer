@@ -24,6 +24,18 @@ public class XMLBeanFactory extends AbstractBeanFactory {
     @Override
     public Object getBean(String id) {
         try {
+            if(beanHashMap.get("id").isLazy() && beanHashMap.get("id").getBeanInstance().equals(null)){
+                Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
+                beanHashMap.put("id", bean);
+                addEdges(bean);
+                if(!beanGraph.reviewCyclesBean()){
+                    bean.setBeanInstance(injectBeanInstance(bean));
+                    return  bean.getBeanInstance();
+                }
+                else{
+                    System.exit(0);
+                }
+            }
             if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
                 Bean bean = createBean(xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id)));
                 bean.setBeanInstance(injectBeanInstance(bean));
@@ -36,7 +48,4 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         }
     }
 
-    public XMLParser getXmlParser() {
-        return xmlParser;
-    }
 }

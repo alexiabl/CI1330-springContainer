@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-
-    <bean id="teste" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton">
-        <setter-arg name="estudiante" reference = "Estudiante" autowiringMode="byName"/>
-        <setter-arg name="mascota" reference = "cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota" autowiringMode="byType"/>
+    <bean id="teste" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton" lazy="true">
+        <constructor-args reference="Estudiante" autowiringMode="byName"/>
+        <setter-arg name="mascota" reference = "Mascota" autowiringMode="byName"/>
     </bean>
 
     <bean id="Persona" className="cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona" scopeType="singleton" >
     </bean>
 
     <bean id="Mascota" className="cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota" scopeType="singleton" >
+
     </bean>
 
     <bean id="Estudiante" className="cr.ac.ucr.ecci.ci1330.IoC.Estudiante" scopeType="singleton" >
+        <setter-arg name="teste" reference = "teste" autowiringMode="byName"/>
     </bean>
 
 </beans>

@@ -19,19 +19,7 @@ public class Bean {
     private ScopeType scopeType;
     private List<Dependency> constructorDependencies;
     private List<Dependency> setterDependencies;
-
-
-    public Bean(String id, String className, String initMethod, String destructMethod, Object beanInstance, AutowiringMode autowiringMode, ScopeType scopeType) {
-        this.id = id;
-        this.className = className;
-        this.initMethod = initMethod;
-        this.destructMethod = destructMethod;
-        this.beanInstance = beanInstance;
-        this.autowiringMode = autowiringMode;
-        this.scopeType = scopeType;
-        this.constructorDependencies= new ArrayList<>();
-        this.setterDependencies= new ArrayList<>();
-    }
+    private boolean lazy;
 
     public Bean(){
         this.initMethod = "initMethod";
@@ -40,6 +28,7 @@ public class Bean {
         this.scopeType = ScopeType.SINGLETON;
         this.constructorDependencies= new ArrayList<>();
         this.setterDependencies= new ArrayList<>();
+        this.lazy= false;
     }
 
     public String getId() {
@@ -102,6 +91,14 @@ public class Bean {
 
     public void setSetterDependencies(List<Dependency> setterDependencies) {
         this.setterDependencies = setterDependencies;
+    }
+
+    public boolean isLazy() {
+        return lazy;
+    }
+
+    public void setLazy(boolean lazy) {
+        this.lazy = lazy;
     }
 
     public boolean hasDependencies(){

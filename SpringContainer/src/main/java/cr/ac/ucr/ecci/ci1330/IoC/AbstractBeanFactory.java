@@ -1,5 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
+import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
 import cr.ac.ucr.ecci.ci1330.IoC.beanGraph.BeanGraph;
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency;
@@ -90,7 +91,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
     }
 
     protected Object injectBeanInstance(Bean bean) {
-        if (bean.getBeanInstance() != null) {
+        if (bean.getBeanInstance() != null && bean.getScopeType().equals(ScopeType.SINGLETON)) {
             return bean.getBeanInstance();
         }
         Class newClass = null;
@@ -236,6 +237,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     //devuelve la instancia con las dependencias agregadas
     protected Object injectConstructorDependencies(Class newClass, Object[] parameters) {
+        System.out.println(parameters[0]);
         Object objectInstance = new Object[]{new Object()};
         Constructor[] constructors = newClass.getConstructors();
         Constructor constructor = null;

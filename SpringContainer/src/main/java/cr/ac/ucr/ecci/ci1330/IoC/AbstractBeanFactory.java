@@ -4,14 +4,14 @@ import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
 import cr.ac.ucr.ecci.ci1330.IoC.beanGraph.BeanGraph;
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by majo_ on 22/9/2017.

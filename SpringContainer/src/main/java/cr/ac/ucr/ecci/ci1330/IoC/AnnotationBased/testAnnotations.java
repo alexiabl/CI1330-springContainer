@@ -1,5 +1,6 @@
-package cr.ac.ucr.ecci.ci1330.IoC;
+package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
 
+import cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory;
 import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory;
 import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota;
 import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
@@ -20,7 +21,7 @@ public class testAnnotations {
     public void executeTest(){
         AbstractBeanFactory beanFactory =null;
         for (Class aClass: annotatedClasses) {
-            beanFactory = new AnnotationBeanFactory(aClass);
+            //beanFactory = new AnnotationBeanFactory(aClass);
         }
         beanFactory.getBean(annotatedClasses.get(0).getSimpleName());
     }

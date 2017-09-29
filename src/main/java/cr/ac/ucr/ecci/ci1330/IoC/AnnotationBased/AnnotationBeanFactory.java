@@ -1,7 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
 
 
-import com.sun.beans.finder.ClassFinder;
 import cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory;
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
 import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
@@ -10,7 +9,6 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

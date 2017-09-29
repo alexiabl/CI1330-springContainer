@@ -14,7 +14,9 @@ import java.util.List;
 
 
 /**
- * @author
+ * Parse the elements of the xml file to get all the information of a Bean to create it later.
+ * @author María José Cubero
+ * @author Renato Mainieri
  */
 
 public class XMLParser {
@@ -29,6 +31,12 @@ public class XMLParser {
         this.tagsBeanContent = new HashMap();
     }
 
+    /**
+     * Read the XML file Element by Element, obtains the information of a bean and calls a method to create it.
+     * @author María José Cubero
+     * @author Alexia Borchgrevink
+     * @author Renato Mainieri
+     */
     public void readXML() {
         Builder builder = new Builder();
         Document xmlDoc = null;
@@ -47,6 +55,12 @@ public class XMLParser {
         }
     }
 
+    /**
+     * Obtains the attributes of a bean receiving them from the element.
+     * @autor María José Cubero Hidalgo
+     * @param beanTag
+     * @return
+     */
     public HashMap obtainBeanAttributes(Element beanTag) {
         HashMap<String, Object> beanAttributes = new HashMap();
         beanAttributes.put("id", beanTag.getAttributeValue("id"));
@@ -69,7 +83,8 @@ public class XMLParser {
     }
 
     /**
-     *
+     * Obtains the dependencies of the current element, and puts the dependencies on beanAttributes.
+     * @autor María José Cubero Hidalgo
      * @param beanAttributes
      * @param beanTag
      */

@@ -1,11 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased;
 
 import cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory;
-import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory;
-import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota;
-import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**

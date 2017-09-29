@@ -14,11 +14,9 @@ import java.util.HashMap;
 public class XMLBeanFactory extends AbstractBeanFactory {
 
     private XMLParser xmlParser;
-    private String path;
     private AnnotationBeanFactory annotationBeanFactory;
 
-    public XMLBeanFactory(String fileName) {
-        this.path = "SpringContainer/src/main/resources/" + fileName;
+    public XMLBeanFactory(String path) {
         this.xmlParser = new XMLParser(path, this);
         xmlParser.readXML();
         // annotationBeanFactory= new AnnotationBeanFactory();

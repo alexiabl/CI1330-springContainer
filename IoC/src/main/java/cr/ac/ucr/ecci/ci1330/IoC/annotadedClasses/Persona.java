@@ -22,7 +22,7 @@ public class Persona {
         this.edad = 18;
         this.nombre = "Alberto";
     }
-
+/*
 
     public int getEdad() {
         return edad;
@@ -51,5 +51,5 @@ public class Persona {
     @PreDestruct
     public void destructMethod(){
         System.out.println("**Mensaje: Se llama al metodo destructMethod de la clase Persona**");
-    }
+    }*/
 }

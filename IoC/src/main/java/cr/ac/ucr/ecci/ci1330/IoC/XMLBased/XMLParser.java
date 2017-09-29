@@ -66,7 +66,12 @@ public class XMLParser {
         return beanAttributes;
     }
 
-    public void setBeanDependencies(HashMap<String, Object> beanAttributes, Element beanTag){
+    /**
+     *@author María José Cubero
+     *@param //(HashMap<String, Object> beanAttributes, Element beanTag)
+     *@return (methods only)
+     */
+    public void setBeanDependencies(HashMap<String, Object> beanAttributes, Element beanTag) {
         Elements dependenciesTags = beanTag.getChildElements();
         if (dependenciesTags.size() > 0) {
             List<Dependency> constructorDependencies = new ArrayList<>();

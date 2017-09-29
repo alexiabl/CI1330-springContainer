@@ -1,5 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses;
 
+import cr.ac.ucr.ecci.ci1330.IoC.testeReflection;
+
 /**
  * Created by alexiaborchgrevink on 9/26/17.
  */

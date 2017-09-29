@@ -206,7 +206,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         }
     }
 
-
     protected Object injectSetterDependencies(Boolean hasConstructor, Bean bean, Class newClass, String setterName, Object parameter) {
         Object objectInstance = null;
         if (!hasConstructor) {

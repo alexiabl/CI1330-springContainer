@@ -12,9 +12,11 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        AbstractBeanFactory annotationTest = new AnnotationBeanFactory("CI1330-springContainer/SpringContainer/src/main/resources/xmlAnnotations.xml");
+     //   AbstractBeanFactory annotationTest = new AnnotationBeanFactory("CI1330-springContainer/SpringContainer/src/main/resources/xmlAnnotations.xml");
 
-        String path = "SpringContainer/src/main/resources/beans.xml";
+
+
+        String path = "IoC/src/main/resources/beans.xml";
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
 
         System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());

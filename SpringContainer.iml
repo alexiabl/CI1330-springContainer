@@ -4,7 +4,8 @@
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/SpringContainer/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/IoC/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/IoC" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

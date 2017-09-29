@@ -7,7 +7,7 @@ public class testXml {
 
     public testXml() {
     }
-
+/*
     public void executeTest() {
         String path = "beanExample.xml";
         AbstractBeanFactory abstractBeanFactory = new XMLBeanFactory(path);
@@ -78,9 +78,9 @@ public class testXml {
 
         /*System.out.println("\n4) Autowiring");
         System.out.println("-COMPROBACION DEL By Name:");
-        System.out.println("-COMPROBACION DEL By Type:");*/
+        System.out.println("-COMPROBACION DEL By Type:");
 
-        }
+        }*/
 
 
 }

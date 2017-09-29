@@ -6,6 +6,7 @@ package cr.ac.ucr.ecci.ci1330.IoC;
 public class Estudiante {
     private String name;
     private String Age;
+    private testeReflection testeReflection;
 
     public Estudiante(){
         name= "Maria";
@@ -13,6 +14,15 @@ public class Estudiante {
 
     public String getName() {
         return name;
+    }
+
+
+    public testeReflection getTesteReflection() {
+        return testeReflection;
+    }
+
+    public void setTesteReflection(testeReflection testeReflection) {
+        this.testeReflection = testeReflection;
     }
 
     public void setName(String name) {

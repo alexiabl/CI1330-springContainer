@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1330.IoC.beanGraph;
+package cr.ac.ucr.ecci.ci1330.IoC.BeanGraph;
 
 
 import java.util.ArrayList;

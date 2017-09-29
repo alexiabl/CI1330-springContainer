@@ -9,7 +9,7 @@ public class Main {
 
 
 
-        String path = "IoC/src/main/resources/beans.xml";
+        String path = "src/main/resources/beans.xml";
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
 
         System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());

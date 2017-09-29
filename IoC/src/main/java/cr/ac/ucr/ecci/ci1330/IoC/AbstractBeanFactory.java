@@ -331,13 +331,8 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
                 Bean bean = createBean(obtainBeanAttributes(id));
                 beanHashMap.put("id", bean);
                 addEdges(bean);
-                if(!beanGraph.reviewCyclesBean()){
-                    bean.setBeanInstance(injectBeanInstance(bean));
-                    return  bean.getBeanInstance();
-                }
-                else{
-                    System.exit(0);
-                }
+                bean.setBeanInstance(injectBeanInstance(bean));
+                return  bean.getBeanInstance();
             }
             if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
                 Bean bean = createBean(obtainBeanAttributes(id));

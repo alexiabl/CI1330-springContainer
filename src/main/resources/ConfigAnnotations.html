@@ -76,6 +76,8 @@
             el bean en caso de que exista una dependencia y con este,
             poder inyectarla.
         </p>
+        <p>Ejemplo: </p>
+        <img src="./images/Component.png"/>
         <br>
         <h5><b>@Autowired</b></h5>
         <p>El annotation de @Autowired se utiliza para invocar al constructor de la clase o para setear algún atributo
@@ -88,9 +90,11 @@
         <p>Por defecto, el modo de @Autowired es BYTPE. </p>
         <p><u>Uso:</u> Crea una instancia del objeto de la clase definida cuando este tiene el mismo tipo. Por lo que
             solo puede haber un bean “By Type” que no repita el tipo con otro.</p>
+        <img src="images/autowiredType.png"/>
         <br>
         <p><i>BYNAME:</i></p>
         <p><u>Uso:</u>Crea una instancia del objeto cuando este se llama igual que el id del componente.</p>
+        <img src="images/autowiredName.png"/>
         <br>
         <h5><b>@Scope</b></h5>
         <p>El annotation @Scope determina el lifecycle de una instancia o bean. Este tiene dos tipos:
@@ -100,23 +104,28 @@
         <p><i>SINGLETON:</i></p>
         <p>Por defecto, el tipo de @Scope es SINGLETON. </p>
         <p><u>Uso:</u>Se crea una instancia del objeto por contenedor.</p>
+        <img src="images/scopeProt.png"/>
         <br>
         <p><i>PROTOTYPE</i></p>
         <p><u>Uso:</u>Se crea una instancia nueva por cada objeto que requiera una.</p>
+        <img src=" images/scopeSing.png"/>
         <br>
         <h5><b>@PostConstruct</b></h5>
         <p>El annotation @PostConstruct se utiliza para un método del objeto que se invoca después de que el bean ha
             sido creado y la inyección de la independencia está completada. </p>
+        <img src="images/postconstruct.png"/>
         <br>
         <h5><b>@PreDestruct</b></h5>
         <p>El annotation @PreDestruct se utiliza para un método que se invoca antes de que el bean se elimine del
             contexto de la aplicación. Señala que un componente se va a destruir del contenedor. </p>
+        <img src="images/preDestruct.png">
         <br>
         <h5><b>@Lazy</b></h5>
         <p>El annotation @Lazy se utiliza para una objeto en caso de que se quisiera hacer "lazy initialization" del
             bean.
             Si el annotation @Lazy esta presente en la definicion del objeto, el valor de @Lazy se setea como "true".
         </p>
+        <img src="images/lazy.png">
         <br>
     </div>
 </div>

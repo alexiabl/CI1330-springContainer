@@ -23,18 +23,9 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
     private AnnotationParser annotationParser;
     private HashMap<String, Object> annotationsContent;
 
-
     public AnnotationBeanFactory(String xmlPath) {
         annotationsContent = new HashMap<>();
         List<Class> annotatedClasses = this.getClassesFromPackage(xmlPath);
-        for (Class aClass : annotatedClasses) {
-            this.annotationParser = new AnnotationParser(aClass, this);
-        }
-    }
-
-    public AnnotationBeanFactory(Element element){
-        annotationsContent = new HashMap<>();
-        List<Class> annotatedClasses = this.parseHybridConfiguration(element);
         for (Class aClass : annotatedClasses) {
             this.annotationParser = new AnnotationParser(aClass, this);
         }
@@ -79,25 +70,5 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
         return annotadedClasses;
     }
 
-    /**
-     * Reads the xmlAnnotations file for the classes to scan for Annotations to use with XML configuration.
-     * @author Maria Jose Cubero
-     * @param element
-     * @return List</Class>
-     */
-    public List<Class> parseHybridConfiguration(Element element) {
-        List<Class> annotatedClasses = new ArrayList<>();
-        Elements classes = element.getChildElements();
-        try {
-            for (int i = 0; i < classes.size(); i++) {
-                String packageName = classes.get(i).getAttribute("package").getValue();
-                Class aClass = Class.forName(packageName);
-                annotatedClasses.add(aClass);
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return annotatedClasses;
-    }
 }
 

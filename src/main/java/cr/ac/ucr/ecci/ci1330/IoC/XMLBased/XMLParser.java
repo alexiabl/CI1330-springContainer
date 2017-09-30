@@ -1,5 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.IoC.XMLBased;
 
+import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationParser;
 import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency;
 import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
@@ -24,6 +25,7 @@ public class XMLParser {
     private String path;
     private XMLBeanFactory xmlBeanFactory;
     private HashMap<String, Element> tagsBeanContent;
+    private AnnotationParser annotationParser;
 
     public XMLParser(String path, XMLBeanFactory xmlBeanFactory) {
         this.path = path;
@@ -51,7 +53,17 @@ public class XMLParser {
         for (int i = 0; i < beanTags.size(); i++) {
             Element currentBeanTag = beanTags.get(i);
             if(currentBeanTag.getLocalName().equals("classesToScan")){
-                this.xmlBeanFactory.callAnnotationBeanFactory(currentBeanTag);
+                Elements classes = currentBeanTag.getChildElements();
+                try {
+                    for (int j = 0; j < classes.size(); j++) {
+                        String packageName = classes.get(j).getAttribute("package").getValue();
+                        Class aClass = Class.forName(packageName);
+                        this.annotationParser= new AnnotationParser(aClass);
+                        this.xmlBeanFactory.createBean(annotationParser.getAnnotationBeanContent());
+                    }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
             else if (!this.xmlBeanFactory.getBeanHashMap().containsKey(currentBeanTag.getAttributeValue("id"))){
                 this.xmlBeanFactory.createBean(obtainBeanAttributes(currentBeanTag));

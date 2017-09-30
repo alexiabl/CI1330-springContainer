@@ -12,17 +12,24 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        AbstractBeanFactory annotationTest = new AnnotationBeanFactory("CI1330-springContainer/SpringContainer/src/main/resources/xmlAnnotations.xml");
-        Persona persona = (Persona) annotationTest.getBean("Persona");
-        String path = "SpringContainer/src/main/resources/beans.xml";
-        AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
 
-        System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());
+       // AbstractBeanFactory hybridTeste= new XMLBeanFactory("src/main/resources/hybridBeans.xml");
+        AbstractBeanFactory annotationTest = new AnnotationBeanFactory("src/main/resources/xmlAnnotations.xml");
+        Persona persona= (Persona) annotationTest.getBean("Persona");
+        System.out.println(persona.getEdad());
+       // Estudiante estudiante= (Estudiante) hybridTeste.getBean("Estudiante");
+        //System.out.println(estudiante.getName());
+     //   Persona persona = (Persona) hybridTeste.getBean("persona");
+      //  System.out.println(persona.getNombre());
+       // String path = "SpringContainer/src/main/resources/beans.xml";
+//        AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
+
+     //   System.out.println("beanHashMap.size()= "+abstractBeanFactory.beanHashMap.size());
 
       //  Persona persona= (Persona) abstractBeanFactory.getBean("Persona");
         //System.out.println(persona.getNombre());
 
-        testeReflection testeReflection= (cr.ac.ucr.ecci.ci1330.IoC.testeReflection) abstractBeanFactory.getBean("teste");
+     //   testeReflection testeReflection= (cr.ac.ucr.ecci.ci1330.IoC.testeReflection) abstractBeanFactory.getBean("teste");
 
        // System.out.println(testeReflection.getMascota().getName());
         //System.out.println(testeReflection.getEstudiante().getName());

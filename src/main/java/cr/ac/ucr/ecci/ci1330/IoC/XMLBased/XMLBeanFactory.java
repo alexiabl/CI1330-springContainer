@@ -31,7 +31,4 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         return xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id));
     }
 
-    public void callAnnotationBeanFactory(Element element){
-        AnnotationBeanFactory annotationBeanFactory= new AnnotationBeanFactory(element);
-    }
 }

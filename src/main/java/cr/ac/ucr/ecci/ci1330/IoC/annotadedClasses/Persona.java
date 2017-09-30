@@ -9,7 +9,6 @@ import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
  */
 
 @Component(id = "Persona")
-@Lazy
 public class Persona {
 
     private int edad;

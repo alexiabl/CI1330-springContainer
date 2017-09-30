@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by majo_ on 22/9/2017.
+ * Parse the package classes to get all the annotations information of the object to create the Bean later.
+ * @author Alexia Borchgrevink
  */
 public class AnnotationParser {
 
@@ -31,7 +32,11 @@ public class AnnotationParser {
         return this.annotationBeanContent;
     }
 
-
+    /**
+     * Read the class file for annotations, obtains the information of a bean and calls a method to create it.
+     *
+     * @author Alexia Borchgrevink
+     */
     public void parseClassForAnnotations() {
         if (this.theClass.isAnnotationPresent(Component.class)) {
             Component component = (Component) this.theClass.getAnnotation(Component.class);
@@ -78,9 +83,14 @@ public class AnnotationParser {
         }
     }
 
+    /**
+     * Scans the class fields for @autowired annotation to set dependencies.
+     * @param beanId
+     * @return ArrayList</Dependency>
+     * @author Alexia Borchgrevink
+     */
     public ArrayList<Dependency> scanClassSetterDependencies(String beanId) {
         Field fields[] = this.theClass.getDeclaredFields(); //atributos de la clase
-        Method methods[] = this.theClass.getDeclaredMethods();
         ArrayList<Dependency> setterDependencies = new ArrayList<>();
         for (Field field : fields) { //revisar los atributos de la clase
             if (field.isAnnotationPresent(Autowired.class)) { //setter dependencies
@@ -102,6 +112,12 @@ public class AnnotationParser {
         return setterDependencies;
     }
 
+    /**
+     * Scans the class constructors for @autowired annotation to set dependencies.
+     * @param beanId
+     * @return ArrayList</Dependency>
+     * @author Alexia Borchgrevink
+     */
     public ArrayList<Dependency> scanClassConstructorDependencies(String beanId) {
         ArrayList<Dependency> constructorDependencies = new ArrayList<>();
         Constructor constructors[] = this.theClass.getConstructors(); //constructores de la clase

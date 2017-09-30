@@ -21,10 +21,5 @@ public class testAnnotations {
         }
         beanFactory.getBean(annotatedClasses.get(0).getSimpleName());
     }
-/*    List<Class> classesToScan = new LinkedList<>();
-        classesToScan.add(Persona.class);
-        classesToScan.add(Mascota.class);
-    testAnnotations testAnnotations = new testAnnotations(classesToScan);
-        testAnnotations.executeTest();*/
 
 }

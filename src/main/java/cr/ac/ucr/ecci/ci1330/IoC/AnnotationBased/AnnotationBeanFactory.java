@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Creates an Annotation Bean Factory for the Annotation Based Configuration
+ *
+ * @author Alexia Borchgrevink
+ */
 public class AnnotationBeanFactory extends AbstractBeanFactory {
 
     private AnnotationParser annotationParser;
@@ -39,11 +44,22 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
         return annotationsContent;
     }
 
+    /**
+     * Obtains the attributes of a bean
+     *
+     * @param id
+     * @return
+     */
     @Override
     public HashMap<String, Object> obtainBeanAttributes(String id) {
         return (HashMap<String, Object>) annotationsContent.get(id);
     }
 
+    /**
+     * Reads the xmlAnnotations file for the classes to scan for Annotations.
+     * @param configFile
+     * @return List</Class>
+     */
     public List<Class> getClassesFromPackage(String configFile) {
         Builder builder = new Builder();
         Document xmlDoc = null;
@@ -58,12 +74,17 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
                 annotadedClasses.add(aClass);
             }
         } catch (Exception e) {
-            System.out.println("El path es incorrecto");
             e.printStackTrace();
         }
         return annotadedClasses;
     }
 
+    /**
+     * Reads the xmlAnnotations file for the classes to scan for Annotations to use with XML configuration.
+     * @author Maria Jose Cubero
+     * @param element
+     * @return List</Class>
+     */
     public List<Class> parseHybridConfiguration(Element element) {
         List<Class> annotatedClasses = new ArrayList<>();
         Elements classes = element.getChildElements();

@@ -23,11 +23,11 @@
      id="mySidebar">
     <a class="w3-bar-item w3-button w3-hide-large w3-large" href="javascript:void(0)" onclick="w3_close()">Close <i
             class="fa fa-remove"></i></a>
-    <a href="./Documentation.html" class="w3-bar-item w3-button">Introduccion</a>
+    <a href="./Documentation.html" class="w3-bar-item w3-button">Introducción</a>
     <a href="./Problemas.html" class="w3-bar-item w3-button">Problemas no resueltos</a>
-    <a href="./DescLibreria.html" class="w3-bar-item w3-button">Descripcion de la libreria</a>
-    <a href="./ConfigXML.html" class="w3-bar-item w3-button">Configuracion con XML</a>
-    <a href="./ConfigAnnotations.html" class="w3-bar-item w3-button w3-teal">Configuracion con Annotations</a>
+    <a href="./DescLibreria.html" class="w3-bar-item w3-button">Descripción de la librería</a>
+    <a href="./ConfigXML.html" class="w3-bar-item w3-button">Configuración con XML</a>
+    <a href="./ConfigAnnotations.html" class="w3-bar-item w3-button w3-teal">Configuración con Annotations</a>
     <a class="w3-bar-item w3-button" href="./diagramaClases.html">Diagrama de clases</a>
     <a class="w3-bar-item w3-button" href="./ManualInstalacion.html">Manual de instalación de la librería</a>
     <a class="w3-bar-item w3-button" href="./usoXML.html">Uso mediante XML</a>
@@ -54,7 +54,70 @@
 
         <h2>Configuración con Annotations</h2>
 
-        <p>Insertar texto aqui, si se quiere poner heading use el tag h2</p>
+        <p>Si se desea utilizar Inversion of Control utilizando Annotations únicamente, debe seguir los siguientes
+            pasos:
+        </p>
+        <ol>
+            <li>Crear el archivo XML "xmlAnnotations"</li>
+            <li>Agregue annotations a las clases de acuerdo a las reglas de uso de cada Annotation.</li>
+            <li>Especifique las clases a escanear utilizando las etiquetas "classesToScan" y "classes" como en el
+                siguiente ejemplo:
+            </li>
+            <a href="xmlAnnotations.xml">xmlAnnotations.xml</a>
+        </ol>
+        <br>
+        <h3>Reglas de uso de las Annotations</h3>
+        <h5><b>@Component</b></h5>
+        <p>El annotation de @Component se usa para definir un objecto como bean. Este annotation debe estar presente en
+            la definición de
+            una clase para poder escanear las demás annotations de la clase.
+        </p>
+        <p>A este se le asigna un <a style="font-family: 'Courier New'">"id"</a> que sirve para identificar la clase o
+            el bean en caso de que exista una dependencia y con este,
+            poder inyectarla.
+        </p>
+        <br>
+        <h5><b>@Autowired</b></h5>
+        <p>El annotation de @Autowired se utiliza para invocar al constructor de la clase o para setear algún atributo
+            de la instancia del objeto creado. @Autowired tiene dos
+            tipos de autowiring. Estos son:
+        <p style="text-align: center; font-family: 'Courier New',Consolas, 'Source Code Pro'">autowiringMode.BYNAME</p>
+        <p style="text-align: center; font-family: 'Courier New', Consolas, 'Source Code Pro'">autowiringMode.BYTYPE</p>
+        </p>
+        <p><i>BYTYPE:</i></p>
+        <p>Por defecto, el modo de @Autowired es BYTPE. </p>
+        <p><u>Uso:</u> Crea una instancia del objeto de la clase definida cuando este tiene el mismo tipo. Por lo que
+            solo puede haber un bean “By Type” que no repita el tipo con otro.</p>
+        <br>
+        <p><i>BYNAME:</i></p>
+        <p><u>Uso:</u>Crea una instancia del objeto cuando este se llama igual que el id del componente.</p>
+        <br>
+        <h5><b>@Scope</b></h5>
+        <p>El annotation @Scope determina el lifecycle de una instancia o bean. Este tiene dos tipos:
+        <p style="text-align: center; font-family: 'Courier New',Consolas, 'Source Code Pro'">ScopeType.SINGLETON</p>
+        <p style="text-align: center; font-family: 'Courier New', Consolas, 'Source Code Pro'">ScopeType.PROTOTYPE</p>
+        </p>
+        <p><i>SINGLETON:</i></p>
+        <p>Por defecto, el tipo de @Scope es SINGLETON. </p>
+        <p><u>Uso:</u>Se crea una instancia del objeto por contenedor.</p>
+        <br>
+        <p><i>PROTOTYPE</i></p>
+        <p><u>Uso:</u>Se crea una instancia nueva por cada objeto que requiera una.</p>
+        <br>
+        <h5><b>@PostConstruct</b></h5>
+        <p>El annotation @PostConstruct se utiliza para un método del objeto que se invoca después de que el bean ha
+            sido creado y la inyección de la independencia está completada. </p>
+        <br>
+        <h5><b>@PreDestruct</b></h5>
+        <p>El annotation @PreDestruct se utiliza para un método que se invoca antes de que el bean se elimine del
+            contexto de la aplicación. Señala que un componente se va a destruir del contenedor. </p>
+        <br>
+        <h5><b>@Lazy</b></h5>
+        <p>El annotation @Lazy se utiliza para una objeto en caso de que se quisiera hacer "lazy initialization" del
+            bean.
+            Si el annotation @Lazy esta presente en la definicion del objeto, el valor de @Lazy se setea como "true".
+        </p>
+        <br>
     </div>
 </div>
 

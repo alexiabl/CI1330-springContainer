@@ -3,3 +3,4 @@
     <class package="cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota"></class>
     <class package="cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona"></class>
 </classesToScan>
+

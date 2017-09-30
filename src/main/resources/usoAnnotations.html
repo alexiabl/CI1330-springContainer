@@ -6,15 +6,24 @@
 <link rel="stylesheet" href="style1.css">
 <link rel="stylesheet" href="style2.css">
 <link rel="stylesheet" href="style3.css">
-<link rel="stylesheet" href="style4.css"><style>
-    body {font-family: "Roboto", sans-serif}
-    .w3-bar-block .w3-bar-item{padding:16px;font-weight:bold}
+<link rel="stylesheet" href="style4.css">
+<style>
+    body {
+        font-family: "Roboto", sans-serif
+    }
+
+    .w3-bar-block .w3-bar-item {
+        padding: 16px;
+        font-weight: bold
+    }
 </style>
 <body>
 
-<nav class="w3-sidebar w3-bar-block w3-collapse w3-animate-left w3-card-2" style="z-index:3;width:250px;" id="mySidebar">
-    <a class="w3-bar-item w3-button w3-hide-large w3-large" href="javascript:void(0)" onclick="w3_close()">Close <i class="fa fa-remove"></i></a>
-    <a href="./Documentation.html" class="w3-bar-item w3-button w3-teal">Introduccion</a>
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-animate-left w3-card-2" style="z-index:3;width:250px;"
+     id="mySidebar">
+    <a class="w3-bar-item w3-button w3-hide-large w3-large" href="javascript:void(0)" onclick="w3_close()">Close <i
+            class="fa fa-remove"></i></a>
+    <a href="./Documentation.html" class="w3-bar-item w3-button">Introduccion</a>
     <a href="./Problemas.html" class="w3-bar-item w3-button">Problemas no resueltos</a>
     <a href="./DescLibreria.html" class="w3-bar-item w3-button">Descripcion de la libreria</a>
     <a href="./ConfigXML.html" class="w3-bar-item w3-button">Configuracion con XML</a>
@@ -22,12 +31,13 @@
     <a class="w3-bar-item w3-button" href="./diagramaClases.html">Diagrama de clases</a>
     <a class="w3-bar-item w3-button" href="./ManualInstalacion.html">Manual de instalación de la librería</a>
     <a class="w3-bar-item w3-button" href="./usoXML.html">Uso mediante XML</a>
-    <a class="w3-bar-item w3-button" href="./usoAnnotations.html">Uso mediante Annotations</a>
+    <a class="w3-bar-item w3-button w3-teal" href="./usoAnnotations.html">Uso mediante Annotations</a>
     <a class="w3-bar-item w3-button" href="./usoHibrido.html">Uso mediante Annotations y XML</a>
 
 </nav>
 
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     id="myOverlay"></div>
 
 <div class="w3-main" style="margin-left:250px;">
 
@@ -38,27 +48,13 @@
 
     <div class="w3-container w3-theme" style="padding:64px 32px">
         <h1 class="w3-xlarge" style="text-align: center">CI-1330 Tarea Programada I: Inversion of Control</h1>
-        <h4>Autores:</h4>
-        <h5>Maria Jose Cubero</h5>
-        <h5>Renato Maineri</h5>
-        <h5>Alexia Borchgrevink</h5>
     </div>
 
     <div class="w3-container" style="padding:32px">
 
-        <h2>Descripcion de la tarea</h2>
+        <h2>Uso mediante Annotations</h2>
 
-        <p>IoC es una librería desarrollada con el propósito de realizar inyección de dependencias en cualquier
-            aplicación desarrollada en Java. La inyección de dependencias es un patrón de diseño que provee la ventaja
-            de que las clases son independientes unas de las otras, de manera que una clase que vaya a ocupar de un
-            objeto en específico no debe crearlo (hacerle new) en la misma clase, ya que IoC le inyecta la dependencia
-            de la otra clase desde afuera.
-            La inyección de dependencias se realiza pasándole los parámetros del constructor ya creados correctamente y
-            también pasándole el valor de un atributo sin necesidad de que le haga new, sino más bien llamando a su
-            método de setter. La especificación de cómo se inyectan las dependencias de puede realizar de dos tipos,
-            utilizando la configuración por XML o utilizando la configuración por Annotations, y de la misma forma se
-            pueden utilizar las dos al mismo tiempo.
-        </p>
+        <p>Insertar texto aqui, si se quiere poner heading use el tag h2</p>
     </div>
 </div>
 
@@ -74,7 +70,9 @@
     }
 
     // Change style of top container on scroll
-    window.onscroll = function() {myFunction()};
+    window.onscroll = function () {
+        myFunction()
+    };
     function myFunction() {
         if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
             document.getElementById("myTop").classList.add("w3-card-4", "w3-animate-opacity");

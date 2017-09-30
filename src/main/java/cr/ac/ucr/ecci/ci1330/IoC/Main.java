@@ -13,12 +13,14 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-       // AbstractBeanFactory hybridTeste= new XMLBeanFactory("src/main/resources/hybridBeans.xml");
-        AbstractBeanFactory annotationTest = new AnnotationBeanFactory("src/main/resources/xmlAnnotations.xml");
-        Persona persona= (Persona) annotationTest.getBean("Persona");
+        AbstractBeanFactory hybridTeste= new XMLBeanFactory("src/main/resources/hybridBeans.xml");
+     //   AbstractBeanFactory annotationTest = new AnnotationBeanFactory("src/main/resources/xmlAnnotations.xml");
+        Persona persona= (Persona) hybridTeste.getBean("Persona");
         System.out.println(persona.getEdad());
-       // Estudiante estudiante= (Estudiante) hybridTeste.getBean("Estudiante");
-        //System.out.println(estudiante.getName());
+        Mascota mascota= (Mascota) hybridTeste.getBean("Mascota");
+        System.out.println(mascota.getName());
+        Estudiante estudiante= (Estudiante) hybridTeste.getBean("Estudiante");
+        System.out.println(estudiante.getName());
      //   Persona persona = (Persona) hybridTeste.getBean("persona");
       //  System.out.println(persona.getNombre());
        // String path = "SpringContainer/src/main/resources/beans.xml";

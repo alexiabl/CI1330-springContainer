@@ -436,7 +436,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
      */
     public Object getBean(String id) {
         try {
-            if (beanHashMap.get(id).isLazy() && beanHashMap.get(id).getBeanInstance().equals(null)) {
+            if (beanHashMap.get(id).isLazy() && beanHashMap.get(id).getBeanInstance()==null) {
                 Bean bean = createBean(obtainBeanAttributes(id));
                 beanHashMap.put(id, bean);
                 addEdges(bean);

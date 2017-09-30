@@ -1,8 +1,5 @@
 package cr.ac.ucr.ecci.ci1330.IoC;
 
-import cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory;
-import cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona;
-
 public class testXml {
 
     public testXml() {

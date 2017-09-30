@@ -26,9 +26,6 @@ public class BeanGraph {
     public void addEdge(String start, String end) {
         Edge edge = new Edge(getNodeForName(start), getNodeForName(end));
         getNodeForName(start).addEdge(edge);
-        if (getNodeForName(end) == null) {
-            System.out.println(start+".PERROOO."+end+".");
-        }
     }
 
     public boolean reviewCyclesBean() {

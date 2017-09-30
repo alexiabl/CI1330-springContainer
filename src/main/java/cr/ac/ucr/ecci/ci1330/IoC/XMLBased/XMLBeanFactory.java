@@ -14,13 +14,11 @@ import java.util.HashMap;
 public class XMLBeanFactory extends AbstractBeanFactory {
 
     private XMLParser xmlParser;
-    private AnnotationBeanFactory annotationBeanFactory;
 
     public XMLBeanFactory(String path) {
         this.xmlParser = new XMLParser(path, this);
-        xmlParser.readXML();
-        // annotationBeanFactory= new AnnotationBeanFactory();
-        createBeanInstances();
+        this.xmlParser.readXML();
+        this.createBeanInstances();
     }
 
     /**
@@ -33,11 +31,7 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         return xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id));
     }
 
-    public AnnotationBeanFactory getAnnotationBeanFactory() {
-        return annotationBeanFactory;
-    }
-
-    public void setAnnotationBeanFactory(AnnotationBeanFactory annotationBeanFactory) {
-        this.annotationBeanFactory = annotationBeanFactory;
+    public void callAnnotationBeanFactory(Element element){
+        AnnotationBeanFactory annotationBeanFactory= new AnnotationBeanFactory(element);
     }
 }

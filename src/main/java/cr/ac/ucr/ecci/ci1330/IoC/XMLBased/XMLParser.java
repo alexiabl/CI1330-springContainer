@@ -50,8 +50,13 @@ public class XMLParser {
         Elements beanTags = root.getChildElements();
         for (int i = 0; i < beanTags.size(); i++) {
             Element currentBeanTag = beanTags.get(i);
-            xmlBeanFactory.createBean(obtainBeanAttributes(currentBeanTag));
-            tagsBeanContent.put(currentBeanTag.getAttributeValue("id"), currentBeanTag);
+            if(currentBeanTag.getLocalName().equals("classesToScan")){
+                this.xmlBeanFactory.callAnnotationBeanFactory(currentBeanTag);
+            }
+            else{
+                this.xmlBeanFactory.createBean(obtainBeanAttributes(currentBeanTag));
+                this.tagsBeanContent.put(currentBeanTag.getAttributeValue("id"), currentBeanTag);
+            }
         }
     }
 

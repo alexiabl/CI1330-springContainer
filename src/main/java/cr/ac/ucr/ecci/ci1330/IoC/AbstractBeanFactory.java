@@ -11,6 +11,7 @@ import java.util.*;
 
 /**
  * Creates beans and their instances, injecting dependencies. Also, returns bean instance when user asks for it.
+ *
  * @author María José Cubero
  * @author Renato Mainieri
  */
@@ -30,9 +31,10 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Obtains a bean information a creates a bean but not its instance.
-     * @author María José Cubero
+     *
      * @param beanInformation
      * @return Created bean
+     * @author María José Cubero
      */
     public Bean createBean(HashMap<String, Object> beanInformation) {
         Bean bean = null;
@@ -40,7 +42,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         try {
             definedClass = Class.forName((String) beanInformation.get("className"));
         } catch (ClassNotFoundException e) {
-            System.out.println("La clase "+beanInformation.get("className")+"no existe");
+            System.out.println("La clase " + beanInformation.get("className") + "no existe");
         }
         if (definedClass != null) {
             bean = new Bean();
@@ -67,7 +69,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             if (beanInformation.containsKey("setterDependencies")) {
                 bean.setSetterDependencies((List<Dependency>) beanInformation.get("setterDependencies")); //por setter
             }
-            if(beanInformation.containsKey("lazy")){
+            if (beanInformation.containsKey("lazy")) {
                 bean.setLazy((Boolean) beanInformation.get("lazy"));
             }
             beanHashMap.put((String) beanInformation.get("id"), bean);
@@ -78,20 +80,22 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Adds bean dependecies ass edges of a node.
-     * @author Renato Mainieri
+     *
      * @param bean
+     * @author Renato Mainieri
      */
-    protected void addEdges(Bean bean){
+    protected void addEdges(Bean bean) {
         for (Dependency dependency : bean.getConstructorDependencies()) {
-            beanGraph.addEdge(bean.getId(),dependency.getReference());
+            beanGraph.addEdge(bean.getId(), dependency.getReference());
         }
         for (Dependency dependency : bean.getSetterDependencies()) {
-            beanGraph.addEdge(bean.getId(),dependency.getReference());
+            beanGraph.addEdge(bean.getId(), dependency.getReference());
         }
     }
 
     /**
      * Iterates the beansHashMap and creates the instances of each bean.
+     *
      * @author María José Cubero
      * @author Renato Mainieri
      */
@@ -102,21 +106,21 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         if (!beanGraph.reviewCyclesBean()) {
             for (Map.Entry<String, Bean> entry : beanHashMap.entrySet()) {
                 Bean bean = entry.getValue();
-                if(!bean.isLazy()){
+                if (!bean.isLazy()) {
                     injectBeanInstance(bean);
                 }
             }
-        }
-        else {
+        } else {
             System.exit(0);
         }
     }
 
     /**
      * Creates a bean instance with all of its needed dependencies.
-     * @author María José Cubero
+     *
      * @param bean
      * @return Object of type bean instance
+     * @author María José Cubero
      */
     protected Object injectBeanInstance(Bean bean) {
         if (bean.getBeanInstance() != null && bean.getScopeType().equals(ScopeType.SINGLETON)) {
@@ -160,7 +164,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
                     beanHashMap.remove(bean.getId());
                 }
             }
-            instance= bean.getBeanInstance();
+            instance = bean.getBeanInstance();
         }
         executeBeanInstanceMethod(bean, bean.getInitMethod());
         return instance;
@@ -168,42 +172,44 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Obtains the parameters of the bean, checks if it has constructor dependencies or setter dependencies, then calls obtainParameters
-     * @author María José Cubero
+     *
      * @param bean
      * @return Object[]: an array of the bean parameters instantieted.
+     * @author María José Cubero
      */
     protected Object[] obtainBeanParameters(Bean bean) {
         Object[] parameters = null;
         if (bean.getConstructorDependencies().size() > 0) {
             List<Dependency> constructorDependencies = bean.getConstructorDependencies();
-            parameters= obtainParameters(constructorDependencies, bean);
+            parameters = obtainParameters(constructorDependencies, bean);
             bean.getConstructorDependencies().clear();
         } else if (bean.getSetterDependencies().size() > 0) {
             List<Dependency> setterDependencies = bean.getSetterDependencies();
-            parameters= obtainParameters(setterDependencies, bean);
+            parameters = obtainParameters(setterDependencies, bean);
         }
         return parameters;
     }
 
     /**
      * Obtains the parameters of the bean iterating the bean dependencies, checks if it has to get the current parameter byName or byType.
-     * @author María José Cubero
+     *
      * @param dependencies
      * @param bean
      * @return Object[]: an array of the bean parameters instantieted.
+     * @author María José Cubero
      */
-    private Object [] obtainParameters(List<Dependency> dependencies, Bean bean){
-        Object[] parameters= new Object[dependencies.size()];
+    private Object[] obtainParameters(List<Dependency> dependencies, Bean bean) {
+        Object[] parameters = new Object[dependencies.size()];
         for (int i = 0; i < dependencies.size(); i++) {
             Dependency currentDependency = dependencies.get(i);
             if (currentDependency.getAutowiringMode().equals(AutowiringMode.BYNAME)) {
-                parameters[i]= obtainParameterByName(currentDependency.getReference(), bean);
-                if(parameters[i].equals(null)){
+                parameters[i] = obtainParameterByName(currentDependency.getReference(), bean);
+                if (parameters[i].equals(null)) {
                     return null;
                 }
             } else {
-                parameters[i]= obtainParameterByType(currentDependency.getReference(), bean);
-                if(parameters[i].equals(null)){
+                parameters[i] = obtainParameterByType(currentDependency.getReference(), bean);
+                if (parameters[i].equals(null)) {
                     return null;
                 }
             }
@@ -213,13 +219,14 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Creates a parameter instance when it is asked to be created byType.
-     * @author María José Cubero
+     *
      * @param reference
      * @param bean
      * @return Object: a parameter instance.
+     * @author María José Cubero
      */
     private Object obtainParameterByType(String reference, Bean bean) {
-        Object instance= null;
+        Object instance = null;
         boolean found = false;
         Iterator<Map.Entry<String, Bean>> entries = beanHashMap.entrySet().iterator();
         while (!found && entries.hasNext()) {
@@ -227,7 +234,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             if (entry.getValue().getClassName().equals(reference)) {
                 found = true;
                 Bean dependencyBean = entry.getValue();
-                instance= injectBeanInstance(dependencyBean);
+                instance = injectBeanInstance(dependencyBean);
                 return instance;
             }
         }
@@ -239,13 +246,14 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Creates a parameter instance when it is asked to be created byName.
-     * @author María José Cubero
-     * @author Renato Mainieri
+     *
      * @param reference
      * @param bean
      * @return Object: a parameter instance.
+     * @author María José Cubero
+     * @author Renato Mainieri
      */
-    private Object obtainParameterByName(String reference, Bean bean){
+    private Object obtainParameterByName(String reference, Bean bean) {
         if (beanHashMap.containsKey(reference)) {
             Bean dependencyBean = beanHashMap.get(reference);
             Object instance = injectBeanInstance(dependencyBean);
@@ -258,14 +266,15 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Injects setter dependencies to a bean instance.
-     * @author María José Cubero
-     * @author Renato Mainieri
+     *
      * @param hasConstructor: to define if the instance was already created
      * @param bean
      * @param newClass
      * @param setterName
      * @param parameter
      * @return Object: a bean instance with its setter dependencies injected.
+     * @author María José Cubero
+     * @author Renato Mainieri
      */
     protected Object injectSetterDependencies(Boolean hasConstructor, Bean bean, Class newClass, String setterName, Object parameter) {
         Object objectInstance = null;
@@ -301,11 +310,12 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Injects constructor dependencies to a bean instance.
-     * @author María José Cubero
-     * @author Renato Mainieri
+     *
      * @param newClass
      * @param parameters
      * @return Object: a bean instance with its constructor dependencies injected.
+     * @author María José Cubero
+     * @author Renato Mainieri
      */
     protected Object injectConstructorDependencies(Class newClass, Object[] parameters) {
         Object objectInstance = new Object[]{new Object()};
@@ -334,11 +344,12 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Looks for the constructor of the class that matches the specified constructor.
-     * @author María José Cubero
-     * @author Renato Mainieri
+     *
      * @param constructors
      * @param parameters
      * @return int: the position of the matching constructor.
+     * @author María José Cubero
+     * @author Renato Mainieri
      */
     protected int lookForConstructor(Constructor[] constructors, Object[] parameters) {
         boolean found = false;
@@ -372,10 +383,11 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Looks for a method that has to be invoked.
-     * @author María José Cubero
+     *
      * @param methods
      * @param setterName
      * @return Method: method to invoke.
+     * @author María José Cubero
      */
     protected Method obtainMethodtoInvoke(Method[] methods, String setterName) {
         boolean found = false;
@@ -397,10 +409,11 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Obtains the name of the setter that has to be invoked.
-     * @author María José Cubero
-     * @author Renato Mainieri
+     *
      * @param fieldName
      * @return String: name of the setter.
+     * @author María José Cubero
+     * @author Renato Mainieri
      */
     protected String obtainSetterName(String fieldName) {
         fieldName = fieldName.toLowerCase();
@@ -409,25 +422,26 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return setterName;
     }
 
-    protected HashMap<String, Object> obtainBeanAttributes(String id){
+    protected HashMap<String, Object> obtainBeanAttributes(String id) {
         return null;
     }
 
     /**
      * Obtains a bean instance when it is asked by its id.
-     * @author María José Cubero
-     * @author Renato Mainieri
+     *
      * @param id
      * @return Object: bean instance.
+     * @author María José Cubero
+     * @author Renato Mainieri
      */
     public Object getBean(String id) {
         try {
-            if(beanHashMap.get(id).isLazy() && beanHashMap.get(id).getBeanInstance() == null){
+            if (beanHashMap.get(id).isLazy() && beanHashMap.get(id).getBeanInstance() == null) {
                 Bean bean = createBean(obtainBeanAttributes(id));
                 beanHashMap.put(id, bean);
                 addEdges(bean);
                 bean.setBeanInstance(injectBeanInstance(bean));
-                return  bean.getBeanInstance();
+                return bean.getBeanInstance();
             }
             if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
                 Bean bean = createBean(obtainBeanAttributes(id));
@@ -443,8 +457,9 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Calls the destruct method
-     * @author Renato Mainieri
+     *
      * @param id
+     * @author Renato Mainieri
      */
     public void destroyBean(String id) {
         Bean bean = beanHashMap.remove(id);
@@ -453,9 +468,10 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     /**
      * Executes the init/destruct method
-     * @author Renato Mainieri
+     *
      * @param bean
      * @param methodName
+     * @author Renato Mainieri
      */
     public void executeBeanInstanceMethod(Bean bean, String methodName) {
         Class instance = null;
@@ -481,7 +497,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             }
         }
     }
-
 
 
 }

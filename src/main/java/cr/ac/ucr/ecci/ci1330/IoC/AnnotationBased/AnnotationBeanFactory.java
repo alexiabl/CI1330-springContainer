@@ -22,7 +22,15 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
     public AnnotationBeanFactory(String xmlPath) {
         annotationsContent = new HashMap<>();
         List<Class> annotatedClasses = this.getClassesFromPackage(xmlPath);
-        for (Class aClass: annotatedClasses) {
+        for (Class aClass : annotatedClasses) {
+            this.annotationParser = new AnnotationParser(aClass, this);
+        }
+    }
+
+    public AnnotationBeanFactory(Element element){
+        annotationsContent = new HashMap<>();
+        List<Class> annotatedClasses = this.parseHybridConfiguration(element);
+        for (Class aClass : annotatedClasses) {
             this.annotationParser = new AnnotationParser(aClass, this);
         }
     }
@@ -32,11 +40,11 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
     }
 
     @Override
-    public HashMap<String, Object> obtainBeanAttributes(String id){
+    public HashMap<String, Object> obtainBeanAttributes(String id) {
         return (HashMap<String, Object>) annotationsContent.get(id);
     }
 
-    public List<Class> getClassesFromPackage(String configFile){
+    public List<Class> getClassesFromPackage(String configFile) {
         Builder builder = new Builder();
         Document xmlDoc = null;
         List<Class> annotadedClasses = new ArrayList<>();
@@ -44,7 +52,7 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
             xmlDoc = builder.build(configFile);
             Element root = xmlDoc.getRootElement();
             Elements classes = root.getChildElements();
-            for (int i=0; i<classes.size(); i++){
+            for (int i = 0; i < classes.size(); i++) {
                 String packageName = classes.get(i).getAttribute("package").getValue();
                 Class aClass = Class.forName(packageName);
                 annotadedClasses.add(aClass);
@@ -54,6 +62,21 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
             e.printStackTrace();
         }
         return annotadedClasses;
+    }
+
+    public List<Class> parseHybridConfiguration(Element element) {
+        List<Class> annotatedClasses = new ArrayList<>();
+        Elements classes = element.getChildElements();
+        try {
+            for (int i = 0; i < classes.size(); i++) {
+                String packageName = classes.get(i).getAttribute("package").getValue();
+                Class aClass = Class.forName(packageName);
+                annotatedClasses.add(aClass);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return annotatedClasses;
     }
 }
 

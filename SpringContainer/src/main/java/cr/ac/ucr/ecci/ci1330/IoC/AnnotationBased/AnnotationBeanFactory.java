@@ -18,7 +18,6 @@ import java.util.List;
 public class AnnotationBeanFactory extends AbstractBeanFactory {
 
     private AnnotationParser annotationParser;
-    private String path;
     private HashMap<String, Object> annotationsContent;
 
 
@@ -26,11 +25,9 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
         annotationsContent = new HashMap<>();
         List<Class> annotatedClasses = this.getClassesFromPackage(xmlPath);
         for (Class aClass: annotatedClasses) {
-            annotationParser = new AnnotationParser(aClass, this);
-            //createBeanInstances();
+            this.annotationParser = new AnnotationParser(aClass, this);
         }
     }
-
 
     public HashMap<String, Object> getAnnotationsContent() {
         return annotationsContent;
@@ -39,22 +36,6 @@ public class AnnotationBeanFactory extends AbstractBeanFactory {
     @Override
     public HashMap<String, Object> obtainBeanAttributes(String id){
         return (HashMap<String, Object>) annotationsContent.get(id);
-    }
-
-
-    @Override
-    public Object getBean(String id) {
-        try {
-            if (beanHashMap.get(id).getScopeType().equals(ScopeType.PROTOTYPE)) {
-                Bean bean = createBean(annotationParser.getAnnotationBeanContent());
-                bean.setBeanInstance(injectBeanInstance(bean));
-                return bean.getBeanInstance();
-            }
-            return beanHashMap.get(id).getBeanInstance();
-        } catch (NullPointerException e) {
-            System.out.println("El id '" + id + "' no identifica nigún bean.");
-            return null;
-        }
     }
 
     public List<Class> getClassesFromPackage(String configFile){

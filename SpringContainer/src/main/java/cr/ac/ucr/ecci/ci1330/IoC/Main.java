@@ -13,7 +13,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         AbstractBeanFactory annotationTest = new AnnotationBeanFactory("CI1330-springContainer/SpringContainer/src/main/resources/xmlAnnotations.xml");
-
+        Persona persona = (Persona) annotationTest.getBean("Persona");
         String path = "SpringContainer/src/main/resources/beans.xml";
         AbstractBeanFactory abstractBeanFactory= new XMLBeanFactory(path);
 

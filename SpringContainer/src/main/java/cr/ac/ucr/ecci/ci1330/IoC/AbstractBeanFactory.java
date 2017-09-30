@@ -46,7 +46,7 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
             }
             if (beanInformation.containsKey("autowiringMode")) {
                 String autowiringName = (String) beanInformation.get("autowiringMode");
-                if (autowiringName.equals("byName") || autowiringName.equals("byType")) {
+                if (autowiringName.equalsIgnoreCase("byName") || autowiringName.equalsIgnoreCase("byType")) {
                     bean.setAutowiringMode(AutowiringMode.valueOf((String) beanInformation.get("autowiringMode")));
                 }
             }
@@ -328,9 +328,9 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
 
     public Object getBean(String id) {
         try {
-            if(beanHashMap.get("id").isLazy() && beanHashMap.get("id").getBeanInstance().equals(null)){
+            if(beanHashMap.get(id).isLazy() && beanHashMap.get(id).getBeanInstance() == null){
                 Bean bean = createBean(obtainBeanAttributes(id));
-                beanHashMap.put("id", bean);
+                beanHashMap.put(id, bean);
                 addEdges(bean);
                 if(!beanGraph.reviewCyclesBean()){
                     bean.setBeanInstance(injectBeanInstance(bean));

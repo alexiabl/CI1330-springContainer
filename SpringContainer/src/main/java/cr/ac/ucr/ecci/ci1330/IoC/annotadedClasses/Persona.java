@@ -9,6 +9,7 @@ import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
  */
 
 @Component(id = "Persona")
+@Lazy
 public class Persona {
 
     private int edad;
@@ -28,7 +29,6 @@ public class Persona {
         return edad;
     }
 
-    @Autowired(autowiringMode = AutowiringMode.BYNAME)
     public void setEdad(int edad) {
         this.edad = edad;
     }
@@ -38,7 +38,6 @@ public class Persona {
         return nombre;
     }
 
-    @Autowired
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -51,5 +50,9 @@ public class Persona {
     @PreDestruct
     public void destructMethod(){
         System.out.println("**Mensaje: Se llama al metodo destructMethod de la clase Persona**");
+    }
+
+    public void setMascota(Mascota m){
+        this.mascota=m;
     }
 }

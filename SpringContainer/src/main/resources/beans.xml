@@ -3,7 +3,7 @@
 
     <bean id="teste" className="cr.ac.ucr.ecci.ci1330.IoC.testeReflection" scopeType="singleton" lazy="true">
         <constructor-args reference="Estudiante" autowiringMode="byName"/>
-        <setter-arg name="mascota" reference = "Mascota" autowiringMode="byName"/>
+        <setter-arg name="mascota" reference = "cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota" autowiringMode="byType"/>
     </bean>
 
     <bean id="Persona" className="cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona" scopeType="singleton" >

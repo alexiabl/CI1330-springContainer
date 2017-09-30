@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by majo_ on 22/9/2017.
+ * Bean
+ * @author Alexia Borchgrevink
+ * @author María José Cubero
+ * @author Renato Mainieri
  */
 public class Bean {
     private String id;

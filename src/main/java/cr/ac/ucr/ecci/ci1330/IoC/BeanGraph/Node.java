@@ -2,6 +2,10 @@ package cr.ac.ucr.ecci.ci1330.IoC.BeanGraph;
 
 import java.util.ArrayList;
 
+/**
+ * Node
+ * @author Renato Mainieri
+ */
 public class Node {
     public String name;
     public ArrayList<Edge> edges;

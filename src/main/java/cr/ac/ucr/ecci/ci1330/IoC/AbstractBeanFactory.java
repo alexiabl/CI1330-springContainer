@@ -10,7 +10,9 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
- * Created by majo_ on 22/9/2017.
+ * Creates beans and their instances, injecting dependencies. Also, returns bean instance when user asks for it.
+ * @author María José Cubero
+ * @author Renato Mainieri
  */
 public class AbstractBeanFactory implements BeanFactoryContainer {
 
@@ -26,6 +28,12 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return beanHashMap;
     }
 
+    /**
+     * Obtains a bean information a creates a bean but not its instance.
+     * @author María José Cubero
+     * @param beanInformation
+     * @return Created bean
+     */
     public Bean createBean(HashMap<String, Object> beanInformation) {
         Bean bean = null;
         Class definedClass = null;
@@ -68,6 +76,11 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return bean;
     }
 
+    /**
+     * Adds bean dependecies ass edges of a node.
+     * @author Renato Mainieri
+     * @param bean
+     */
     protected void addEdges(Bean bean){
         for (Dependency dependency : bean.getConstructorDependencies()) {
             beanGraph.addEdge(bean.getId(),dependency.getReference());
@@ -77,6 +90,11 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         }
     }
 
+    /**
+     * Iterates the beansHashMap and creates the instances of each bean.
+     * @author María José Cubero
+     * @author Renato Mainieri
+     */
     protected void createBeanInstances() {
         for (Map.Entry<String, Bean> entry : beanHashMap.entrySet()) {
             addEdges(entry.getValue());
@@ -94,6 +112,12 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         }
     }
 
+    /**
+     * Creates a bean instance with all of its needed dependencies.
+     * @author María José Cubero
+     * @param bean
+     * @return Object of type bean instance
+     */
     protected Object injectBeanInstance(Bean bean) {
         if (bean.getBeanInstance() != null && bean.getScopeType().equals(ScopeType.SINGLETON)) {
             return bean.getBeanInstance();
@@ -131,7 +155,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
                     for (int i = 0; i < parameters.length; i++) {
                         String setterName = obtainSetterName(bean.getSetterDependencies().get(i).getName());
                         bean.setBeanInstance(injectSetterDependencies(hasConstructor, bean, newClass, setterName, parameters[i]));
-
                     }
                 } else {
                     beanHashMap.remove(bean.getId());
@@ -143,7 +166,12 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return instance;
     }
 
-
+    /**
+     * Obtains the parameters of the bean, checks if it has constructor dependencies or setter dependencies, then calls obtainParameters
+     * @author María José Cubero
+     * @param bean
+     * @return Object[]: an array of the bean parameters instantieted.
+     */
     protected Object[] obtainBeanParameters(Bean bean) {
         Object[] parameters = null;
         if (bean.getConstructorDependencies().size() > 0) {
@@ -157,6 +185,13 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return parameters;
     }
 
+    /**
+     * Obtains the parameters of the bean iterating the bean dependencies, checks if it has to get the current parameter byName or byType.
+     * @author María José Cubero
+     * @param dependencies
+     * @param bean
+     * @return Object[]: an array of the bean parameters instantieted.
+     */
     private Object [] obtainParameters(List<Dependency> dependencies, Bean bean){
         Object[] parameters= new Object[dependencies.size()];
         for (int i = 0; i < dependencies.size(); i++) {
@@ -176,6 +211,13 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return parameters;
     }
 
+    /**
+     * Creates a parameter instance when it is asked to be created byType.
+     * @author María José Cubero
+     * @param reference
+     * @param bean
+     * @return Object: a parameter instance.
+     */
     private Object obtainParameterByType(String reference, Bean bean) {
         Object instance= null;
         boolean found = false;
@@ -195,6 +237,14 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return instance;
     }
 
+    /**
+     * Creates a parameter instance when it is asked to be created byName.
+     * @author María José Cubero
+     * @author Renato Mainieri
+     * @param reference
+     * @param bean
+     * @return Object: a parameter instance.
+     */
     private Object obtainParameterByName(String reference, Bean bean){
         if (beanHashMap.containsKey(reference)) {
             Bean dependencyBean = beanHashMap.get(reference);
@@ -206,6 +256,17 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         }
     }
 
+    /**
+     * Injects setter dependencies to a bean instance.
+     * @author María José Cubero
+     * @author Renato Mainieri
+     * @param hasConstructor: to define if the instance was already created
+     * @param bean
+     * @param newClass
+     * @param setterName
+     * @param parameter
+     * @return Object: a bean instance with its setter dependencies injected.
+     */
     protected Object injectSetterDependencies(Boolean hasConstructor, Bean bean, Class newClass, String setterName, Object parameter) {
         Object objectInstance = null;
         if (!hasConstructor) {
@@ -221,7 +282,6 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         } else {
             objectInstance = bean.getBeanInstance();
         }
-
         Method[] methods = null;
         try {
             methods = newClass.getMethods();
@@ -239,7 +299,14 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return objectInstance;
     }
 
-    //devuelve la instancia con las dependencias agregadas
+    /**
+     * Injects constructor dependencies to a bean instance.
+     * @author María José Cubero
+     * @author Renato Mainieri
+     * @param newClass
+     * @param parameters
+     * @return Object: a bean instance with its constructor dependencies injected.
+     */
     protected Object injectConstructorDependencies(Class newClass, Object[] parameters) {
         Object objectInstance = new Object[]{new Object()};
         Constructor[] constructors = newClass.getConstructors();
@@ -265,6 +332,14 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return objectInstance;
     }
 
+    /**
+     * Looks for the constructor of the class that matches the specified constructor.
+     * @author María José Cubero
+     * @author Renato Mainieri
+     * @param constructors
+     * @param parameters
+     * @return int: the position of the matching constructor.
+     */
     protected int lookForConstructor(Constructor[] constructors, Object[] parameters) {
         boolean found = false;
         boolean equal = true;
@@ -295,7 +370,13 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return i - 1;
     }
 
-    //determina cual es el método que se va a invocar a partit del nombre del mismo
+    /**
+     * Looks for a method that has to be invoked.
+     * @author María José Cubero
+     * @param methods
+     * @param setterName
+     * @return Method: method to invoke.
+     */
     protected Method obtainMethodtoInvoke(Method[] methods, String setterName) {
         boolean found = false;
         int i = 0;
@@ -314,6 +395,13 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         }
     }
 
+    /**
+     * Obtains the name of the setter that has to be invoked.
+     * @author María José Cubero
+     * @author Renato Mainieri
+     * @param fieldName
+     * @return String: name of the setter.
+     */
     protected String obtainSetterName(String fieldName) {
         fieldName = fieldName.toLowerCase();
         fieldName = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1).toLowerCase();
@@ -325,6 +413,13 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         return null;
     }
 
+    /**
+     * Obtains a bean instance when it is asked by its id.
+     * @author María José Cubero
+     * @author Renato Mainieri
+     * @param id
+     * @return Object: bean instance.
+     */
     public Object getBean(String id) {
         try {
             if(beanHashMap.get(id).isLazy() && beanHashMap.get(id).getBeanInstance() == null){
@@ -346,13 +441,22 @@ public class AbstractBeanFactory implements BeanFactoryContainer {
         }
     }
 
-
+    /**
+     * Calls the destruct method
+     * @author Renato Mainieri
+     * @param id
+     */
     public void destroyBean(String id) {
         Bean bean = beanHashMap.remove(id);
         executeBeanInstanceMethod(bean, bean.getDestructMethod());
     }
 
-
+    /**
+     * Executes the init/destruct method
+     * @author Renato Mainieri
+     * @param bean
+     * @param methodName
+     */
     public void executeBeanInstanceMethod(Bean bean, String methodName) {
         Class instance = null;
         try {

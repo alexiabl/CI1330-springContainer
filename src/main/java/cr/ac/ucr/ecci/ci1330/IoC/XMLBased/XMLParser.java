@@ -57,9 +57,9 @@ public class XMLParser {
 
     /**
      * Obtains the attributes of a bean receiving them from the element.
-     * @autor María José Cubero Hidalgo
-     * @param beanTag
-     * @return
+     * @author María José Cubero
+     * @param beanTag Element
+     * @return HashMap<String, Object> beanAttributes
      */
     public HashMap obtainBeanAttributes(Element beanTag) {
         HashMap<String, Object> beanAttributes = new HashMap();
@@ -84,7 +84,7 @@ public class XMLParser {
 
     /**
      * Obtains the dependencies of the current element, and puts the dependencies on beanAttributes.
-     * @autor María José Cubero Hidalgo
+     * @author María José Cubero Hidalgo
      * @param beanAttributes
      * @param beanTag
      */

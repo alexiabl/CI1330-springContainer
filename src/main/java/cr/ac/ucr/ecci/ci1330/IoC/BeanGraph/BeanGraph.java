@@ -4,6 +4,11 @@ package cr.ac.ucr.ecci.ci1330.IoC.BeanGraph;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Bean Graph
+ * @author Renato Mainieri
+ */
+
 public class BeanGraph {
     private ArrayList<Node> nodes;
     private HashMap<String, Node> visited;

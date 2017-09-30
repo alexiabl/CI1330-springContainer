@@ -1,7 +1,10 @@
 package cr.ac.ucr.ecci.ci1330.IoC.BeanGraph;
 
-public
-class Edge {
+/**
+ * Edge
+ * @author Renato Mainieri
+ */
+public class Edge {
     public Node start;
     public Node end;
 

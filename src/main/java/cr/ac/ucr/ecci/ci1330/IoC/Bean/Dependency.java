@@ -3,8 +3,10 @@ package cr.ac.ucr.ecci.ci1330.IoC.Bean;
 import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
 
 /**
- * Created by majo_ on 25/9/2017.
+ * Dependency of a bean
+ * @author María José Cubero
  */
+
 public class Dependency {
     private String beanID;
     private String reference;

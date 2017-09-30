@@ -7,7 +7,9 @@ import nu.xom.Element;
 import java.util.HashMap;
 
 /**
- * Created by majo_ on 22/9/2017.
+ * Creates a Bean Factory for the XML Configuration
+ * @author María José Cubero
+ * @author Renato Mainieri
  */
 public class XMLBeanFactory extends AbstractBeanFactory {
 
@@ -21,6 +23,11 @@ public class XMLBeanFactory extends AbstractBeanFactory {
         createBeanInstances();
     }
 
+    /**
+     * Obtains the attributes of a bean
+     * @param id
+     * @return
+     */
     @Override
     protected HashMap<String, Object> obtainBeanAttributes(String id){
         return xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id));

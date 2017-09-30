@@ -53,7 +53,7 @@ public class XMLParser {
             if(currentBeanTag.getLocalName().equals("classesToScan")){
                 this.xmlBeanFactory.callAnnotationBeanFactory(currentBeanTag);
             }
-            else{
+            else if (!this.xmlBeanFactory.getBeanHashMap().containsKey(currentBeanTag.getAttributeValue("id"))){
                 this.xmlBeanFactory.createBean(obtainBeanAttributes(currentBeanTag));
                 this.tagsBeanContent.put(currentBeanTag.getAttributeValue("id"), currentBeanTag);
             }

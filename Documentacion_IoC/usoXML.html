@@ -52,16 +52,106 @@
         </p>
         <ol>
             <li>Crear un archivo XML dentro de la carpeta "resources" del proyecto correspondiente</li>
-            <li>Cree los beans dentro del archivo XML como en el siguiente ejemplo: .</li> <a href="xml/beans.xml">beans.xml</a>
-            <li>Cree un "BeanFactoryContainer" de la siguiente forma: </li>
+            <li>Cree los beans dentro del archivo XML como en el siguiente ejemplo: </li> <a href="xml/beans.xml">beans.xml</a>
+            <li>Cree un "BeanFactoryContainer" que reciba de parámetro el path del archivo XML creado, de la siguiente forma: </li>
 			<p><h1 class="w3-xlarge" style="text-align: center"><img src="images/beanFactoryContainer.png"/></h1></p>
 			<li>Para obtener una instancia utilice la función getBean("nombre del bean"), de la siguiente forma: </li>
 			<p><h1 class="w3-xlarge" style="text-align: center"><img src="images/beanObjectEx.png"/></h1></p>
+            <li>Para destruir una instancia del contenedor utilice la función destroyBean("nombre del bean"), de la siguiente forma: </li>
+            <p><h1 class="w3-xlarge" style="text-align: center"><img src="images/beanObjectEx.png"/></h1></p>
         </ol>
         <br>
         <h3>Reglas de uso del XML</h3>
 
-        <p>Insertar texto aqui, si se quiere poner heading use el tag h2</p>
+        <ol>
+            <li>Al inicio del archivo XML ingrese la versión de este y la manera de codificación, por ejemplo:</li>
+            <img src="images/XMLversion.png"/>
+            <li>Ingrese un tag principal de tipo <a style="font-family: 'Courier New'">"beans"</a>, en que se almacene cada uno de los bean, de la siguiente manera:</li>
+            <img src="images/XMLbeans.png"/>
+            <li>Dentro del tag principal ingrese cada uno de los bean y sus respectivos atributos para la inyección de independencias:</li>
+
+            <h5><b>El id y el classname</b></h5>
+            <p>El <a style="font-family: 'Courier New'">"id"</a> es un nombre único que va a tener cada bean para diferenciarse de los demás
+                y el <a style="font-family: 'Courier New'">"classname"</a> es el tipo de instancia que se inyectará con el respectivo bean. Ambos son estrictamente necesarios
+                para la creación del bean, son los atributos mínimos que debe tener el tag de un bean.
+            <p>Ejemplo: </p>
+            <img src="images/XMLbeanBasico.png"/>
+            <br>
+
+            <h5><b>El autowiringMode</b></h5>
+            <p>El atributo <a style="font-family: 'Courier New'">"autowiringMode"</a> se utiliza para invocar a un Constructor de la clase o a algún Set de un atributo
+                de la instancia creado. Si se desea referenciar en un
+                Constructor se debe específicar ingresando un tag interno de tipo <a style="font-family: 'Courier New'">"constructor-args"</a> por cada parámetro del
+                constructor, existente. Si se desea llamar a un Set se debe ingresar el nombre del atributo a setear, que exista un método llamado Set"Nombre"
+                y agregar un tag interno de tipo <a style="font-family: 'Courier New'">"setter-args"</a>.</p>
+            <p>Hay dos tipos de autowiring. Estos son:
+            <p style="text-align: center; font-family: 'Courier New',Consolas, 'Source Code Pro'">autowiringMode.BYNAME</p>
+            <p style="text-align: center; font-family: 'Courier New', Consolas, 'Source Code Pro'">autowiringMode.BYTYPE</p>
+            </p>
+            <p><i>BYTYPE:</i></p>
+            <p>Este valor se obtiene por defecto si no se específica el tipo del atributo <a style="font-family: 'Courier New'">"autowiringMode"</a>. </p>
+            <p><u>Uso:</u> Se crea una instancia con las características del primer bean encontrado que tenga
+                un valor de <a style="font-family: 'Courier New'">"classname"</a> igual al que referencia un Set o un Contructor.</p>
+            <p>Ejemplo: </p>
+            <img src="images/XMLByType.png"/>
+            <br>
+            <br>
+            <p><i>BYNAME:</i></p>
+            <p><u>Uso:</u> Se crea una instancia con las características del bean que tenga
+                un valor de <a style="font-family: 'Courier New'">"id"</a> igual al que referencia un Set o un Contructor.</p>
+            <p>Ejemplo: </p>
+            <img src="images/XMLByName.png"/>
+            <br>
+            <p>Las dependencias y los tipos de <a style="font-family: 'Courier New'">"autowiringMode"</a> se pueden mezclar dentro de un mismo bean, por ejemplo:</p>
+            <img src="images/XMLautowiringMode.png"/>
+
+            <h5><b>El scopeType</b></h5>
+            <p>El atributo <a style="font-family: 'Courier New'">"scopeType"</a> se utiliza para escoger la proveniencia o independencia de la instancia que se inyecta. </p>
+            <p>Hay dos tipos de scopes. Estos son:
+            <p style="text-align: center; font-family: 'Courier New',Consolas, 'Source Code Pro'">scopeType.SINGLETON</p>
+            <p style="text-align: center; font-family: 'Courier New', Consolas, 'Source Code Pro'">scopeType.PROTOTYPE</p>
+            <p><i>SINGLETON:</i></p>
+            <p>Este valor se obtiene por defecto si no se específica el tipo del atributo <a style="font-family: 'Courier New'">"scopeType"</a>. </p>
+            <p><u>Uso:</u> A la hora de recuperar una instancia del bean, esta es la misma del bean que se encuentra en el
+                Container; es decir, si un bean es de tipo <a style="font-family: 'Courier New'">"singleton"</a> toda inyección de este compartirá la misma
+                instancia.</p>
+            <p>Ejemplos: </p>
+            <img src="images/XMLsingleton.png"/>
+            <br>
+            <br>
+            <p><i>PROTOTYPE:</i></p>
+            <p><u>Uso:</u> A la hora de recuperar un instancia de bean, se devuelva una instancia nueva con las características que se
+            insertaron inicialmente en el bean.</p>
+            <p>Ejemplo: </p>
+            <img src="images/XMLprototype.png"/>
+            <br>
+
+            <h5><b>El initMethod</b></h5>
+            <p><u>Uso:</u> El atributo <a style="font-family: 'Courier New'">"initMethod"</a> se utiliza para especificar el método que se va a ejecutar una vez inyectada la instancia.
+                Por defecto este atributo especifica a un método llamado "initMethod". Si se especifica a un método que no existe, simplemente no se ejecuta.</p>
+            <p>Ejemplo: </p>
+            <img src="images/XMLinitMethod.png"/>
+
+            <h5><b>El destructMethod</b></h5>
+            <p><u>Uso:</u> El atributo <a style="font-family: 'Courier New'">"destructMethod"</a> se utiliza para especificar el método que se va a ejecutar una vez destruida la instancia.
+                Por defecto este atributo especifica a un método llamado "destructMethod". Si se especifica a un método que no existe, simplemente no se ejecuta.</p>
+            <p>Ejemplo: </p>
+            <img src="images/XMLdestructMethod.png"/>
+
+            <h5><b>El lazy</b></h5>
+            <p><u>Uso:</u> El atributo <a style="font-family: 'Courier New'">"lazy"</a> se utiliza para especificar que no se inyecte la instancia hasta que se solicite el respectivo bean.
+                Por defecto esta característica no está activa.</p>
+            <p>Ejemplo: </p>
+            <img src="images/XMLlazy.png"/>
+
+            <h5><b>Mezcla de atributos</b></h5>
+            <p><u>Uso:</u> Mientras no se ingrese más de una vez el mismo atributo dentro un mismo tag, se pueden mezclar los distintos atributos que puede tener un bean.</p>
+            <p>Ejemplos: </p>
+            <img src="images/XMLejemplo.png"/>
+
+        </ol>
+
+
     </div>
 </div>
 

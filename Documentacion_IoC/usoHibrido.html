@@ -45,9 +45,24 @@
 
     <div class="w3-container" style="padding:32px">
 
-        <h2>Uso mediante Annotations y XML</h2>
-
-        <p>Insertar texto aqui, si se quiere poner heading use el tag h2</p>
+        <h2>Manual de uso: XML y Annotations</h2>
+		
+		<p>Si se desea utilizar Inversion of Control utilizando XML y Annotations simultáneamente, debe seguir los siguientes
+            pasos:
+        </p>
+        <ol>
+            <li>Crear un archivo XML dentro de la carpeta "resources" del proyecto correspondiente</li>
+            <li>Cree los beans dentro del archivo XML como en el siguiente ejemplo: </li> <a href="xml/hybridBeans.xml">beans.xml</a>
+            <li>Cree un "BeanFactoryContainer" que reciba de parámetro el path del archivo XML creado, de la siguiente forma: </li>
+			<p><h1 class="w3-xlarge" style="text-align: center"><img src="images/beanFactoryContainer.png"/></h1></p>
+			<li>Para obtener una instancia utilice la función getBean("nombre del bean"), de la siguiente forma: </li>
+			<p><h1 class="w3-xlarge" style="text-align: center"><img src="images/beanObjectEx.png"/></h1></p>
+            <li>Para destruir una instancia del contenedor utilice la función destroyBean("nombre del bean"), de la siguiente forma: </li>
+            <p><h1 class="w3-xlarge" style="text-align: center"><img src="images/destroyBean.png"/></h1></p>
+        </ol>
+        <br>
+        <h3>Reglas al utilizar del XML y Annotations</h3>
+		<p>Las reglas que se deben seguir son las mismas que aplican a utilizar cada una de las configuraciones por separado.</p>
     </div>
 </div>
 

@@ -84,8 +84,7 @@
             el que se encuentran)
             de configuración xmlAnnotations.xml dentro el tag "classesToScan" utilizando el tag "classes". Las clases
             deben tener el annotation
-            @Component para que el parser identifique que la clase debe leerse. Las clases
-            especificadas en el archivo deben tener annotations para que la creación de los beans sea exitosa. En la
+            @Component para que el parser identifique que la clase debe leerse. En la
             lectura, el parser se encarga de obtener las annotations de acuerdo
             a las reglas especificadas para cada annotation (ver Manual de uso > Configuración con Annotations). Una vez
             que obtiene estas clases, por cada una de ellas obtiene las annotations y las ingresa al hashmap del
@@ -93,6 +92,8 @@
             Una vez que se haya hecho esto, se pueden llamar a los métodos de la clase AbstractBeanFactory donde se
             inyectan las dependencias, se crean y se obtienen los beans.
         </p>
+        <p>IMPORTANTE: Las clases
+            especificadas en el archivo deben tener annotations para que la creación de los beans sea exitosa.</p>
 		
 		<h3>Implementación del híbrido: XML y Annotations</h3>
 

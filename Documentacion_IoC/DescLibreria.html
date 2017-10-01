@@ -24,8 +24,8 @@
     <a class="w3-bar-item w3-button w3-hide-large w3-large" href="javascript:void(0)" onclick="w3_close()">Close <i
             class="fa fa-remove"></i></a>
     <a href="./Index.html" class="w3-bar-item w3-button">Introducción</a>
-    <a href="./DescLibreria.html" class="w3-bar-item w3-button w3-teal">Descripción de la librería: Inversion of Control
-        (IoC)</a>
+	<a href="./FuncionesIoC.html" class="w3-bar-item w3-button">Funciones de IoC</a>
+    <a href="./DescLibreria.html" class="w3-bar-item w3-button w3-teal">Descripción de implementación</a>
     <a class="w3-bar-item w3-button" href="./diagramaClases.html">Diagrama de clases</a>
     <a class="w3-bar-item w3-button" href="./ManualInstalacion.html">Manual de instalación de la librería</a>
     <a class="w3-bar-item w3-button" href="./usoXML.html">Manual de uso</a>
@@ -48,7 +48,34 @@
     <div class="w3-container" style="padding:32px">
 
         <h2>Descripción de la Librería</h2>
-
+		
+		<p>La librería se ha implementado de forma modular, debido a que las acciones que van realizando para crear Beans que contengan las instancias de las
+		clases se dan por etapas. Para empezar, cabe destacar que la librería soporta la creación de beans mediante XML o Annotations. Esta información es brindada
+		 por el usuario que va a hacer uso de la misma , de manera que este es el que debe especificar cada una de las instancias que desea que la librería maneje.
+		</p>
+		
+		<p>Para empezar, se tiene la clase Bean que cuanta con las listas de las dependencias que se le deben inyectar a cada instancia que posea un Bean. Las dependencias 
+		se manejan como objetos que contienen la información necesaria para después poder obtener la instancia de una clase que se va a inyectar en la instancias del Bean.
+		El primer paso que la librería va a realizar será encargarse de crear estos beans, pero sin inyectar directamente ninguna de sus instancias.
+		</p>
+		
+		<p>Para lograr lo descrito anteriormente se cuenta con una interfaz de llamada BeanFactoryContainer, la cual es implementada por un AbstractBeanFactory, que a su vez 
+		hereda a los dos módulos principales que maneja la librería, el XMLBeanFactory y el AnnotationsBeanFactory. Además, cada uno de estos dos módulos contiene un parser correspondiente 
+		que se una clase que se encarga de leer los datos suministrados por el usuario de la librería y guardarlos en una estructura de datos HashMap para después enviar a que sean
+		 creados. 
+		</p>
+		
+		<p>Una vez que se tienen los datos en el HashMap, el parser correspondiente únicamente crea el bean. Sin embargo, la creación del Bean como tal se da en el AbstractBeanFactory, 
+		el cual sirve para los dos módulos. Este método de crear el bean coloca el bean ya creado en un HashMap, donde cada bean es identificado por su id. Al finalizar la creación
+		 de estos beans se puede llamar al método del AbstractBeanFactory llamado createBeanInstances, que se encarga de iterar sobre cada uno de los beans del HashMap 
+		 e ir creando sus instancias.
+		</p>
+		
+		<p>Sin embargo, se debe tomar en cuenta que para crear la instancia de un bean hay que verificar si el bean tiene dependencias, y si tiene, 
+		inyectarle cada una, por lo tanto, se itera sobre cada dependencia
+		 para identificar si ya existe o si hay que crearla, y se van metiendo en un array de objetos que se va a utilizar para que se inyecte cada instancia. 
+		</p>
+		
         <h3>Implementación de XML</h3>
 
         <p>Se basa en la creación de beans por medio de una clase llamada XMLParser encargada de realizar la lectura de
@@ -134,11 +161,11 @@
             anteriormente.
         </p>
 
-        <p>Además de revisar las clases a escanera por anotaciones, también se van leyendo los beans definidos por
+        <p>Además de revisar las clases a escaneadas por anotaciones, también se van leyendo los beans definidos por
             configuración de XML. Estos beans se van parseando y creando
             de la misma forma que se crean en la configuración de XML, de modo que después de crear todos los beans,
             tanto de annotations como de XML, se envía a crear las instancias
-            correspondientes.
+            correspondientes en el AbstractBeanFactory.
         </p>
     </div>
 </div>

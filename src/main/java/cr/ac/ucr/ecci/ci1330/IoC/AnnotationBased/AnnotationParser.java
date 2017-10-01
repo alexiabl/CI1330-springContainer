@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 /**
  * Parse the package classes to get all the annotations information of the object to create the Bean later.
+ *
  * @author Alexia Borchgrevink
  */
 public class AnnotationParser {
@@ -20,9 +21,15 @@ public class AnnotationParser {
     private AnnotationBeanFactory annotationBeanFactory;
     private HashMap<String, Object> annotationBeanContent;
 
-
     public AnnotationParser(Class aClass, AnnotationBeanFactory annotationBeanFactory) {
         this.annotationBeanFactory = annotationBeanFactory;
+        this.annotationBeanContent = new HashMap<>();
+        this.theClass = aClass;
+        this.parseClassForAnnotations();
+        this.createCurrentBean();
+    }
+
+    public AnnotationParser(Class aClass) {
         this.annotationBeanContent = new HashMap<>();
         this.theClass = aClass;
         this.parseClassForAnnotations();
@@ -76,15 +83,19 @@ public class AnnotationParser {
             this.annotationBeanContent.put("scopeType", scopeType);
             this.annotationBeanContent.put("constructorDependencies", constructorDependencies);
             this.annotationBeanContent.put("setterDependencies", setterDependencies);
-            this.annotationBeanFactory.createBean(annotationBeanContent);
-            this.annotationBeanFactory.getAnnotationsContent().put(this.theClass.getSimpleName(), this.annotationBeanContent);
         } else {
             System.out.println("La clase " + this.theClass.getSimpleName() + " no tiene el Component annotation necesitado para poder escanearla");
         }
     }
 
+    private void createCurrentBean() {
+        this.annotationBeanFactory.createBean(annotationBeanContent);
+        this.annotationBeanFactory.getAnnotationsContent().put(this.theClass.getSimpleName(), this.annotationBeanContent);
+    }
+
     /**
      * Scans the class fields for @autowired annotation to set dependencies.
+     *
      * @param beanId
      * @return ArrayList</Dependency>
      * @author Alexia Borchgrevink
@@ -114,6 +125,7 @@ public class AnnotationParser {
 
     /**
      * Scans the class constructors for @autowired annotation to set dependencies.
+     *
      * @param beanId
      * @return ArrayList</Dependency>
      * @author Alexia Borchgrevink

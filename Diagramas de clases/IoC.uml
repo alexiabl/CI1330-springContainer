@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>cr.ac.ucr.ecci.ci1330.IoC</OriginalElement>
+  <nodes>
+    <node x="329.88888888888914" y="954.5555555555554">cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationParser</node>
+    <node x="1316.1666666666658" y="-49.33333333333292">cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.Node</node>
+    <node x="316.75" y="690.0">cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory</node>
+    <node x="822.2222222222217" y="1337.0555555555554">cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.PostConstruct</node>
+    <node x="1350.1111111111109" y="182.7777777777783">cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.Edge</node>
+    <node x="-173.1685534591188" y="934.6944444444443">cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLParser</node>
+    <node x="1205.333333333333" y="1163.5000000000002">cr.ac.ucr.ecci.ci1330.IoC.ScopeType</node>
+    <node x="0.0" y="146.0">cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory</node>
+    <node x="1336.9999999999998" y="1303.5">cr.ac.ucr.ecci.ci1330.IoC.Main</node>
+    <node x="819.722222222222" y="1498.1666666666665">cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.PreDestruct</node>
+    <node x="168.0" y="0.0">cr.ac.ucr.ecci.ci1330.IoC.BeanFactoryContainer</node>
+    <node x="820.777777777778" y="1376.2777777777778">cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.Component</node>
+    <node x="807.5" y="35.50000000000032">cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.BeanGraph</node>
+    <node x="806.8333333333333" y="315.83333333333326">cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean</node>
+    <node x="819.4444444444447" y="1436.833333333333">cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.Scope</node>
+    <node x="-114.25" y="726.3333333333333">cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory</node>
+    <node x="818.4999999999998" y="1538.166666666667">cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.Lazy</node>
+    <node x="284.44444444444423" y="1289.8333333333333">cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency</node>
+    <node x="1016.1666666666665" y="1161.8333333333335">cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode</node>
+    <node x="817.5" y="1575.722222222222">cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.Annotations.Autowired</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLParser" target="cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLParser" target="cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationParser">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory" target="cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationParser">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory" target="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.BeanGraph">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean" target="cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency" target="cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory" target="cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory" target="cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory">
+      <point x="0.0" y="-82.0" />
+      <point x="494.75" y="665.0" />
+      <point x="510.75" y="665.0" />
+      <point x="170.25" y="247.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.Node" target="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.Edge">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory" target="cr.ac.ucr.ecci.ci1330.IoC.BeanFactoryContainer">
+      <point x="0.0" y="-247.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.BeanGraph" target="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.Edge">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory" target="cr.ac.ucr.ecci.ci1330.IoC.AbstractBeanFactory">
+      <point x="0.0" y="-49.0" />
+      <point x="-3.75" y="686.111111111111" />
+      <point x="170.25" y="686.1111111111111" />
+      <point x="-170.25" y="247.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLParser" target="cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.Edge" target="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.Node">
+      <point x="0.0" y="-60.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean" target="cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationParser" target="cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationBeanFactory">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.BeanGraph" target="cr.ac.ucr.ecci.ci1330.IoC.BeanGraph.Node">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationParser" target="cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLBeanFactory" target="cr.ac.ucr.ecci.ci1330.IoC.XMLBased.XMLParser">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean" target="cr.ac.ucr.ecci.ci1330.IoC.ScopeType">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.3077816492450639" x="696.0" y="800.9999999999999" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<title>CI-1330 IoC Container</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style1.css">
+<link rel="stylesheet" href="css/style2.css">
+<link rel="stylesheet" href="css/style3.css">
+<link rel="stylesheet" href="css/style4.css">
+<style>
+    body {
+        font-family: "Roboto", sans-serif
+    }
+
+    .w3-bar-block .w3-bar-item {
+        padding: 16px;
+        font-weight: bold
+    }
+</style>
+<body>
+
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-animate-left w3-card-2" style="z-index:3;width:250px;" id="mySidebar">
+    <a class="w3-bar-item w3-button w3-hide-large w3-large" href="javascript:void(0)" onclick="w3_close()">Close <i class="fa fa-remove"></i></a>
+    <a href="./Index.html" class="w3-bar-item w3-button">Introducción</a>
+    <a href="./DescLibreria.html" class="w3-bar-item w3-button w3-teal">Descripción de la librería: Inversion of Control (IoC)</a>
+    <a class="w3-bar-item w3-button" href="./diagramaClases.html">Diagrama de clases</a>
+    <a class="w3-bar-item w3-button" href="./ManualInstalacion.html">Manual de instalación de la librería</a>
+    <a class="w3-bar-item w3-button" href="./usoXML.html">Manual de uso</a>
+</nav>
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     id="myOverlay"></div>
+
+<div class="w3-main" style="margin-left:250px;">
+
+    <div id="myTop" class="w3-container w3-top w3-theme w3-large">
+        <p><i class="fa fa-bars w3-button w3-teal w3-hide-large w3-xlarge" onclick="w3_open()"></i>
+            <span id="myIntro" class="w3-hide">IoC Container</span></p>
+    </div>
+
+    <div class="w3-container w3-theme" style="padding:64px 32px">
+        <h1 class="w3-xlarge" style="text-align: center">CI-1330 Tarea Programada I: Inversion of Control</h1>
+    </div>
+
+    <div class="w3-container" style="padding:32px">
+
+        <h2>Descripción de la Librería</h2>
+
+        <h3>Implementación de XML</h3>
+
+        <p>Se basa en la creación de beans por medio de una clase llamada XMLParser encargada de realizar la lectura de un archivo .xml, 
+		que contiene distintos tags con las características básicas para inyectar la dependencia de cada bean. 
+        </p>
+		
+		<p>Se realiza una primera lectura que almacena en un hashMap objetos de tipo Element con la información de cada tag, luego se crea cada bean con la información recuperada y se
+		almacena cada bean creado en un otro hashMap distinto. Una vez que se han creado todos los beans, se realiza un grafo en donde cada vértice contiene un String que es id de cada bean
+		y sus aristas son las referencias de tipo SETTER o CONSTRUCT cada bean a otro bean (otro vértice). 
+		Se analiza si el grafo presenta ciclos, si existe alguno se termina el programa con ERROR porque hay un ciclo, de lo contrario se procede a inyectar las dependencias de cada bean.
+        </p>
+		
+		<p>La segunda y última lectura se realiza cuando se inyectan las dependencias, en donde a cada bean se le pregunta si no se ha inyectado ya su instancias 
+		(si este es singleton), de lo contrario se inicia preguntando si posee dependencias de CONSTRUCT y/o SETTER y se agregan (si no es de tipo Lazy), donde si 
+		la dependencia es sobre otro bean que no se ha instanciado se instancia primero el de la dependencia y luego que se continúa con el anterior. Si tiene dependencias 
+		de tipo CONSTRUCT, se busca el constructor de la instancia que tenga la misma cantidad de las que se puso en el tag del bean, el mismo tipo y el mismo orden, por 
+		otro lado, si tiene dependencias del tipo SETTER se llama al método set del respectivo atributo agregado.
+        </p>
+		
+		<p>Luego de que se inyectan las dependencias, se ejecuta el método initMethod, en donde si una instancia no tiene tal método simplemente no se ejecuta. 
+		Si se solicita un bean con un respectivo id, se devuelve la instancia de este pero revisando los distintos atributos del bean. Si se presenta un atributo
+		lazy y su instancia no se ha asignado, se inyecta esta y sus respectivas dependencias, por lo tanto se hace solo una vez. Y de caso contrario, se pregunta si es
+		tipo prototype, si lo es se crea una nuevo bean con las características guardadas en hashMap de los Element, para que devuelva los valores por defecto; pero si 
+		es de tipo singleton se devuelve el respectivo bean del hashMap que tenga el mismo id.
+        </p>
+		
+		<p>Una vez que se devuelve la instancia del bean, el uso de esta queda fuera del IoC, excepto que realice cambios en un bean de tipo singleton porque también 
+		se almacenan el bean dentro hashMap. Y si finalmente se destruye el bean, se ejecuta el método destructMethod, en donde si una instancia no tiene tal método 
+		simplemente no se ejecuta.
+        </p>
+		
+		<h3>Implementación de Annotations</h3>
+
+        <p>-
+        </p>
+		
+		<h3>Implementación del híbrido: XML y Annotations</h3>
+
+        <p>El híbrido consiste en utilizar la configuración con XML, de manera que se lee el archivo .xml que se encuentra en la carpeta de resources de manera común, sin embargo, 
+		si se encuentran clases para escanear dentro de ese xml, identificadas con el tag de <classesToScan>, entonces se iterará sobre las clases que se deben escanear
+		y se creará un AnnotationParser, el cual se encargará de conseguir la información de la clase que posee Annotations y meterla en un HashMap para después crear el bean 
+		correspondiente. Además, hay un HashMap que cuenta con un identificador del bean como llave y un HashMap con los atributos de ese bean como valor, lo cual se hace 
+		con el fin de poder tener esta información para poder crear nuevas instancias posteriormente si el scope es prototype o si se ha definido que se cree como lazy. Por cada 
+		AnnotationParser que se realiza se obtiene la información que se genera y se mete en el HashMap descrito anteriormente.
+        </p>
+		
+		<p>Además de revisar las clases a escanera por anotaciones, también se van leyendo los beans definidos por configuración de XML. Estos beans se van parseando y creando
+		 de la misma forma que se crean en la configuración de XML, de modo que después de crear todos los beans, tanto de annotations como de XML, se envía a crear las instancias 
+		 correspondientes.
+        </p>
+    </div>
+</div>
+
+<script>
+    // Open and close the sidebar on medium and small screens
+    function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("myOverlay").style.display = "block";
+    }
+    function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("myOverlay").style.display = "none";
+    }
+
+    // Change style of top container on scroll
+    window.onscroll = function () {
+        myFunction()
+    };
+    function myFunction() {
+        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+            document.getElementById("myTop").classList.add("w3-card-4", "w3-animate-opacity");
+            document.getElementById("myIntro").classList.add("w3-show-inline-block");
+        } else {
+            document.getElementById("myIntro").classList.remove("w3-show-inline-block");
+            document.getElementById("myTop").classList.remove("w3-card-4", "w3-animate-opacity");
+        }
+    }
+
+    // Accordions
+    function myAccordion(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+            x.previousElementSibling.className += " w3-theme";
+            x.style.display = "block"
+        } else {
+            x.className = x.className.replace("w3-show", "");
+            x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-theme", "");
+        }
+    }
+</script>
+
+</body>
+</html>

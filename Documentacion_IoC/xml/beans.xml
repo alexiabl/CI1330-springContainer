@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <bean id="Course" className="com.company.Course" scopeType="prototype" lazy="true">
+        <constructor-args reference="Group" autowiringMode="ByName"/>
+    </bean>
+
+    <bean id="Student" className="com.company.Student" scopeType="prototype" destructMethod="getInformation">
+        <constructor-args reference="Scholarship" autowiringMode="ByName"/>
+        <constructor-args reference="com.company.Group"/>
+        <setter-arg name="scholarship" reference="Scholarship" autowiringMode="ByName"/>
+    </bean>
+
+    <bean id="Group" className="com.company.Group">
+        <setter-arg name="teacher" reference="com.company.Teacher" autowiringMode="ByType"/>
+    </bean>
+
+    <bean id="Scholarship" className="com.company.Scholarship" scopeType="prototype" lazy="true" initMethod="getInformation"/>
+
+    <bean id="Teacher" className="com.company.Teacher" scopeType="singleton"/>
+
+</beans>

@@ -1,6 +1,8 @@
 package cr.ac.ucr.ecci.ci1330.IoC.XMLBased;
 
+import cr.ac.ucr.ecci.ci1330.IoC.AnnotationBased.AnnotationParser;
 import cr.ac.ucr.ecci.ci1330.IoC.AutowiringMode;
+import cr.ac.ucr.ecci.ci1330.IoC.Bean.Bean;
 import cr.ac.ucr.ecci.ci1330.IoC.Bean.Dependency;
 import cr.ac.ucr.ecci.ci1330.IoC.ScopeType;
 import nu.xom.Builder;
@@ -24,17 +26,19 @@ public class XMLParser {
     private String path;
     private XMLBeanFactory xmlBeanFactory;
     private HashMap<String, Element> tagsBeanContent;
+    private AnnotationParser annotationParser;
+    private HashMap<String, HashMap<String, Object>> annotationBeansAttributes;
 
     public XMLParser(String path, XMLBeanFactory xmlBeanFactory) {
         this.path = path;
         this.xmlBeanFactory = xmlBeanFactory;
         this.tagsBeanContent = new HashMap();
+        this.annotationBeansAttributes= new HashMap<>();
     }
 
     /**
      * Read the XML file Element by Element, obtains the information of a bean and calls a method to create it.
      * @author María José Cubero
-     * @author Alexia Borchgrevink
      * @author Renato Mainieri
      */
     public void readXML() {
@@ -51,12 +55,32 @@ public class XMLParser {
         for (int i = 0; i < beanTags.size(); i++) {
             Element currentBeanTag = beanTags.get(i);
             if(currentBeanTag.getLocalName().equals("classesToScan")){
-                this.xmlBeanFactory.callAnnotationBeanFactory(currentBeanTag);
+                implementHybridConfiguration(currentBeanTag);
             }
             else if (!this.xmlBeanFactory.getBeanHashMap().containsKey(currentBeanTag.getAttributeValue("id"))){
                 this.xmlBeanFactory.createBean(obtainBeanAttributes(currentBeanTag));
                 this.tagsBeanContent.put(currentBeanTag.getAttributeValue("id"), currentBeanTag);
             }
+        }
+    }
+
+    /**
+     * Implements hybrid configuration when its required.
+     * @author María José Cubero
+     * @param currentBeanTag
+     */
+    private void implementHybridConfiguration(Element currentBeanTag){
+        Elements classes = currentBeanTag.getChildElements();
+        try {
+            for (int j = 0; j < classes.size(); j++) {
+                String packageName = classes.get(j).getAttribute("package").getValue();
+                Class aClass = Class.forName(packageName);
+                this.annotationParser= new AnnotationParser(aClass);
+                Bean bean= this.xmlBeanFactory.createBean(annotationParser.getAnnotationBeanContent());
+                annotationBeansAttributes.put(bean.getId(), annotationParser.getAnnotationBeanContent());
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -125,5 +149,9 @@ public class XMLParser {
 
     public HashMap getTagsBeanContent() {
         return tagsBeanContent;
+    }
+
+    public HashMap<String, HashMap<String, Object>> getAnnotationBeansAttributes() {
+        return annotationBeansAttributes;
     }
 }

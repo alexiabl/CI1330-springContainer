@@ -28,10 +28,11 @@ public class XMLBeanFactory extends AbstractBeanFactory {
      */
     @Override
     protected HashMap<String, Object> obtainBeanAttributes(String id){
-        return xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id));
+        if(xmlParser.getTagsBeanContent().containsKey(id)){
+            return xmlParser.obtainBeanAttributes((Element) xmlParser.getTagsBeanContent().get(id));
+        } else{
+            return xmlParser.getAnnotationBeansAttributes().get(id);
+        }
     }
 
-    public void callAnnotationBeanFactory(Element element){
-        AnnotationBeanFactory annotationBeanFactory= new AnnotationBeanFactory(element);
-    }
 }

@@ -52,37 +52,58 @@
 		<h3>Inyección de dependencias</h3>
 		<ol>
             <li><h4>Setters</h4></li>
-            <li><h4>Constructor</h4></a>
+            <li><h4>Constructor</h4></li>
         </ol>
 		<h3>Scope</h3>
 		<ol>
             <li><h4>Singleton</h4></li>
-            <li><h4>Prototype</h4></a>
+            <li><h4>Prototype</h4></li>
         </ol>
 		<p></p>
 		<h3>Lifecycle</h3>
 		<ol>
             <li><h4>Initialization</h4></li>
-            <li><h4>Destroy</h4></a>
+            <li><h4>Destroy</h4></li>
         </ol>
 		<p></p>
 		<h3>Autowiring</h3>
 		<ol>
             <li><h4>ByName</h4></li>
-            <li><h4>ByType</h4></a>
+            <p>El Autowiring ByName realiza el autowiring si el nombre del bean es igual al nombre de otra propiedad del
+                bean.
+                Para el uso del contenedor usando configuración por XML, el autowiring se hace utilizando el atributo
+                "ref". Usando Annotations, se debe
+                poner "@Autowired" en la definición del atributo o propiedad.
+            </p>
+            <li><h4>ByType</h4></li>
+            <p>
+                El Autowiring ByType realiza el autowiring dependiendo en el tipo de dato del bean o el "classtype".
+                Para el uso del contenedor usando configuración por XML, el autowiring se hace utilizando el atributo
+                "ref". Usando Annotations, se debe
+                poner "@Autowired" en la definición del atributo o propiedad. Por defecto, el modo de autowiring esta
+                seteado en ByType. Únicamente debe
+                haber un bean en @Autowired ByType en la configuración del contenedor.
+            </p>
         </ol>
 		<p></p>
 		<h3>Configuration format</h3>
 		<ol>
             <li><h4>XML</h4></li>
-            <li><h4>Annotations</h4></a>
+            <p>En la configuración mediante XML, los beans y sus propiedades se especifican en el archivo xml de los
+                beans.</p>
+            <li><h4>Annotations</h4></li>
+            <p>En la configuración mediante Annotations, los beans y sus propiedades se crean a partir de las
+                annotations puestas en las clases.
+                Sin embargo, se debe especificar en el xml de configuración si la aplicación va a ser "annotation
+                based".
+            </p>
+
         </ol>
 		<p></p>
 		<h3>Lazy loading</h3>
 		<p></p>
 		
 
-        
     </div>
 </div>
 

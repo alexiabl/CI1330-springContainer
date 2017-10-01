@@ -80,8 +80,10 @@
 		<h3>Implementación de Annotations</h3>
 
         <p>Se basa en escanear o leer las clases que contengan annotations utilizando el método annotationParser
-            encargado de tomar las clases especificadas en el archivo
-            de configuración xmlAnnotations.xml bajo el tag "classesToScan". Las clases deben tener el annotation
+            encargado de tomar las clases especificadas en el archivo (deben venir con el nombre completo del paquete en
+            el que se encuentran)
+            de configuración xmlAnnotations.xml dentro el tag "classesToScan" utilizando el tag "classes". Las clases
+            deben tener el annotation
             @Component para que el parser identifique que la clase debe leerse. Las clases
             especificadas en el archivo deben tener annotations para que la creación de los beans sea exitosa. En la
             lectura, el parser se encarga de obtener las annotations de acuerdo

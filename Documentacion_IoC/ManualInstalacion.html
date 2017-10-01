@@ -45,8 +45,19 @@
     <div class="w3-container" style="padding:32px">
 
         <h2>Manual de instalación de la Librería</h2>
-
-        <p>Insertar texto aqui, si se quiere poner heading use el tag h2</p>
+		<p>La instalación de la librería se puede realizar de varias formas, sin embargo, asumiendo que se va a utilizar Maven en el proyecto que vaya a 
+		usar la librería, a continuación se explican dos formas de agregar la librería a  un proyecto: </p>
+		
+		<h3>Teniendo la carpeta del proyecto</h3>
+        <p>Para empezar, si se tiene la carpeta con todo el proyecto se debe abrir la terminal y ejecutar el comando "mvn clean install", 
+		donde ya se asume que se cuenta con maven agregado a las variables del sistema, de esta manera se genererará en el proyecto una carpeta target que contendrá 
+		el .jar del proyecto. Además, ese comando automáticamente agrega una carpeta en las librerías que maven maneja localmente en la computadora. </p>
+		<p><h1 class="w3-xlarge" style="text-align: center"><img src="images/mvnCleanInstall.png"/></h1></p>
+		<p>Posteriormente, se debe agregar esta dependencia al pom del proyecto que vaya a hacer uso de la librería, la cual se ve de la siguiente forma:</p>
+		<p><h1 class="w3-xlarge" style="text-align: center"><img src="images/mavenDependency.png"/></h1></p>
+		
+		<h3>A partir del .jar:  </h3>
+		<p>Para se debe tomar el .jar del proyecto, que es un archivo que posee los archivos del proyecto comprimidos, y agregarlo . </p>
     </div>
 </div>
 

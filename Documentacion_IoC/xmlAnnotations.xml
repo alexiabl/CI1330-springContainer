@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classesToScan>
+    <class package="cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Mascota"></class>
+    <class package="cr.ac.ucr.ecci.ci1330.IoC.annotadedClasses.Persona"></class>
+</classesToScan>
+

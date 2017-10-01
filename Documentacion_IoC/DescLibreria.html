@@ -79,13 +79,24 @@
 		
 		<h3>Implementación de Annotations</h3>
 
-        <p>-
+        <p>Se basa en escanear o leer las clases que contengan annotations utilizando el método annotationParser
+            encargado de tomar las clases especificadas en el archivo
+            de configuración xmlAnnotations.xml bajo el tag "classesToScan". Las clases deben tener el annotation
+            @Component para que el parser identifique que la clase debe leerse. Las clases
+            especificadas en el archivo deben tener annotations para que la creación de los beans sea exitosa. En la
+            lectura, el parser se encarga de obtener las annotations de acuerdo
+            a las reglas especificadas para cada annotation (ver Manual de uso > Configuración con Annotations). Una vez
+            que obtiene estas clases, por cada una de ellas obtiene las annotations y las ingresa al hashmap del
+            annotationBeanFactory.
+            Una vez que se haya hecho esto, se pueden llamar a los métodos de la clase AbstractBeanFactory donde se
+            inyectan las dependencias, se crean y se obtienen los beans.
         </p>
 		
 		<h3>Implementación del híbrido: XML y Annotations</h3>
 
-        <p>El híbrido consiste en utilizar la configuración con XML, de manera que se lee el archivo .xml que se encuentra en la carpeta de resources de manera común, sin embargo, 
-		si se encuentran clases para escanear dentro de ese xml, identificadas con el tag de <classesToScan>, entonces se iterará sobre las clases que se deben escanear
+        <p>El híbrido consiste en utilizar la configuración con XML, de manera que se lee el archivo .xml que se encuentra en la carpeta de resources de manera común, sin embargo,
+            si se encuentran clases para escanear dentro de ese xml, identificadas con el tag de "classesToScan",
+            entonces se iterará sobre las clases que se deben escanear
 		y se creará un AnnotationParser, el cual se encargará de conseguir la información de la clase que posee Annotations y meterla en un HashMap para después crear el bean 
 		correspondiente. Además, hay un HashMap que cuenta con un identificador del bean como llave y un HashMap con los atributos de ese bean como valor, lo cual se hace 
 		con el fin de poder tener esta información para poder crear nuevas instancias posteriormente si el scope es prototype o si se ha definido que se cree como lazy. Por cada 

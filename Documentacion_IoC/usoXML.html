@@ -78,6 +78,15 @@
             <img src="images/XMLbeanBasico.png"/>
             <br>
 
+			<h5><b>Inyección por setter</b></h5>
+			<p>Se debe poner al inicio de la dependencia un tag <a style="font-family: 'Courier New'">"<setter-arg></a> para identificar que es un setter, e ingresarle el nombre del atributo que se va a 
+			inyectar y la referencia a la clase o el bean que se va a inyectar. Más adelante se identifican ejemplos de esto.</p>
+			
+			<h5><b>Inyección por contructor</b></h5>
+			<p>Para cada parámetro del constructor, se debe poner al inicio de la dependencia un tag <a style="font-family: 'Courier New'">"<constructor-args></a> para identificar que es un parametro que pertenece a un constructor,
+			e ingresarle la referencia a la clase o el bean que se va a inyectar. Cabe destacar que cada uno de estos parámetros que se especifiquen deben coincidir
+			en tipo y en orden con el contructor que se va a llamar. Más adelante se identifican ejemplos de esto.</p>
+			
             <h5><b>El autowiringMode</b></h5>
             <p>El atributo <a style="font-family: 'Courier New'">"autowiringMode"</a> se utiliza para invocar a un Constructor de la clase o a algún Set de un atributo
                 de la instancia creado. Si se desea referenciar en un
@@ -148,7 +157,9 @@
             <p><u>Uso:</u> Mientras no se ingrese más de una vez el mismo atributo dentro un mismo tag, se pueden mezclar los distintos atributos que puede tener un bean.</p>
             <p>Ejemplos: </p>
             <img src="images/XMLejemplo.png"/>
-
+			
+			<h5><b>Manejo de ciclos</b></h5>
+			<p>Las dependencias no deben tener ciclos, ya que el contenedor los identifica y se descontinúan sus labores.</p>
         </ol>
 
 

@@ -56,24 +56,34 @@
         </ol>
 		<h3>Scope</h3>
         <p>La funcionalidad de Scope es definir el ámbito en que se desea recuperar un bean, esto quiere decir que permite eligir el origen
-            y la integridad de la instancia que se desea inyectar. El tipo <b>singleton</b> devuelve siempre la misma instancia cada vez que se
-            desea recuperar un bean, quiere decir que se comparte la misma instancia en cada inyección. Y el tipo <b>prototype</b> se encarga de
-            devolver una instancia nueva cada vez que se requiera recuperar un bean de este tipo, una instancia independiente.
+            y la integridad de la instancia que se desea inyectar.
         </p>
 		<ol>
             <li><h4>Singleton</h4></li>
+            <p>
+                El tipo <b>singleton</b> es el valor por defecto en el Scope, devuelve siempre la misma instancia cada vez que se desea recuperar un bean,
+                quiere decir que se comparte la misma instancia en cada inyección.
+            </p>
             <li><h4>Prototype</h4></li>
+            <p>
+                Y el tipo <b>prototype</b> se encarga de devolver una instancia nueva cada vez que se requiera recuperar un bean de este tipo,
+                una instancia independiente.
+            </p>
         </ol>
 		<p></p>
 		<h3>Lifecycle</h3>
-        <p>La funcionalidad de Lifecycle es marcar la inicialización de un bean y su destrucción. Cuando se inyecta una dependencia se ejecuta su función
-            de <b>initialization</b>, que es un método "initMethod" que se puede asignar para iniciar una instancia en un respectivo estado deseado. Por otro lado,
-            cuando se ejecuta la destrucción de un bean se puede utilizar la función <b>destroy</b> que ejecuta un método "destructMethod" para que al destruirse
-            se tenga un estado deseado.
+        <p>La funcionalidad de Lifecycle es marcar la inicialización de un bean y su destrucción, para obtener un deseado estado en el sistema, cuando se
+            ejecute la respectiva acción.
         </p>
 		<ol>
             <li><h4>Initialization</h4></li>
+            <p>Cuando se inyecta una dependencia se ejecuta su función de <b>initialization</b>,
+                que es un método "initMethod" que se puede asignar para iniciar una instancia en un respectivo estado deseado.
+            </p>
             <li><h4>Destroy</h4></li>
+            <p>Por otro lado, cuando se ejecuta la destrucción de un bean se puede utilizar la función <b>destroy</b> que ejecuta un método "destructMethod"
+                para que al destruirse se tenga otro estado deseado.
+            </p>
         </ol>
 		<p></p>
 		<h3>Autowiring</h3>
